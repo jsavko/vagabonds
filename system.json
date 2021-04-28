@@ -1,0 +1,54 @@
+{
+  "name": "vagabonds",
+  "title": "Vagabonds of Dyfed",
+  "description": "The Vagabonds of Dyfed system for FoundryVTT!",
+  "version": "0.1.6",
+  "minimumCoreVersion": "0.7.5",
+  "compatibleCoreVersion": "0.7.9",
+  "templateVersion": 2,
+  "author": "James Savko",
+  "esmodules": ["module/vagabonds.js"],
+  "styles": ["css/vagabonds.css"],
+  "scripts": [],
+  "packs": [
+    {
+      "name": "techniques",
+      "label": "Vagabonds - Techniques",
+      "path": "packs/vagabonds-techniques.db",
+      "entity": "Item"
+    },
+    {
+      "name": "monsterability",
+      "label": "Vagabonds - Monster Abilities",
+      "path": "packs/vagabonds-monster-abilities.db",
+      "entity": "Item"
+    },
+    {
+      "name": "lineage",
+      "label": "Vagabonds - Lineages",
+      "path": "packs/vagabonds-lineage.db",
+      "entity": "Item"
+    },
+    {
+      "name": "spells",
+      "label": "Vagabonds - Spells",
+      "path": "packs/vagabonds-spells.db",
+      "entity": "Item"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "speed",
+  "url": "",
+  "manifest": "https://raw.githubusercontent.com/jsavko/vagabonds/main/system.json",
+  "download": "https://github.com/jsavko/vagabonds/archive/refs/tags/0.1.6.zip",
+  "license": "LICENSE.txt"
+}

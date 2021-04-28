@@ -1,0 +1,101 @@
+{
+  "Actor": {
+    "types": ["character", "npc"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 8,
+          "min": 0,
+          "max": 8
+        },
+        "speed": {
+          "value": 0,
+          "min": -10,
+          "max": 15
+        },
+        "armor": {
+          "value": 0,
+          "min": 0,
+          "max": 20
+        }
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "biography": "",
+      "attributes": {
+        "level": {
+          "value": 1
+        },
+        "xp": {
+          "value": 0,
+          "min": 0,
+          "max": 100
+        }
+      },
+      "aproaches": {
+        "conflict": "",
+        "goal": "",
+        "gimmick": "",
+        "background": "",
+        "foreground": "",
+        "weakness": "",
+        "a1": "",
+        "a2": "",
+        "a3": "",
+        "a4": "",
+        "a5": "",
+        "a6": "",
+        "coreflaw": "",
+        "lineage":""
+      }
+    },
+    "npc": {
+      "templates": ["base"],
+      "biography": "",
+      "damage": {
+        "value": 1
+      },
+      "traits":"",
+      "combat_notes": ""
+    }
+  },
+  "Item": {
+    "types": ["item", "approach", "technique","lineage","injury"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0
+    },
+    "approach": {
+      "templates": ["base"],
+      "label": "",
+      "value": "",
+      "corrupted": false
+    },
+    "technique": {
+        "templates": ["base"],
+        "label": "",
+        "value": "",
+        "corrupted": false
+    },
+    "lineage": {
+        "templates": ["base"],
+        "label": "",
+        "value": "",
+        "corrupted": false
+    },
+    "injury": {
+        "templates": ["base"],
+        "label": "",
+        "value": "",
+        "corrupted": false
+    }
+    
+  }
+}

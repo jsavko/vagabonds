@@ -1,0 +1,25 @@
+{{#ifCond type '==' 'defend'}}
+<h1>Defend Roll</h1>
+<h2>{{damage}} damage taken.</h2>
+<p>{{outcome}}</p>
+{{else}}
+
+<h2>{{outcome}}</h2>
+{{#if apptitude}}
+<p>Apptitude: {{apptitude}}</p>
+{{/if}}
+{{/ifCond}}
+{{#ifCond type '!=' 'defend'}}
+{{#ifCond outcome '==' 'Failure'}}
+<p>6 or less is a miss (things get worse or turn out bad)</p>
+{{/ifCond}}
+{{#ifCond outcome '==' 'Partial Success'}}
+<p>7 to 9 is a partial success (some good with a complication)</p>
+{{/ifCond}}
+{{#ifCond outcome '==' 'Complete Success'}}
+<p>10 to 12 is a complete success (you do it without issue)</p>
+{{/ifCond}}
+{{#ifCond outcome '==' 'Critical Success'}}
+<p>13+ is a critical success (you do it with an added benefit)</p>
+{{/ifCond}}
+{{/ifCond}}
