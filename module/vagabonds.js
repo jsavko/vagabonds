@@ -23,8 +23,8 @@ Hooks.once('init', async function() {
   };
 
   // Define custom Entity classes
-  CONFIG.Actor.entityClass = VagabondsActor;
-  CONFIG.Item.entityClass = VagabondsItem;
+  CONFIG.Actor.documentClass = VagabondsActor;
+  CONFIG.Item.documentClass = VagabondsItem;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
@@ -77,6 +77,7 @@ Hooks.once('init', async function() {
             return options.inverse(this);
     }
   });
+  
 
 });
 

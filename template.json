@@ -3,6 +3,7 @@
     "types": ["character", "npc"],
     "templates": {
       "base": {
+        "name":"",
         "health": {
           "value": 8,
           "min": 0,

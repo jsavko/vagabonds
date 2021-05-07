@@ -2,7 +2,7 @@
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class VagabondsActorSheet extends ActorSheet {
+ export class VagabondsActorSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
@@ -21,21 +21,24 @@ export class VagabondsActorSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.dtypes = ["String", "Number", "Boolean"];
-    for (let attr of Object.values(data.data.attributes)) {
+    for (let attr of Object.values(data.data.data.attributes)) {
       attr.isCheckbox = attr.dtype === "Boolean";
     }
 
       // Prepare items.
-  if (this.actor.data.type == 'character') {
-    this._prepareCharacterItems(data);
-  }
+    if (this.actor.data.type == 'character') {
+      this._prepareCharacterItems(data);
+
+    }
 
     return data;
   }
 
 
   _prepareCharacterItems(sheetData) {
-    const actorData = sheetData.actor;
+
+    const actorData = sheetData.data;
+    console.log(sheetData)
 
     // Initialize containers.
   const gear = [];
@@ -46,7 +49,7 @@ export class VagabondsActorSheet extends ActorSheet {
   // Iterate through items, allocating to containers
   // let totalWeight = 0;
   for (let i of sheetData.items) {
-    let item = i.data;
+    let item = i;
     i.img = i.img || DEFAULT_TOKEN;
     // Append to gear.
     if (i.type === 'item') {
@@ -69,6 +72,7 @@ export class VagabondsActorSheet extends ActorSheet {
   actorData.techniques = techniques;
   actorData.lineage = lineage;
   actorData.injury = injury;
+  console.log(actorData)
 }
 
 
@@ -151,7 +155,7 @@ export class VagabondsActorSheet extends ActorSheet {
     if (dataset.defend) {
       let roll = new Roll(dataset.defend, this.actor.data.data);
       let label = dataset.label ? `Defending ${dataset.label}` : '';
-      roll.evaluate();
+      roll.evaluate({async: true});
       var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
 
       if (roll.dice[0].results[0].result > roll.dice[0].results[1].result) {

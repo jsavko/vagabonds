@@ -42,7 +42,8 @@ export class RollHelper {
             close: html => {
                 if (confirmed) {
                     let rollModifier = parseInt(html.find('[name=modifier-value]')[0].value);
-                    var roll = new Roll("2d6 + " + rollModifier).evaluate();
+                    var roll = new Roll("2d6 + " + rollModifier);
+                    roll.evaluate({async: true});
                     var RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: roll };
                     if (roll.total < 7) {
                         RollResult.outcome = "Failure";
