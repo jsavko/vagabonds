@@ -83,7 +83,6 @@ Hooks.once('init', async function() {
 
 Hooks.on("renderSidebarTab", (app, html, data) => {
   html.find(".chat-control-icon").click(async (event) => {
-    console.log('clicked dice');
     RollHelper.displayRollModal();
   });
 });

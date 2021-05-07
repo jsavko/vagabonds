@@ -38,7 +38,6 @@
   _prepareCharacterItems(sheetData) {
 
     const actorData = sheetData.data;
-    console.log(sheetData)
 
     // Initialize containers.
   const gear = [];
@@ -72,7 +71,6 @@
   actorData.techniques = techniques;
   actorData.lineage = lineage;
   actorData.injury = injury;
-  console.log(actorData)
 }
 
 
@@ -153,35 +151,38 @@
     }
 
     if (dataset.defend) {
-      let roll = new Roll(dataset.defend, this.actor.data.data);
+      let roll = new Roll(dataset.defend, this.actor);
       let label = dataset.label ? `Defending ${dataset.label}` : '';
-      roll.evaluate({async: false});
-      var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
+      roll.evaluate({async: true}).then(
+        function(result)  {
+          var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
+          if (result.terms[0].results[0].result > roll.terms[0].results[1].result) {
+            RollResult.high = roll.terms[0].results[0].result;
+            RollResult.low = roll.terms[0].results[1].result;
+          } else {
+            RollResult.low = roll.terms[0].results[0].result;
+            RollResult.high = roll.terms[0].results[1].result;
+          }
 
-      if (roll.dice[0].results[0].result > roll.dice[0].results[1].result) {
-        RollResult.high = roll.dice[0].results[0].result;
-        RollResult.low = roll.dice[0].results[1].result;
-      } else {
-        RollResult.low = roll.dice[0].results[0].result;
-        RollResult.high = roll.dice[0].results[1].result;
-      }
+          if (result._total < 7) {
+            RollResult.outcome = "Failure";
+            RollResult.damage =  (RollResult.high - result.data.data.data.armor.value);
+          } else if (result._total < 10) {
+            RollResult.outcome = "Partial Success";
+            RollResult.damage = (RollResult.low - result.data.data.data.armor.value)
+          } 
 
-      if (roll.total < 7) {
-        RollResult.outcome = "Failure";
-        RollResult.damage =  (RollResult.high - this.actor.data.data.armor.value);
-      } else if (roll.total < 10) {
-        RollResult.outcome = "Partial Success";
-        RollResult.damage = (RollResult.low - this.actor.data.data.armor.value)
-      } 
+          let template = 'systems/vagabonds/templates/chat/rolls.html';
+          var RollTemplate = renderTemplate(template, RollResult).then(content => {
+            result.toMessage({
+              speaker: ChatMessage.getSpeaker({actor: result.data}),
+              flavor: content,
+            });
+          });
+        }
+      );
 
-      let template = 'systems/vagabonds/templates/chat/rolls.html';
-      var RollTemplate = renderTemplate(template, RollResult).then(content => {
-        roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: content,
-        });
-      });
-    
+      
     }
   }
 

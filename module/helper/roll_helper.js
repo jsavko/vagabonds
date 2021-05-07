@@ -2,10 +2,7 @@
 
 
 export class RollHelper {
-
-    
     static async displayRollModal() {
-        console.log("made it this far")
         let confirmed = false;
         // Add modifier for a d20 roll
         new Dialog({
@@ -47,23 +44,32 @@ export class RollHelper {
                     } else {
                         var roll = new Roll("2d6 " + rollModifier);
                     }
-                    roll.evaluate({async: false});
-                    var RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: roll };
-                    if (roll.total < 7) {
-                        RollResult.outcome = "Failure";
-                      } else if (roll.total < 10) {
-                        RollResult.outcome = "Partial Success";
-                      } else if (roll.total > 12) {
-                        RollResult.outcome = "Critical Success";
-                      }
-                    let template = 'systems/vagabonds/templates/chat/rolls.html';
-                    
-                    var RollTemplate = renderTemplate(template, RollResult).then(content => {
-                      roll.toMessage({
-                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                        flavor: content,
-                      });
-                    });
+                    roll.evaluate({async: true}).then(
+                        function(result) {
+                            console.log(result); // "Stuff worked!"
+
+                            var RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: result };
+                            if (result._total < 7) {
+                                RollResult.outcome = "Failure";
+                              } else if (result._total < 10) {
+                                RollResult.outcome = "Partial Success";
+                              } else if (result._total > 12) {
+                                RollResult.outcome = "Critical Success";
+                              }
+                            let template = 'systems/vagabonds/templates/chat/rolls.html';
+                            var RollTemplate = renderTemplate(template, RollResult).then(content => {
+                                result.toMessage({
+                                speaker: ChatMessage.getSpeaker({ }),//actor: this.actor }),
+                                flavor: content,
+                              });
+                            });
+
+                        }
+
+                    );
+
+
+                   
                 }
             }
         }).render(true);
