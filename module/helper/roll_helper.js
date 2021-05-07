@@ -18,8 +18,8 @@ export class RollHelper {
                     <option value="+3">+3</option>
                     <option value="+2">+2</option>
                     <option value="+1">+1</option>
-                    <option value="0" selected>0</option>
-                    <option value="-1">+1</option>
+                    <option value="+0" selected>0</option>
+                    <option value="-1">-1</option>
                     <option value="-2">-2</option>
                     <option value="-3">-3</option>
                 </select>
@@ -42,8 +42,12 @@ export class RollHelper {
             close: html => {
                 if (confirmed) {
                     let rollModifier = parseInt(html.find('[name=modifier-value]')[0].value);
-                    var roll = new Roll("2d6 + " + rollModifier);
-                    roll.evaluate({async: true});
+                    if (rollModifier >= 0) { 
+                        var roll = new Roll("2d6 +" + rollModifier);
+                    } else {
+                        var roll = new Roll("2d6 " + rollModifier);
+                    }
+                    roll.evaluate({async: false});
                     var RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: roll };
                     if (roll.total < 7) {
                         RollResult.outcome = "Failure";

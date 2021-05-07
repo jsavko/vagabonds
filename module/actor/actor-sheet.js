@@ -155,7 +155,7 @@
     if (dataset.defend) {
       let roll = new Roll(dataset.defend, this.actor.data.data);
       let label = dataset.label ? `Defending ${dataset.label}` : '';
-      roll.evaluate({async: true});
+      roll.evaluate({async: false});
       var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
 
       if (roll.dice[0].results[0].result > roll.dice[0].results[1].result) {
