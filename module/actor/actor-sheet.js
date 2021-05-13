@@ -156,12 +156,12 @@
       roll.evaluate({async: true}).then(
         function(result)  {
           var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
-          if (result.terms[0].results[0].result > roll.terms[0].results[1].result) {
-            RollResult.high = roll.terms[0].results[0].result;
-            RollResult.low = roll.terms[0].results[1].result;
+          if (result.terms[0].results[0].result > result.terms[0].results[1].result) {
+            RollResult.high = result.terms[0].results[0].result;
+            RollResult.low = result.terms[0].results[1].result;
           } else {
-            RollResult.low = roll.terms[0].results[0].result;
-            RollResult.high = roll.terms[0].results[1].result;
+            RollResult.low = result.terms[0].results[0].result;
+            RollResult.high = result.terms[0].results[1].result;
           }
 
           if (result._total < 7) {
