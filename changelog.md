@@ -2,6 +2,7 @@
 0.2.2
 * Added Defense roll option from the d20 dialog popup.  Defense rolls take into account Character Armor
 * GM can now select which token is rolling
+* Updated to 0.8.4 support
 
 
 
