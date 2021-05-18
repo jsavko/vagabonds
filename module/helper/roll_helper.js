@@ -49,6 +49,7 @@ export class RollHelper {
                      //console.log(token);
                    if (token.length == 0) {
                         ui.notifications.error("You must have an actor to roll a defense roll");
+                        return
                    } else {
                        
                    }
