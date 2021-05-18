@@ -1,4 +1,9 @@
 # Vagabonds of Dyfed Foundry VTT System
+0.2.2
+* Added Defense roll option from the d20 dialog popup.  Defense rolls take into account Character Armor
+* GM can now select which token is rolling
+
+
 
 0.2.1
 
