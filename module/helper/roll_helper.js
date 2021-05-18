@@ -45,6 +45,7 @@ export class RollHelper {
                     let rollModifier = parseInt(html.find('[name=modifier-value]')[0].value);
                     let rollisDefense= html.find(`[name=rolltype-defense]`).is(":checked");
                     let token = canvas.tokens.controlled;
+                    //let token = game.user.character ?? canvas.tokens.controlled[0].actor ?? game.actors.find(a => a.owner)
                      //console.log(token);
                    if (token.length == 0) {
                         ui.notifications.error("You must have an actor to roll a defense roll");
@@ -59,7 +60,7 @@ export class RollHelper {
                     }
                     roll.evaluate({async: true}).then(
                         function(result) {
-                            console.log(result); // "Stuff worked!"
+                            //console.log(result); // "Stuff worked!"
                             //Set Roll Type
                             if (rollisDefense == true) {
                                 //Making a defense roll
@@ -87,7 +88,7 @@ export class RollHelper {
                                     flavor: content,
                                   });
                                 });
-                                
+
                             } else {
                                 //Normal Roll
                                 var RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: result };
