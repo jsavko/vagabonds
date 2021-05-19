@@ -91,6 +91,12 @@
       const item = this.actor.getOwnedItem(li.data("itemId"));
       item.sheet.render(true);
     });
+
+    html.find('.item-name').dblclick(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.sheet.render(true);
+    });
     
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
