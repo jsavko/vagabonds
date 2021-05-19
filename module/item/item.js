@@ -23,8 +23,6 @@ export class VagabondsItem extends Item {
     } else if(itemData.type == "technique" && itemData.img == 'icons/svg/item-bag.svg') { 
       itemData.img = 'systems/vagabonds/assets/swords-emblem.svg'
     } 
-    
-    const data = itemData.data;
 
   }
 

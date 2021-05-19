@@ -26,6 +26,7 @@ Hooks.once('init', async function() {
   CONFIG.Actor.documentClass = VagabondsActor;
   CONFIG.Item.documentClass = VagabondsItem;
 
+
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
 

@@ -5,6 +5,7 @@
 * Updated to 0.8.4 support
 * Added Level to ActorSheet
 * Updated compendiums with new icons to better show on ActorSheet
+* Updated ActorSheet Gear, Technique, and Injury Icons
 
 
 0.2.1
