@@ -26,6 +26,7 @@ Hooks.once('init', async function() {
   CONFIG.Actor.documentClass = VagabondsActor;
   CONFIG.Item.documentClass = VagabondsItem;
 
+  //foundry.data.ItemData.DEFAULT_ICON = "icons/containers/bags/pack-leather-brown.webp";
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
