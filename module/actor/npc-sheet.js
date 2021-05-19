@@ -10,7 +10,7 @@ export class VagabondsNPCSheet extends ActorSheet {
       classes: ["vagabonds", "sheet", "actor"],
       template: "systems/vagabonds/templates/actor/npc-sheet.html",
       width: 600,
-      height: 600,
+      height: 440,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }

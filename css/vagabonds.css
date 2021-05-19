@@ -254,9 +254,23 @@
 
 .vagabonds .items-list .item-name {
   margin: 0;
+  text-align: left;
 }
 
 .vagabonds .items-list .item-controls {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 86px;
+  flex: 0 0 86px;
+  text-align: right;
+  opacity: 66%;
+}
+
+.vagabonds .items-list .item-controls:hover {
+  opacity: 100%;
+}
+
+.vagabonds .items-list .item-controls .item-create {
+  font-size: 10px;
   -webkit-box-flex: 0;
   -ms-flex: 0 0 86px;
   flex: 0 0 86px;
@@ -274,4 +288,12 @@
 .fa-dice-d20:hover {
   content: "\f6cf";
   color: red;
+}
+
+.no-border {
+  border: none;
+}
+
+.left {
+  text-align: left;
 }
