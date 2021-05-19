@@ -69,6 +69,7 @@
       }
     },
     "item": {
+      "img":"icons/containers/bags/pack-leather-brown.webp",
       "templates": ["base"],
       "quantity": 1,
       "weight": 0

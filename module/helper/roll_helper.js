@@ -45,9 +45,9 @@ export class RollHelper {
                     let rollModifier = parseInt(html.find('[name=modifier-value]')[0].value);
                     let rollisDefense= html.find(`[name=rolltype-defense]`).is(":checked");
                     let token = canvas.tokens.controlled;
-                    //let token = game.user.character ?? canvas.tokens.controlled[0].actor ?? game.actors.find(a => a.owner)
-                     //console.log(token);
-                   if (token.length == 0) {
+                    let actor = game.user.character ?? canvas.tokens.controlled[0]?.actor ?? game.actors.find(a => a.owner);
+                    //console.log(token);
+                   if (actor.length == 0) {
                         ui.notifications.error("You must have an actor to roll a defense roll");
                         return
                    } else {
@@ -55,9 +55,9 @@ export class RollHelper {
                    }
 
                     if (rollModifier >= 0) { 
-                        var roll = new Roll("2d6 +" + rollModifier, token[0].actor.data);
+                        var roll = new Roll("2d6 +" + rollModifier, actor.data);
                     } else {
-                        var roll = new Roll("2d6 " + rollModifier, token[0].actor.data);
+                        var roll = new Roll("2d6 " + rollModifier, actor.data);
                     }
                     roll.evaluate({async: true}).then(
                         function(result) {
@@ -95,11 +95,11 @@ export class RollHelper {
                                 var RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: result };
                                 if (result._total < 7) {
                                     RollResult.outcome = "Failure";
-                                  } else if (result._total < 10) {
+                                } else if (result._total < 10) {
                                     RollResult.outcome = "Partial Success";
-                                  } else if (result._total > 12) {
+                                } else if (result._total > 12) {
                                     RollResult.outcome = "Critical Success";
-                                  }
+                                }
                                 let template = 'systems/vagabonds/templates/chat/rolls.html';
                                 var RollTemplate = renderTemplate(template, RollResult).then(content => {
                                     result.toMessage({
@@ -109,13 +109,8 @@ export class RollHelper {
                                 });
                             
                             }
-
                         }
-
                     );
-
-
-                   
                 }
             }
         }).render(true);

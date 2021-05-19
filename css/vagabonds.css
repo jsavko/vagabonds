@@ -270,3 +270,8 @@
 .editor-content {
   min-height: 100px;
 }
+
+.fa-dice-d20:hover {
+  content: "\f6cf";
+  color: red;
+}
