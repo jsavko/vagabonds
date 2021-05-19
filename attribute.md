@@ -6,3 +6,5 @@
 * swords-emblem.svg created by Lorc. https://game-icons.net/1x1/lorc/swords-emblem.html
 * cog.svg created by Lorc. https://game-icons.net/1x1/lorc/swords-emblem.html
 * ifrit.svg created by Lorc. https://game-icons.net/1x1/lorc/ifrit.html
+* injurty.svg created by Lorc. https://game-icons.net/1x1/lorc/internal-injury.html
+* cut-palm created by Lorc. https://game-icons.net/1x1/lorc/cut-palm.html
