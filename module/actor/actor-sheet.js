@@ -47,7 +47,7 @@
 
   // Iterate through items, allocating to containers
   // let totalWeight = 0;
-  for (let i of sheetData.items) {
+  for (let i of sheetData.items.reverse()) {
     let item = i;
     i.img = i.img || DEFAULT_TOKEN;
     // Append to gear.
@@ -71,6 +71,7 @@
   actorData.techniques = techniques;
   actorData.lineage = lineage;
   actorData.injury = injury;
+
 }
 
 

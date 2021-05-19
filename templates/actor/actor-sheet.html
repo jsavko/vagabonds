@@ -130,13 +130,7 @@
         <label class="resource-label">Equipment</label>
         <label class="rules-label">-1 speed for each loaded-down limb and point of armor; at -7, you are immobilized</label>
           <ol class="items-list">
-            <li class="item flexrow item-header">
-              <div class="item-image"></div>
-              <div class="item-name"></div>
-              <div class="item-controls">
-                <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
-              </div>
-            </li>
+
           {{#each data.gear as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
               <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
@@ -147,17 +141,18 @@
               </div>
             </li>
           {{/each}}
+          <li class="item flexrow item-header">
+            <div class="item-image"></div>
+            <div class="item-name"></div>
+            <div class="item-controls">
+              <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
+            </div>
+          </li>
           </ol>
 
         <label class="resource-label">Techniques</label>
           <ol class="items-list">
-            <li class="item flexrow item-header">
-              <div class="item-image"></div>
-              <div class="item-name"></div>
-              <div class="item-controls">
-                <a class="item-control item-create" title="Create item" data-type="technique"><i class="fas fa-plus"></i> Add</a>
-              </div>
-            </li>
+
         {{#each data.techniques as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
                 <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
@@ -168,17 +163,18 @@
                 </div>
             </li>
         {{/each}}
+        <li class="item flexrow item-header">
+          <div class="item-image"></div>
+          <div class="item-name"></div>
+          <div class="item-controls">
+            <a class="item-control item-create" title="Create item" data-type="technique"><i class="fas fa-plus"></i> Add</a>
+          </div>
+        </li>
         </ol>
 
         <label class="resource-label">Injuries</label>
           <ol class="items-list">
-            <li class="item flexrow item-header">
-              <div class="item-image"></div>
-              <div class="item-name"></div>
-              <div class="item-controls">
-                <a class="item-control item-create" title="Create item" data-type="injury"><i class="fas fa-plus"></i> Add</a>
-              </div>
-            </li>
+
         {{#each data.injury as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
                 <div class="item-image"><img src="systems/vagabonds/assets/cut-palm.svg" title="{{item.name}}" width="24" height="24"/></div>
@@ -189,6 +185,13 @@
                 </div>
             </li>
         {{/each}}
+        <li class="item flexrow item-header">
+          <div class="item-image"></div>
+          <div class="item-name"></div>
+          <div class="item-controls">
+            <a class="item-control item-create" title="Create item" data-type="injury"><i class="fas fa-plus"></i> Add</a>
+          </div>
+        </li>
         </ol>
       
 
