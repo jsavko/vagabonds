@@ -23,8 +23,10 @@ Hooks.once('init', async function() {
   };
 
   // Define custom Entity classes
-  CONFIG.Actor.entityClass = VagabondsActor;
-  CONFIG.Item.entityClass = VagabondsItem;
+  CONFIG.Actor.documentClass = VagabondsActor;
+  CONFIG.Item.documentClass = VagabondsItem;
+
+  //foundry.data.ItemData.DEFAULT_ICON = "icons/containers/bags/pack-leather-brown.webp";
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
@@ -77,12 +79,12 @@ Hooks.once('init', async function() {
             return options.inverse(this);
     }
   });
+  
 
 });
 
 Hooks.on("renderSidebarTab", (app, html, data) => {
   html.find(".chat-control-icon").click(async (event) => {
-    console.log('clicked dice');
     RollHelper.displayRollModal();
   });
 });

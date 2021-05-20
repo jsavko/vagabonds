@@ -2,7 +2,7 @@
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class VagabondsActorSheet extends ActorSheet {
+ export class VagabondsActorSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
@@ -21,21 +21,23 @@ export class VagabondsActorSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.dtypes = ["String", "Number", "Boolean"];
-    for (let attr of Object.values(data.data.attributes)) {
+    for (let attr of Object.values(data.data.data.attributes)) {
       attr.isCheckbox = attr.dtype === "Boolean";
     }
 
       // Prepare items.
-  if (this.actor.data.type == 'character') {
-    this._prepareCharacterItems(data);
-  }
+    if (this.actor.data.type == 'character') {
+      this._prepareCharacterItems(data);
+
+    }
 
     return data;
   }
 
 
   _prepareCharacterItems(sheetData) {
-    const actorData = sheetData.actor;
+
+    const actorData = sheetData.data;
 
     // Initialize containers.
   const gear = [];
@@ -45,8 +47,8 @@ export class VagabondsActorSheet extends ActorSheet {
 
   // Iterate through items, allocating to containers
   // let totalWeight = 0;
-  for (let i of sheetData.items) {
-    let item = i.data;
+  for (let i of sheetData.items.reverse()) {
+    let item = i;
     i.img = i.img || DEFAULT_TOKEN;
     // Append to gear.
     if (i.type === 'item') {
@@ -69,6 +71,7 @@ export class VagabondsActorSheet extends ActorSheet {
   actorData.techniques = techniques;
   actorData.lineage = lineage;
   actorData.injury = injury;
+
 }
 
 
@@ -84,6 +87,12 @@ export class VagabondsActorSheet extends ActorSheet {
     
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.getOwnedItem(li.data("itemId"));
+      item.sheet.render(true);
+    });
+
+    html.find('.item-name').dblclick(ev => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.getOwnedItem(li.data("itemId"));
       item.sheet.render(true);
@@ -149,35 +158,38 @@ export class VagabondsActorSheet extends ActorSheet {
     }
 
     if (dataset.defend) {
-      let roll = new Roll(dataset.defend, this.actor.data.data);
+      let roll = new Roll(dataset.defend, this.actor);
       let label = dataset.label ? `Defending ${dataset.label}` : '';
-      roll.evaluate();
-      var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
+      roll.evaluate({async: true}).then(
+        function(result)  {
+          var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
+          if (result.terms[0].results[0].result > result.terms[0].results[1].result) {
+            RollResult.high = result.terms[0].results[0].result;
+            RollResult.low = result.terms[0].results[1].result;
+          } else {
+            RollResult.low = result.terms[0].results[0].result;
+            RollResult.high = result.terms[0].results[1].result;
+          }
 
-      if (roll.dice[0].results[0].result > roll.dice[0].results[1].result) {
-        RollResult.high = roll.dice[0].results[0].result;
-        RollResult.low = roll.dice[0].results[1].result;
-      } else {
-        RollResult.low = roll.dice[0].results[0].result;
-        RollResult.high = roll.dice[0].results[1].result;
-      }
+          if (result._total < 7) {
+            RollResult.outcome = "Failure";
+            RollResult.damage =  (RollResult.high - result.data.data.data.armor.value);
+          } else if (result._total < 10) {
+            RollResult.outcome = "Partial Success";
+            RollResult.damage = (RollResult.low - result.data.data.data.armor.value)
+          } 
 
-      if (roll.total < 7) {
-        RollResult.outcome = "Failure";
-        RollResult.damage =  (RollResult.high - this.actor.data.data.armor.value);
-      } else if (roll.total < 10) {
-        RollResult.outcome = "Partial Success";
-        RollResult.damage = (RollResult.low - this.actor.data.data.armor.value)
-      } 
+          let template = 'systems/vagabonds/templates/chat/rolls.html';
+          var RollTemplate = renderTemplate(template, RollResult).then(content => {
+            result.toMessage({
+              speaker: ChatMessage.getSpeaker({actor: result.data}),
+              flavor: content,
+            });
+          });
+        }
+      );
 
-      let template = 'systems/vagabonds/templates/chat/rolls.html';
-      var RollTemplate = renderTemplate(template, RollResult).then(content => {
-        roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: content,
-        });
-      });
-    
+      
     }
   }
 

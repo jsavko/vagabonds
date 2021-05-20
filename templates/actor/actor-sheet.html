@@ -9,36 +9,42 @@
             {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
             use both the "grid" and "grid-Ncol" class where "N" can be any number
             from 1 to 12 and will create that number of columns.  --}}
-            <div class="resources grid grid-4col">
+            <div class="resources grid grid-5col">
               {{!-- "flex-group-center" is also defined in the _grid.scss file
               and it will add a small amount of padding, a border, and will
               center all of its child elements content and text. --}}
-              <div class="resource flex-group-center">
+              <div class="resource flex-group-center no-border">
                   <label for="data.health.value" class="resource-label">HP</label>
                   <div class="resource-content flexrow flex-center flex-between">
-                    <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+                    <input type="text" name="data.health.value" value="{{data.data.health.value}}" data-dtype="Number"/>
                     <span> / </span>
-                    <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
+                    <input type="text" name="data.health.max" value="{{data.data.health.max}}" data-dtype="Number"/>
                   </div>
               </div>
-              <div class="resource flex-group-center">
+              <div class="resource flex-group-center no-border">
                   <label for="data.power.value" class="resource-label">Speed</label>
                   <div class="resource-content flexrow flex-center flex-between">
-                    <input type="text" name="data.speed.value" value="{{data.speed.value}}" data-dtype="Number"/>
-                    </div>
+                    <input type="text" name="data.speed.value" value="{{data.data.speed.value}}" data-dtype="Number"/>
+                  </div>
               </div>
-              <div class="resource flex-group-center">
+              <div class="resource flex-group-center no-border">
                 <label for="data.power.value" class="resource-label rollable" data-defend="2d6">Armor</label>
                 <div class="resource-content flexrow flex-center flex-between">
-                  <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
-                  </div>
+                  <input type="text" name="data.armor.value" value="{{data.data.armor.value}}" data-dtype="Number"/>
+                </div>
             </div>
-            <div class="resource flex-group-center">
+            <div class="resource flex-group-center no-border">
               <label for="data.power.value" class="resource-label">Exp</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.attributes.exp.value" value="{{data.attributes.exp.value}}" data-dtype="Number"/>
-                </div>
-          </div>
+                <input type="text" name="data.attributes.exp.value" value="{{data.data.attributes.exp.value}}" data-dtype="Number"/>
+              </div>
+            </div>
+            <div class="resource flex-group-center no-border" >
+              <label for="data.power.value" class="resource-label">Level</label>
+              <div class="resource-content flexrow flex-center flex-between">
+                <input type="text" name="data.attributes.level.value" value="{{data.data.attributes.level.value}}" data-dtype="Number"/>
+              </div>
+            </div>
           </div>
         </div>
     </header>
@@ -46,68 +52,70 @@
     <div class="resources grid grid-2col">
       <div class="resource flex-group-center">
       <label class="resource-label">Traits</label><br>
-      <div class="resource flex-group-center">
+      <div class="resource flex-group-center no-border">
         <label class="rules-label">Sum relevant positive and negative traits to determine <strong>aptitude</strong> (max +3, min -3)</label>
       </div>
         <label class="approach-label">My Approch to Conflict:</label>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.conflict" value="{{data.aproaches.conflict}}" />
+          <input class="border_none" type="text" name="data.aproaches.conflict" value="{{data.data.aproaches.conflict}}" />
         </div>
         <label class="approach-label">My Goal:</label>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.goal" value="{{data.aproaches.goal}}"/>
+          <input class="border_none" type="text" name="data.aproaches.goal" value="{{data.data.aproaches.goal}}"/>
         </div>
         <label class="approach-label">My Gimmick:</label>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.gimmick" value="{{data.aproaches.gimmick}}"/>
+          <input class="border_none" type="text" name="data.aproaches.gimmick" value="{{data.data.aproaches.gimmick}}"/>
         </div>
         <label class="approach-label">My Background:</label>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.background" value="{{data.aproaches.background}}"/>
+          <input class="border_none" type="text" name="data.aproaches.background" value="{{data.data.aproaches.background}}"/>
         </div>
         <label class="approach-label">My Foreground:</label>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.foreground" value="{{data.aproaches.foreground}}"/>
+          <input class="border_none" type="text" name="data.aproaches.foreground" value="{{data.data.aproaches.foreground}}"/>
         </div>
         <label class="approach-label">My Weakness:</label>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.weakness" value="{{data.aproaches.weakness}}" />
+          <input class="border_none" type="text" name="data.aproaches.weakness" value="{{data.data.aproaches.weakness}}" />
+        </div>
+        <label class="approach-label">Additional Traits Per Level:</label>
+        <div class="resource-content flexrow flex-center flex-between">
+          <input class="border_none" type="text" name="data.aproaches.a1" value="{{data.data.aproaches.a1}}"/>
         </div>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.a1" value="{{data.aproaches.a1}}"/>
+          <input class="border_none" type="text" name="data.aproaches.a2" value="{{data.data.aproaches.a2}}" />
         </div>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.a2" value="{{data.aproaches.a2}}" />
+          <input class="border_none" type="text" name="data.aproaches.a3" value="{{data.data.aproaches.a3}}" />
         </div>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.a3" value="{{data.aproaches.a3}}" />
+          <input class="border_none" type="text" name="data.aproaches.a4" value="{{data.data.aproaches.a4}}" />
         </div>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.a4" value="{{data.aproaches.a4}}" />
+          <input class="border_none" type="text" name="data.aproaches.a5" value="{{data.data.aproaches.a5}}"/>
         </div>
         <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.a5" value="{{data.aproaches.a5}}"/>
-        </div>
-        <div class="resource-content flexrow flex-center flex-between">
-          <input class="border_none" type="text" name="data.aproaches.a6" value="{{data.aproaches.a6}}" />
+          <input class="border_none" type="text" name="data.aproaches.a6" value="{{data.data.aproaches.a6}}" />
         </div>
 
 
       </div>
 
       <div class="resource flex-group-center">
-        <label class="resource-label">Core Flaw</label><br>
-        <div class="resource flex-group-center"><label class="rules-label">Once per session, use to wriggle into or out of trouble, or <strong>succumb</strong> for +3xp</label></div>
+        <label class="resource-label">Core Flaw</label>
+        <br>
+        <div class="resource flex-group-center no-border"><label class="rules-label">Once per session, use to wriggle into or out of trouble, or <strong>succumb</strong> for +3xp</label></div>
         
         <div class="resource-content flexrow flex-center flex-between">
-          <!-- <input type="text" name="data.aproaches.coreflaw" value="{{data.aproaches.coreflaw}}" data-dtype="Text"/> -->
-          <textarea class="border_none" name="data.aproaches.coreflaw" rows="6">{{data.aproaches.coreflaw}}</textarea>
+          <!-- <input type="text" name="data.aproaches.coreflaw" value="{{data.data.aproaches.coreflaw}}" data-dtype="Text"/> -->
+          <textarea class="border_none" name="data.aproaches.coreflaw" rows="6">{{data.data.aproaches.coreflaw}}</textarea>
         </div>
-        <div class="resource flex-group-center "><label class="resource-label">Lineage</label></div>
-        <div class="resource-content flexrow flex-center flex-between">
+        <div class="resource flex-group-center no-border"><label class="resource-label">Lineage</label></div>
           <ol class="items-list">
-          {{#each actor.lineage as |item id|}}
+          {{#each data.lineage as |item id|}}
               <li class="item flexrow" data-item-id="{{item._id}}">
+                  <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                   <h4 class="item-name">{{item.name}}</h4>
                   <div class="item-controls">
                       <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -116,23 +124,14 @@
               </li>
           {{/each}}
           </ol>
-        </div>
 
 
-        <div class="resource flex-group-center "><label class="resource-label">Equipment</label></div>
-        <div class="resource flex-group-center">
-          <label class="rules-label">-1 speed for each loaded-down limb and point of armor; at -7, you are immobilized</label>
-        </div>
-        <div class="resource-content flexrow flex-center flex-between">
+
+        <label class="resource-label">Equipment</label>
+        <label class="rules-label">-1 speed for each loaded-down limb and point of armor; at -7, you are immobilized</label>
           <ol class="items-list">
-            <li class="item flexrow item-header">
-              <div class="item-image"></div>
-              <div class="item-name"></div>
-              <div class="item-controls">
-                <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
-              </div>
-            </li>
-          {{#each actor.gear as |item id|}}
+
+          {{#each data.gear as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
               <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
               <h4 class="item-name">{{item.name}}</h4>
@@ -142,20 +141,19 @@
               </div>
             </li>
           {{/each}}
+          <li class="item flexrow item-header">
+            <div class="item-image"></div>
+            <div class="item-name"></div>
+            <div class="item-controls">
+              <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
+            </div>
+          </li>
           </ol>
-        </div>
 
-        <div class="resource flex-group-center "><label class="resource-label">Techniques</label></div>
-        <div class="resource-content flexrow flex-center flex-between">
+        <label class="resource-label">Techniques</label>
           <ol class="items-list">
-            <li class="item flexrow item-header">
-              <div class="item-image"></div>
-              <div class="item-name"></div>
-              <div class="item-controls">
-                <a class="item-control item-create" title="Create item" data-type="technique"><i class="fas fa-plus"></i> Add</a>
-              </div>
-            </li>
-        {{#each actor.techniques as |item id|}}
+
+        {{#each data.techniques as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
                 <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
                 <h4 class="item-name">{{item.name}}</h4>
@@ -165,22 +163,21 @@
                 </div>
             </li>
         {{/each}}
+        <li class="item flexrow item-header">
+          <div class="item-image"></div>
+          <div class="item-name"></div>
+          <div class="item-controls">
+            <a class="item-control item-create" title="Create item" data-type="technique"><i class="fas fa-plus"></i> Add</a>
+          </div>
+        </li>
         </ol>
-        </div>
 
-        <div class="resource flex-group-center "><label class="resource-label">Injuries</label></div>
-        <div class="resource-content flexrow flex-center flex-between">
+        <label class="resource-label">Injuries</label>
           <ol class="items-list">
-            <li class="item flexrow item-header">
-              <div class="item-image"></div>
-              <div class="item-name"></div>
-              <div class="item-controls">
-                <a class="item-control item-create" title="Create item" data-type="injury"><i class="fas fa-plus"></i> Add</a>
-              </div>
-            </li>
-        {{#each actor.injury as |item id|}}
+
+        {{#each data.injury as |item id|}}
             <li class="item flexrow" data-item-id="{{item._id}}">
-                <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
+                <div class="item-image"><img src="systems/vagabonds/assets/cut-palm.svg" title="{{item.name}}" width="24" height="24"/></div>
                 <h4 class="item-name">{{item.name}}</h4>
                 <div class="item-controls">
                     <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
@@ -188,8 +185,15 @@
                 </div>
             </li>
         {{/each}}
+        <li class="item flexrow item-header">
+          <div class="item-image"></div>
+          <div class="item-name"></div>
+          <div class="item-controls">
+            <a class="item-control item-create" title="Create item" data-type="injury"><i class="fas fa-plus"></i> Add</a>
+          </div>
+        </li>
         </ol>
-        </div>
+      
 
       </div>
 

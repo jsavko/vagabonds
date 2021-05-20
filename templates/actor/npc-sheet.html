@@ -6,28 +6,28 @@
           <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
           <div class="resources grid grid-4col">
 
-            <div class="resource flex-group-center">
+            <div class="resource flex-group-center border_none">
                 <label for="data.health.value" class="resource-label">HP</label>
                 <div class="resource-content flexrow flex-center flex-between">
-                  <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
+                  <input type="text" name="data.health.value" value="{{data.data.health.value}}" data-dtype="Number"/>
                 </div>
             </div>
-            <div class="resource flex-group-center">
+            <div class="resource flex-group-center border_none">
                 <label for="data.power.value" class="resource-label">Speed</label>
                 <div class="resource-content flexrow flex-center flex-between">
-                  <input type="text" name="data.speed.value" value="{{data.speed.value}}" data-dtype="Number"/>
+                  <input type="text" name="data.speed.value" value="{{data.data.speed.value}}" data-dtype="Number"/>
                   </div>
             </div>
-            <div class="resource flex-group-center">
+            <div class="resource flex-group-center border_none">
               <label for="data.power.value" class="resource-label">Damage</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.damage.value" value="{{data.damage.value}}" data-dtype="Number"/>
+                <input type="text" name="data.damage.value" value="{{data.data.damage.value}}" data-dtype="Number"/>
                 </div>
           </div>
-            <div class="resource flex-group-center">
+            <div class="resource flex-group-center border_none">
               <label for="data.power.value" class="resource-label">Armor</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
+                <input type="text" name="data.armor.value" value="{{data.data.armor.value}}" data-dtype="Number"/>
                 </div>
           </div>
         </div>
@@ -36,14 +36,14 @@
   </header>
 
   <section class="sheet-body">
-    <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.description" value="{{data.description}}"/></div>
+    <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.description" value="{{data.data.description}}"/></div>
     <div class="resources grid grid-4col">
       <div class="resources-content flexrow flex-left flex-between grid-1col"><label>Trait Tags </label></div>
-      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.traits" value="{{data.traits}}"/></div>
+      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.traits" value="{{data.data.traits}}"/></div>
     </div>
     <div class="resources grid grid-4col">
       <div class="resources-content flexrow flex-left flex-between grid-1col"><label>Combat Notes</label> </div>
-      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.combat_notes" value="{{data.combat_notes}}"/></div>
+      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.combat_notes" value="{{data.data.combat_notes}}"/></div>
     </div>
 
     <ol class="items-list">
