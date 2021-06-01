@@ -10,7 +10,7 @@
           "max": 8
         },
         "speed": {
-          "value": 0,
+          "value": 3,
           "min": -10,
           "max": 15
         },
@@ -29,7 +29,7 @@
           "value": 1
         },
         "xp": {
-          "value": 0,
+          "value": 1,
           "min": 0,
           "max": 100
         }

@@ -28,7 +28,6 @@
       // Prepare items.
     if (this.actor.data.type == 'character') {
       this._prepareCharacterItems(data);
-
     }
 
     return data;
@@ -47,7 +46,7 @@
 
   // Iterate through items, allocating to containers
   // let totalWeight = 0;
-  for (let i of sheetData.items.reverse()) {
+  for (let i of sheetData.items) {
     let item = i;
     i.img = i.img || DEFAULT_TOKEN;
     // Append to gear.
@@ -88,20 +87,23 @@
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      //const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
 
     html.find('.item-name').dblclick(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      //const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
     
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(li.data("itemId"));
+     // this.actor.deleteOwnedItem(li.data("itemId"));
+      this.actor.deleteEmbeddedDocuments("Item", [li.data("itemId")])
       li.slideUp(200, () => this.render(false));
     });
 
@@ -116,7 +118,7 @@
    * @param {Event} event   The originating click event
    * @private
    */
-  _onItemCreate(event) {
+   async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
@@ -135,7 +137,9 @@
     delete itemData.data["type"];
 
     // Finally, create the item!
-    return this.actor.createOwnedItem(itemData);
+    //return this.actor.createOwnedItem(itemData);
+    await this.actor.createEmbeddedDocuments('Item', [itemData], {});
+
   }
 
   /**
@@ -158,36 +162,8 @@
     }
 
     if (dataset.defend) {
-      let roll = new Roll(dataset.defend, this.actor);
-      let label = dataset.label ? `Defending ${dataset.label}` : '';
-      roll.evaluate({async: true}).then(
-        function(result)  {
-          var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
-          if (result.terms[0].results[0].result > result.terms[0].results[1].result) {
-            RollResult.high = result.terms[0].results[0].result;
-            RollResult.low = result.terms[0].results[1].result;
-          } else {
-            RollResult.low = result.terms[0].results[0].result;
-            RollResult.high = result.terms[0].results[1].result;
-          }
-
-          if (result._total < 7) {
-            RollResult.outcome = "Failure";
-            RollResult.damage =  (RollResult.high - result.data.data.data.armor.value);
-          } else if (result._total < 10) {
-            RollResult.outcome = "Partial Success";
-            RollResult.damage = (RollResult.low - result.data.data.data.armor.value)
-          } 
-
-          let template = 'systems/vagabonds/templates/chat/rolls.html';
-          var RollTemplate = renderTemplate(template, RollResult).then(content => {
-            result.toMessage({
-              speaker: ChatMessage.getSpeaker({actor: result.data}),
-              flavor: content,
-            });
-          });
-        }
-      );
+      game.vagabonds.RollHelper.displayRollModal(true);
+  
 
       
     }

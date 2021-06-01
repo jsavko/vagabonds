@@ -2,7 +2,9 @@
 
 
 export class RollHelper {
-    static async displayRollModal() {
+    static async displayRollModal(defend) {
+        defend = (typeof defend !== 'undefined') ?  defend : "";
+        if (defend == true) { defend = "checked";}
         let confirmed = false;
         // Add modifier for a d20 roll
         new Dialog({
@@ -23,7 +25,7 @@ export class RollHelper {
             </div>
                 <div class="form-group">
                 <label>Defence Roll?</label>
-                <input type="checkbox" id="rolltype-defense" name="rolltype-defense" value="1"> Yes
+                <input type="checkbox" ` + defend + ` id="rolltype-defense" name="rolltype-defense" value="1"> Yes
             </div>
             </form>
             `,

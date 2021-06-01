@@ -10,7 +10,8 @@ Hooks.once('init', async function() {
 
   game.vagabonds = {
     VagabondsActor,
-    VagabondsItem
+    VagabondsItem,
+    RollHelper
   };
 
   /**
