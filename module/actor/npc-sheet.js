@@ -17,36 +17,11 @@ export class VagabondsNPCSheet extends ActorSheet {
 
   /* -------------------------------------------- */
 
-  /** @override */
   getData() {
-    const data = super.getData();
-    data.dtypes = ["String", "Number", "Boolean"];
-    for (let attr of Object.values(data.data.data.attributes)) {
-      attr.isCheckbox = attr.dtype === "Boolean";
-    }
-
-      // Prepare items.
-  if (this.actor.data.type == 'character') {
-    this._prepareCharacterItems(data);
-  }
+    const data = super.getData(); 
 
     return data;
   }
-
-
-  _prepareCharacterItems(sheetData) {
-    const actorData = sheetData.actor;
-
-    // Initialize containers.
-
-  // Iterate through items, allocating to containers
-  // let totalWeight = 0;
-  for (let i of sheetData.items) {
-    let item = i.data;
-    i.img = i.img || DEFAULT_TOKEN;
-    // Append to gear.
-  }
-}
 
 
   /** @override */
@@ -62,21 +37,31 @@ export class VagabondsNPCSheet extends ActorSheet {
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.getOwnedItem(li.data("itemId"));
+      //const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
+      item.sheet.render(true);
+    });
+
+    html.find('.item-name').dblclick(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      //const item = this.actor.getOwnedItem(li.data("itemId"));
+      const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
     
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-      this.actor.deleteOwnedItem(li.data("itemId"));
+     // this.actor.deleteOwnedItem(li.data("itemId"));
+      this.actor.deleteEmbeddedDocuments("Item", [li.data("itemId")])
       li.slideUp(200, () => this.render(false));
     });
 
-    // Rollable abilities.
-    html.find('.rollable').click(this._onRoll.bind(this));
   }
 
+
+
+  
   /* -------------------------------------------- */
 
   /**
@@ -84,7 +69,7 @@ export class VagabondsNPCSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onItemCreate(event) {
+   async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
@@ -103,27 +88,9 @@ export class VagabondsNPCSheet extends ActorSheet {
     delete itemData.data["type"];
 
     // Finally, create the item!
-    return this.actor.createOwnedItem(itemData);
-  }
+    //return this.actor.createOwnedItem(itemData);
+    await this.actor.createEmbeddedDocuments('Item', [itemData], {});
 
-  /**
-   * Handle clickable rolls.
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onRoll(event) {
-    event.preventDefault();
-    const element = event.currentTarget;
-    const dataset = element.dataset;
-
-    if (dataset.roll) {
-      let roll = new Roll(dataset.roll, this.actor.data.data);
-      let label = dataset.label ? `Rolling ${dataset.label}` : '';
-      roll.roll().toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label
-      });
-    }
   }
 
 }

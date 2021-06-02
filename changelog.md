@@ -1,4 +1,6 @@
 # Vagabonds of Dyfed Foundry VTT System
+0.2.4
+* Fixed an issue preventing npc sheets from loading.
 
 0.2.3
 * All New Items, Techniques, and Injuries always append to the bottom of the page. (May appear on top of old items at first)
