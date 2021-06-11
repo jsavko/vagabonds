@@ -19,7 +19,6 @@ export class VagabondsNPCSheet extends ActorSheet {
 
   getData() {
     const data = super.getData(); 
-
     return data;
   }
 
@@ -59,8 +58,6 @@ export class VagabondsNPCSheet extends ActorSheet {
 
   }
 
-
-
   
   /* -------------------------------------------- */
 
@@ -69,7 +66,7 @@ export class VagabondsNPCSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-   async _onItemCreate(event) {
+  async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
