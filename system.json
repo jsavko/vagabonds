@@ -7,7 +7,7 @@
   "compatibleCoreVersion": "0.8.6",
   "templateVersion": 2,
   "author": "LostPhoenix",
-  "esmodules": ["module/vagabonds.js"],
+  "esmodules": ["dist/vagabonds.js"],
   "styles": ["css/vagabonds.css"],
   "scripts": [],
   "packs": [

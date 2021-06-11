@@ -2,14 +2,20 @@
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
+ import VagabondsActorSheetBase  from "../svelte/VagabondsActorSheetBase.svelte"; // import Svelte App
+ import { writable } from "svelte/store";
 
  export class VagabondsActorSheet extends ActorSheet {
+
+
+  app = null;
+  dataStore = null;
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["vagabonds", "sheet", "actor"],
-      template: "systems/vagabonds/templates/actor/actor-sheet.html",
+      template: "systems/vagabonds/templates/actor/actor-sheetv2.html",
       width: 640,
       height: 700,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
@@ -171,31 +177,53 @@
     }
   }
 
-  render(force=false, options={}) {
-    // Grab the sheetdata for both updates and new apps.
-    let sheetData = this.getData();
-    // Exit if Vue has already rendered.
-
-    // Run the normal Foundry render once.
+render(force=false, options={}) {
+  // Grab the sheetdata for both updates and new apps.
+  let sheetData = this.getData();
+  // Exit if Vue has already rendered.
+  if (this.app !== null) {
+    this.dataStore?.set(sheetData);
+    return this;
+  } else {
     this._render(force, options).catch(err => {
       err.message = `An error occurred while rendering ${this.constructor.name} ${this.appId}: ${err.message}`;
-	    console.error(err);
-	    this._state = Application.RENDER_STATES.ERROR;
+      console.error(err);
+      this._state = Application.RENDER_STATES.ERROR;
     })
     // Run Vue's render, assign it to our prop for tracking.
     .then(rendered => {
       // Prepare the actor data.
-      
-
+      this.dataStore = writable(sheetData);
+      console.log(sheetData); 
+      this.app = new VagabondsActorSheetBase({
+        target: this.element.find("form").get(0),
+        props: {
+          dataStore: this.dataStore,
+          //name: 'world',
+        },
+      });
     })
-    // Update editable permission
-    options.editable = options.editable ?? this.object.isOwner;
-
-    // Register the active Application with the referenced Documents
-    this.object.apps[this.appId] = this;
-    // Return per the overridden method.
-    return this;
   }
+
+  // Run the normal Foundry render once.
+  // Update editable permission
+  options.editable = options.editable ?? this.object.isOwner;
+
+  // Register the active Application with the referenced Documents
+  this.object.apps[this.appId] = this;
+  // Return per the overridden method.
+  return this;
+}
+
+close (options={}){
+  if (this.app != null) {
+    this.app.$destroy();
+    this.app = null;
+    this.dataStore = null;
+  }
+  return super.close(options);
+}
+
 
 
 
