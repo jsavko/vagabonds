@@ -3,21 +3,24 @@
 	import { getContext } from "svelte";
 	import { slide } from "svelte/transition";
 	import { writable } from "svelte/store";
-import { Item } from "svelte-layouts";
 
 
-	export let dataStore;
 	//getContext("sheetStore", dataStore);	
-	let sheetData = getContext("sheetStore",dataStore);
+	let sheetData = getContext("sheetStore");
 	let { actor, data, actorData, sheet } = $sheetData;
+	
+	//let gear = $sheetData.data.gear;
+	let gear;
+	$: gear = $sheetData.data.gear
 
+ 
 	const sheetSub = sheetData.subscribe((v) => (sheet = v.sheet));
 </script>
 
-<lineage>
+<gear>
 	<label class="resource-label">Gear</label>
 	<ol class="items-list">
-		{#each data.gear as item}
+		{#each gear as item}
 		<li class="item flexrow" data-item-id="{item._id}">
 			<div class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
 			<h4 class="item-name">{item.name}</h4>
@@ -35,7 +38,7 @@ import { Item } from "svelte-layouts";
             </div>
           </li>
 	</ol>
-</lineage>
+</gear>
 
 <style>
 

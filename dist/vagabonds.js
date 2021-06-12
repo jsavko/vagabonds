@@ -2,50 +2,29 @@ var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[Object.keys(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
 
-// fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Col.esbuild-svelte-fake-css
-var require_ = __commonJS({
-  "fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Col.esbuild-svelte-fake-css"(exports, module) {
-    module.exports = {};
-  }
-});
-
-// fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Row.esbuild-svelte-fake-css
-var require_2 = __commonJS({
-  "fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Row.esbuild-svelte-fake-css"(exports, module) {
-    module.exports = {};
-  }
-});
-
-// fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Grid.esbuild-svelte-fake-css
-var require_3 = __commonJS({
-  "fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Grid.esbuild-svelte-fake-css"(exports, module) {
-    module.exports = {};
-  }
-});
-
 // fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetHeader.esbuild-svelte-fake-css
-var require_4 = __commonJS({
+var require_ = __commonJS({
   "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetHeader.esbuild-svelte-fake-css"(exports, module) {
     module.exports = {};
   }
 });
 
 // fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyLeft.esbuild-svelte-fake-css
-var require_5 = __commonJS({
+var require_2 = __commonJS({
   "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyLeft.esbuild-svelte-fake-css"(exports, module) {
     module.exports = {};
   }
 });
 
 // fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyRight.esbuild-svelte-fake-css
-var require_6 = __commonJS({
+var require_3 = __commonJS({
   "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyRight.esbuild-svelte-fake-css"(exports, module) {
     module.exports = {};
   }
 });
 
 // fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBase.esbuild-svelte-fake-css
-var require_7 = __commonJS({
+var require_4 = __commonJS({
   "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBase.esbuild-svelte-fake-css"(exports, module) {
     module.exports = {};
   }
@@ -164,6 +143,11 @@ function attr(node, attribute, value) {
 }
 function children(element2) {
   return Array.from(element2.childNodes);
+}
+function set_data(text2, data) {
+  data = "" + data;
+  if (text2.wholeText !== data)
+    text2.data = data;
 }
 function custom_event(type, detail) {
   const e = document.createEvent("CustomEvent");
@@ -406,7 +390,7 @@ function create_bidirectional_transition(node, fn, params, intro) {
     };
   }
   function go(b) {
-    const { delay = 0, duration = 300, easing = identity, tick: tick2 = noop, css: css2 } = config || null_transition;
+    const { delay = 0, duration = 300, easing = identity, tick: tick2 = noop, css } = config || null_transition;
     const program = {
       start: now() + delay,
       b
@@ -418,9 +402,9 @@ function create_bidirectional_transition(node, fn, params, intro) {
     if (running_program || pending_program) {
       pending_program = program;
     } else {
-      if (css2) {
+      if (css) {
         clear_animation();
-        animation_name = create_rule(node, t, b, duration, delay, easing, css2);
+        animation_name = create_rule(node, t, b, duration, delay, easing, css);
       }
       if (b)
         tick2(0, 1);
@@ -431,7 +415,7 @@ function create_bidirectional_transition(node, fn, params, intro) {
           running_program = init2(pending_program, duration);
           pending_program = null;
           dispatch(node, running_program.b, "start");
-          if (css2) {
+          if (css) {
             clear_animation();
             animation_name = create_rule(node, t, running_program.b, running_program.duration, 0, easing, config.css);
           }
@@ -727,15 +711,6 @@ function writable(value, start = noop) {
   return { set, update: update2, subscribe: subscribe2 };
 }
 
-// node_modules/svelte-layouts/src/Col.svelte
-require_();
-
-// node_modules/svelte-layouts/src/Row.svelte
-require_2();
-
-// node_modules/svelte-layouts/src/Grid.svelte
-require_3();
-
 // module/svelte/VagabondsActorSheetHeader.svelte
 function create_fragment(ctx) {
   let actorhead;
@@ -823,7 +798,7 @@ function create_fragment(ctx) {
       t17 = space();
       label4 = element("label");
       label4.textContent = "Exp";
-      attr(img, "class", "profile-img svelte-n9myf3");
+      attr(img, "class", "profile-img svelte-1e1arv");
       if (img.src !== (img_src_value = ctx[1].img))
         attr(img, "src", img_src_value);
       attr(img, "data-edit", "img");
@@ -834,47 +809,47 @@ function create_fragment(ctx) {
       attr(input0, "type", "text");
       input0.value = input0_value_value = ctx[1].name;
       attr(input0, "placeholder", "Name");
-      attr(input0, "class", "svelte-n9myf3");
-      attr(div0, "class", "namebox svelte-n9myf3");
+      attr(input0, "class", "svelte-1e1arv");
+      attr(div0, "class", "namebox svelte-1e1arv");
       attr(input1, "type", "text");
       attr(input1, "name", "data.attributes.level.value");
       input1.value = input1_value_value = ctx[1].data.attributes.level.value;
       attr(input1, "data-dtype", "Number");
-      attr(input1, "class", "svelte-n9myf3");
-      attr(div1, "class", "item1 svelte-n9myf3");
+      attr(input1, "class", "svelte-1e1arv");
+      attr(div1, "class", "item1 svelte-1e1arv");
       attr(input2, "type", "text");
       attr(input2, "name", "data.health.value");
       input2.value = input2_value_value = ctx[1].data.health.value;
       attr(input2, "data-dtype", "Number");
-      attr(input2, "class", "svelte-n9myf3");
+      attr(input2, "class", "svelte-1e1arv");
       attr(input3, "type", "text");
       attr(input3, "name", "data.health.max");
       input3.value = input3_value_value = ctx[1].data.health.max;
       attr(input3, "data-dtype", "Number");
-      attr(input3, "class", "svelte-n9myf3");
-      attr(div2, "class", "item2 svelte-n9myf3");
+      attr(input3, "class", "svelte-1e1arv");
+      attr(div2, "class", "item2 svelte-1e1arv");
       attr(input4, "type", "text");
       attr(input4, "name", "data.speed.value");
       input4.value = input4_value_value = ctx[1].data.speed.value;
       attr(input4, "data-dtype", "Number");
-      attr(input4, "class", "svelte-n9myf3");
-      attr(div3, "class", "item3 svelte-n9myf3");
+      attr(input4, "class", "svelte-1e1arv");
+      attr(div3, "class", "item3 svelte-1e1arv");
       attr(input5, "type", "text");
       attr(input5, "name", "data.armor.value");
       input5.value = input5_value_value = ctx[1].data.armor.value;
       attr(input5, "data-dtype", "Number");
-      attr(input5, "class", "svelte-n9myf3");
+      attr(input5, "class", "svelte-1e1arv");
       attr(label3, "for", "data.data.armor.value");
       attr(label3, "class", "resource-label rollable");
       attr(label3, "data-defend", "2d6");
-      attr(div4, "class", "item4 svelte-n9myf3");
+      attr(div4, "class", "item4 svelte-1e1arv");
       attr(input6, "type", "text");
       attr(input6, "name", "data.data.attributes.exp.value");
       input6.value = input6_value_value = ctx[1].data.attributes.exp.value;
       attr(input6, "data-dtype", "Number");
-      attr(input6, "class", "svelte-n9myf3");
-      attr(div5, "class", "item5 svelte-n9myf3");
-      attr(actorhead, "class", "svelte-n9myf3");
+      attr(input6, "class", "svelte-1e1arv");
+      attr(div5, "class", "item5 svelte-1e1arv");
+      attr(actorhead, "class", "svelte-1e1arv");
     },
     m(target, anchor) {
       insert(target, actorhead, anchor);
@@ -923,24 +898,20 @@ function create_fragment(ctx) {
 }
 function instance($$self, $$props, $$invalidate) {
   let $sheetData;
-  let { dataStore } = $$props;
-  let sheetData = getContext("sheetStore", dataStore);
-  component_subscribe($$self, sheetData, (value) => $$invalidate(3, $sheetData = value));
-  let { actor, data, actorData, sheet } = $sheetData;
-  $$self.$$set = ($$props2) => {
-    if ("dataStore" in $$props2)
-      $$invalidate(2, dataStore = $$props2.dataStore);
-  };
-  return [sheetData, data, dataStore];
+  let sheetData = getContext("sheetStore");
+  component_subscribe($$self, sheetData, (value) => $$invalidate(2, $sheetData = value));
+  let { actor, actorData, sheet } = $sheetData;
+  let data = $sheetData.data;
+  return [sheetData, data];
 }
 var VagabondsActorSheetHeader = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance, create_fragment, safe_not_equal, { dataStore: 2 });
+    init(this, options, instance, create_fragment, safe_not_equal, {});
   }
 };
 var VagabondsActorSheetHeader_default = VagabondsActorSheetHeader;
-require_4();
+require_();
 
 // module/svelte/VagabondsActorSheetBodyLeft.svelte
 function create_fragment2(ctx) {
@@ -1161,29 +1132,24 @@ function create_fragment2(ctx) {
 }
 function instance2($$self, $$props, $$invalidate) {
   let $sheetData;
-  let { dataStore } = $$props;
-  let sheetData = getContext("sheetStore", dataStore);
-  component_subscribe($$self, sheetData, (value) => $$invalidate(3, $sheetData = value));
+  let sheetData = getContext("sheetStore");
+  component_subscribe($$self, sheetData, (value) => $$invalidate(2, $sheetData = value));
   let { actor, data, actorData, sheet } = $sheetData;
-  $$self.$$set = ($$props2) => {
-    if ("dataStore" in $$props2)
-      $$invalidate(2, dataStore = $$props2.dataStore);
-  };
-  return [sheetData, data, dataStore];
+  return [sheetData, data];
 }
 var VagabondsActorSheetBodyLeft = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance2, create_fragment2, safe_not_equal, { dataStore: 2 });
+    init(this, options, instance2, create_fragment2, safe_not_equal, {});
   }
 };
 var VagabondsActorSheetBodyLeft_default = VagabondsActorSheetBodyLeft;
-require_5();
+require_2();
 
 // module/svelte/VagabondsLinage.svelte
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[7] = list[i];
+  child_ctx[6] = list[i];
   return child_ctx;
 }
 function create_each_block(ctx) {
@@ -1194,7 +1160,7 @@ function create_each_block(ctx) {
   let img_title_value;
   let t0;
   let h4;
-  let t1_value = ctx[7].name + "";
+  let t1_value = ctx[6].name + "";
   let t1;
   let t2;
   let div1;
@@ -1213,16 +1179,16 @@ function create_each_block(ctx) {
       div1.innerHTML = `<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a> 
 				<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>`;
       t4 = space();
-      if (img.src !== (img_src_value = ctx[7].img))
+      if (img.src !== (img_src_value = ctx[6].img))
         attr(img, "src", img_src_value);
-      attr(img, "title", img_title_value = ctx[7].name);
+      attr(img, "title", img_title_value = ctx[6].name);
       attr(img, "width", "24");
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
       attr(h4, "class", "item-name");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
-      attr(li, "data-item-id", li_data_item_id_value = ctx[7]._id);
+      attr(li, "data-item-id", li_data_item_id_value = ctx[6]._id);
     },
     m(target, anchor) {
       insert(target, li, anchor);
@@ -1305,20 +1271,15 @@ function create_fragment3(ctx) {
 }
 function instance3($$self, $$props, $$invalidate) {
   let $sheetData;
-  let { dataStore } = $$props;
-  let sheetData = getContext("sheetStore", dataStore);
-  component_subscribe($$self, sheetData, (value) => $$invalidate(3, $sheetData = value));
+  let sheetData = getContext("sheetStore");
+  component_subscribe($$self, sheetData, (value) => $$invalidate(2, $sheetData = value));
   let { actor, data, actorData, sheet } = $sheetData;
-  $$self.$$set = ($$props2) => {
-    if ("dataStore" in $$props2)
-      $$invalidate(2, dataStore = $$props2.dataStore);
-  };
-  return [sheetData, data, dataStore];
+  return [sheetData, data];
 }
 var VagabondsLinage = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance3, create_fragment3, safe_not_equal, { dataStore: 2 });
+    init(this, options, instance3, create_fragment3, safe_not_equal, {});
   }
 };
 var VagabondsLinage_default = VagabondsLinage;
@@ -1410,6 +1371,20 @@ function create_each_block2(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
+      if (dirty & 2 && img.src !== (img_src_value = ctx[8].img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (dirty & 2 && img_title_value !== (img_title_value = ctx[8].name)) {
+        attr(img, "title", img_title_value);
+      }
+      if (dirty & 2 && t1_value !== (t1_value = ctx[8].name + ""))
+        set_data(t1, t1_value);
+      if (dirty & 2 && a0_data_item_id_value !== (a0_data_item_id_value = ctx[8]._id)) {
+        attr(a0, "data-item-id", a0_data_item_id_value);
+      }
+      if (dirty & 2 && li_data_item_id_value !== (li_data_item_id_value = ctx[8]._id)) {
+        attr(li, "data-item-id", li_data_item_id_value);
+      }
     },
     d(detaching) {
       if (detaching)
@@ -1420,7 +1395,7 @@ function create_each_block2(ctx) {
   };
 }
 function create_fragment4(ctx) {
-  let lineage;
+  let gear_1;
   let label;
   let t1;
   let ol;
@@ -1434,14 +1409,14 @@ function create_fragment4(ctx) {
   let a;
   let mounted;
   let dispose;
-  let each_value = ctx[2].gear;
+  let each_value = ctx[1];
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
     each_blocks[i] = create_each_block2(get_each_context2(ctx, each_value, i));
   }
   return {
     c() {
-      lineage = element("lineage");
+      gear_1 = element("gear");
       label = element("label");
       label.textContent = "Gear";
       t1 = space();
@@ -1469,10 +1444,10 @@ function create_fragment4(ctx) {
       attr(ol, "class", "items-list");
     },
     m(target, anchor) {
-      insert(target, lineage, anchor);
-      append(lineage, label);
-      append(lineage, t1);
-      append(lineage, ol);
+      insert(target, gear_1, anchor);
+      append(gear_1, label);
+      append(gear_1, t1);
+      append(gear_1, ol);
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].m(ol, null);
       }
@@ -1494,8 +1469,8 @@ function create_fragment4(ctx) {
     },
     p(new_ctx, [dirty]) {
       ctx = new_ctx;
-      if (dirty & 5) {
-        each_value = ctx[2].gear;
+      if (dirty & 3) {
+        each_value = ctx[1];
         let i;
         for (i = 0; i < each_value.length; i += 1) {
           const child_ctx = get_each_context2(ctx, each_value, i);
@@ -1517,7 +1492,7 @@ function create_fragment4(ctx) {
     o: noop,
     d(detaching) {
       if (detaching)
-        detach(lineage);
+        detach(gear_1);
       destroy_each(each_blocks, detaching);
       mounted = false;
       dispose();
@@ -1526,21 +1501,23 @@ function create_fragment4(ctx) {
 }
 function instance4($$self, $$props, $$invalidate) {
   let $sheetData;
-  let { dataStore } = $$props;
-  let sheetData = getContext("sheetStore", dataStore);
-  component_subscribe($$self, sheetData, (value) => $$invalidate(4, $sheetData = value));
+  let sheetData = getContext("sheetStore");
+  component_subscribe($$self, sheetData, (value) => $$invalidate(3, $sheetData = value));
   let { actor, data, actorData, sheet } = $sheetData;
+  let gear;
   const sheetSub = sheetData.subscribe((v) => $$invalidate(0, sheet = v.sheet));
-  $$self.$$set = ($$props2) => {
-    if ("dataStore" in $$props2)
-      $$invalidate(3, dataStore = $$props2.dataStore);
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & 8) {
+      $:
+        $$invalidate(1, gear = $sheetData.data.gear);
+    }
   };
-  return [sheet, sheetData, data, dataStore];
+  return [sheet, gear, sheetData, $sheetData];
 }
 var VagabondsGear = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance4, create_fragment4, safe_not_equal, { dataStore: 3 });
+    init(this, options, instance4, create_fragment4, safe_not_equal, {});
   }
 };
 var VagabondsGear_default = VagabondsGear;
@@ -1570,7 +1547,10 @@ function create_if_block(ctx) {
       append(div, t);
       current = true;
     },
-    p: noop,
+    p(ctx2, dirty) {
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[12].data.description + ""))
+        html_tag.p(raw_value);
+    },
     i(local) {
       if (current)
         return;
@@ -1619,7 +1599,7 @@ function create_each_block3(ctx) {
   function click_handler_1() {
     return ctx[6](ctx[12]);
   }
-  let if_block = ctx[0][ctx[12]._id] && create_if_block(ctx);
+  let if_block = ctx[1][ctx[12]._id] && create_if_block(ctx);
   return {
     c() {
       li = element("li");
@@ -1671,10 +1651,21 @@ function create_each_block3(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (ctx[0][ctx[12]._id]) {
+      if (!current || dirty & 1 && img.src !== (img_src_value = ctx[12].img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[12].name)) {
+        attr(img, "title", img_title_value);
+      }
+      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[12].name + ""))
+        set_data(t1, t1_value);
+      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = ctx[12]._id)) {
+        attr(li, "data-item-id", li_data_item_id_value);
+      }
+      if (ctx[1][ctx[12]._id]) {
         if (if_block) {
           if_block.p(ctx, dirty);
-          if (dirty & 1) {
+          if (dirty & 3) {
             transition_in(if_block, 1);
           }
         } else {
@@ -1721,7 +1712,7 @@ function create_fragment5(ctx) {
   let t1;
   let ol;
   let current;
-  let each_value = ctx[2].techniques;
+  let each_value = ctx[0];
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
     each_blocks[i] = create_each_block3(get_each_context3(ctx, each_value, i));
@@ -1753,8 +1744,8 @@ function create_fragment5(ctx) {
       current = true;
     },
     p(ctx2, [dirty]) {
-      if (dirty & 13) {
-        each_value = ctx2[2].techniques;
+      if (dirty & 11) {
+        each_value = ctx2[0];
         let i;
         for (i = 0; i < each_value.length; i += 1) {
           const child_ctx = get_each_context3(ctx2, each_value, i);
@@ -1799,10 +1790,10 @@ function create_fragment5(ctx) {
 }
 function instance5($$self, $$props, $$invalidate) {
   let $sheetData;
-  let { dataStore } = $$props;
-  let sheetData = getContext("sheetStore", dataStore);
-  component_subscribe($$self, sheetData, (value) => $$invalidate(8, $sheetData = value));
+  let sheetData = getContext("sheetStore");
+  component_subscribe($$self, sheetData, (value) => $$invalidate(4, $sheetData = value));
   let { actor, data, actorData, sheet } = $sheetData;
+  let techniques;
   let showItems = [];
   let hasBeenClicked = false;
   function ToggleItem(Item2) {
@@ -1813,23 +1804,25 @@ function instance5($$self, $$props, $$invalidate) {
       hasBeenClicked = false;
     }, 200);
     if (!showItems[Item2]) {
-      $$invalidate(0, showItems[Item2] = true, showItems);
+      $$invalidate(1, showItems[Item2] = true, showItems);
     } else {
-      $$invalidate(0, showItems[Item2] = false, showItems);
+      $$invalidate(1, showItems[Item2] = false, showItems);
     }
   }
   const click_handler = (item) => ToggleItem(item._id);
   const click_handler_1 = (item) => ToggleItem(item._id);
-  $$self.$$set = ($$props2) => {
-    if ("dataStore" in $$props2)
-      $$invalidate(4, dataStore = $$props2.dataStore);
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & 16) {
+      $:
+        $$invalidate(0, techniques = $sheetData.data.techniques);
+    }
   };
   return [
+    techniques,
     showItems,
     sheetData,
-    data,
     ToggleItem,
-    dataStore,
+    $sheetData,
     click_handler,
     click_handler_1
   ];
@@ -1837,7 +1830,7 @@ function instance5($$self, $$props, $$invalidate) {
 var VagabondsTechnique = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance5, create_fragment5, safe_not_equal, { dataStore: 4 });
+    init(this, options, instance5, create_fragment5, safe_not_equal, {});
   }
 };
 var VagabondsTechnique_default = VagabondsTechnique;
@@ -1897,7 +1890,19 @@ function create_each_block4(ctx) {
       append(li, div1);
       append(li, t4);
     },
-    p: noop,
+    p(ctx2, dirty) {
+      if (dirty & 1 && img.src !== (img_src_value = ctx2[7].img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (dirty & 1 && img_title_value !== (img_title_value = ctx2[7].name)) {
+        attr(img, "title", img_title_value);
+      }
+      if (dirty & 1 && t1_value !== (t1_value = ctx2[7].name + ""))
+        set_data(t1, t1_value);
+      if (dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = "" + (ctx2[7]._id + "}"))) {
+        attr(li, "data-item-id", li_data_item_id_value);
+      }
+    },
     d(detaching) {
       if (detaching)
         detach(li);
@@ -1909,7 +1914,7 @@ function create_fragment6(ctx) {
   let label;
   let t1;
   let ol;
-  let each_value = ctx[1].injury;
+  let each_value = ctx[0];
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
     each_blocks[i] = create_each_block4(get_each_context4(ctx, each_value, i));
@@ -1937,8 +1942,8 @@ function create_fragment6(ctx) {
       }
     },
     p(ctx2, [dirty]) {
-      if (dirty & 2) {
-        each_value = ctx2[1].injury;
+      if (dirty & 1) {
+        each_value = ctx2[0];
         let i;
         for (i = 0; i < each_value.length; i += 1) {
           const child_ctx = get_each_context4(ctx2, each_value, i);
@@ -1967,20 +1972,22 @@ function create_fragment6(ctx) {
 }
 function instance6($$self, $$props, $$invalidate) {
   let $sheetData;
-  let { dataStore } = $$props;
-  let sheetData = getContext("sheetStore", dataStore);
-  component_subscribe($$self, sheetData, (value) => $$invalidate(3, $sheetData = value));
+  let sheetData = getContext("sheetStore");
+  component_subscribe($$self, sheetData, (value) => $$invalidate(2, $sheetData = value));
   let { actor, data, actorData, sheet } = $sheetData;
-  $$self.$$set = ($$props2) => {
-    if ("dataStore" in $$props2)
-      $$invalidate(2, dataStore = $$props2.dataStore);
+  let injury;
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & 4) {
+      $:
+        $$invalidate(0, injury = $sheetData.data.injury);
+    }
   };
-  return [sheetData, data, dataStore];
+  return [injury, sheetData, $sheetData];
 }
 var VagabondsInjury = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance6, create_fragment6, safe_not_equal, { dataStore: 2 });
+    init(this, options, instance6, create_fragment6, safe_not_equal, {});
   }
 };
 var VagabondsInjury_default = VagabondsInjury;
@@ -2079,24 +2086,19 @@ function create_fragment7(ctx) {
 }
 function instance7($$self, $$props, $$invalidate) {
   let $sheetData;
-  let { dataStore } = $$props;
-  let sheetData = getContext("sheetStore", dataStore);
-  component_subscribe($$self, sheetData, (value) => $$invalidate(3, $sheetData = value));
+  let sheetData = getContext("sheetStore");
+  component_subscribe($$self, sheetData, (value) => $$invalidate(2, $sheetData = value));
   let { actor, data, actorData, sheet } = $sheetData;
-  $$self.$$set = ($$props2) => {
-    if ("dataStore" in $$props2)
-      $$invalidate(2, dataStore = $$props2.dataStore);
-  };
-  return [sheetData, data, dataStore];
+  return [sheetData, data];
 }
 var VagabondsActorSheetBodyRight = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance7, create_fragment7, safe_not_equal, { dataStore: 2 });
+    init(this, options, instance7, create_fragment7, safe_not_equal, {});
   }
 };
 var VagabondsActorSheetBodyRight_default = VagabondsActorSheetBodyRight;
-require_6();
+require_3();
 
 // module/svelte/VagabondsActorSheetBase.svelte
 function create_fragment8(ctx) {
@@ -2180,7 +2182,7 @@ var VagabondsActorSheetBase = class extends SvelteComponent {
   }
 };
 var VagabondsActorSheetBase_default = VagabondsActorSheetBase;
-require_7();
+require_4();
 
 // module/actor/actor-sheet.js
 var VagabondsActorSheet = class extends ActorSheet {
@@ -2283,6 +2285,7 @@ var VagabondsActorSheet = class extends ActorSheet {
     };
     delete itemData.data["type"];
     return await Item.create(itemData, { parent: this.actor });
+    this.render();
   }
   async _onItemEdit(itemId) {
     const item = this.actor.items.get(itemId);
@@ -2307,24 +2310,30 @@ var VagabondsActorSheet = class extends ActorSheet {
   render(force = false, options = {}) {
     let sheetData = this.getData();
     if (this.app !== null) {
-      this.dataStore?.set(sheetData);
-      return this;
-    } else {
-      this._render(force, options).catch((err) => {
-        err.message = `An error occurred while rendering ${this.constructor.name} ${this.appId}: ${err.message}`;
-        console.error(err);
-        this._state = Application.RENDER_STATES.ERROR;
-      }).then((rendered) => {
-        this.dataStore = writable(sheetData);
-        console.log(sheetData);
-        this.app = new VagabondsActorSheetBase_default({
-          target: this.element.find("form").get(0),
-          props: {
-            dataStore: this.dataStore
-          }
-        });
-      });
+      let states = Application.RENDER_STATES;
+      if (this._state == states.RENDERING || this._state == states.RENDERED) {
+        this.dataStore?.set(sheetData);
+        console.log("updating datastore");
+        console.log(this.app);
+        return;
+      }
     }
+    this._render(force, options).catch((err) => {
+      err.message = `An error occurred while rendering ${this.constructor.name} ${this.appId}: ${err.message}`;
+      console.error(err);
+      this._state = Application.RENDER_STATES.ERROR;
+    }).then((rendered) => {
+      this.dataStore = writable(sheetData);
+      console.log(this.dataStore);
+      console.log(sheetData);
+      this.app = new VagabondsActorSheetBase_default({
+        target: this.element.find("form").get(0),
+        props: {
+          dataStore: this.dataStore
+        }
+      });
+      console.log(this.app);
+    });
     options.editable = options.editable ?? this.object.isOwner;
     this.object.apps[this.appId] = this;
     return this;

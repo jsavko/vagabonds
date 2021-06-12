@@ -5,9 +5,8 @@
 	import { writable } from "svelte/store";
 
 
-	export let dataStore;
 	//getContext("sheetStore", dataStore);	
-	let sheetData = getContext("sheetStore",dataStore);
+	let sheetData = getContext("sheetStore");
 	let { actor, data, actorData, sheet } = $sheetData;
 </script>
 

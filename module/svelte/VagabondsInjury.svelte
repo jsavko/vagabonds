@@ -5,16 +5,17 @@
 	import { writable } from "svelte/store";
 
 
-	export let dataStore;
 	//getContext("sheetStore", dataStore);	
-	let sheetData = getContext("sheetStore",dataStore);
+	let sheetData = getContext("sheetStore");
 	let { actor, data, actorData, sheet } = $sheetData;
+	let injury;
+	$: injury = $sheetData.data.injury
 </script>
 
 <lineage>
 	<label class="resource-label">Injury</label>
 	<ol class="items-list">
-		{#each data.injury as item}
+		{#each injury as item}
 		<li class="item flexrow" data-item-id="{item._id}}">
 			<div class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
 			<h4 class="item-name">{item.name}</h4>

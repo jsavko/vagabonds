@@ -2,7 +2,6 @@
 	import { getContext } from "svelte";
 	import { slide } from "svelte/transition";
 	import { writable } from "svelte/store";
-	import { Row, Col, Item } from 'svelte-layouts'
 	
 	import VagabondsLinage from "./VagabondsLinage.svelte"; 
 	import VagabondsGear from "./VagabondsGear.svelte"; 
@@ -10,9 +9,9 @@
 	import VagabondsInjury from "./VagabondsInjury.svelte"; 
 
 	
-	export let dataStore;
+	//export let dataStore;
 	//getContext("sheetStore", dataStore);	
-	let sheetData = getContext("sheetStore",dataStore);
+	let sheetData = getContext("sheetStore");
 	let { actor, data, actorData, sheet } = $sheetData;
 </script>
 <main>

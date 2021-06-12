@@ -130,7 +130,6 @@
     const item = this.actor.items.get(itemId);
     item.delete();
     this.render();
-
   }
 
   /* -------------------------------------------- */
@@ -159,6 +158,7 @@
     delete itemData.data["type"];
     // Finally, create the item!
     return await Item.create(itemData, {parent: this.actor});
+    this.render();
   }
 
   async _onItemEdit(itemId) {
@@ -195,30 +195,36 @@ render(force=false, options={}) {
   let sheetData = this.getData();
   // Exit if Vue has already rendered.
   if (this.app !== null) {
-    this.dataStore?.set(sheetData);
-    return this;
-  } else {
-    this._render(force, options).catch(err => {
-      err.message = `An error occurred while rendering ${this.constructor.name} ${this.appId}: ${err.message}`;
-      console.error(err);
-      this._state = Application.RENDER_STATES.ERROR;
-    })
-    // Run Vue's render, assign it to our prop for tracking.
-    .then(rendered => {
-      // Prepare the actor data.
-      this.dataStore = writable(sheetData);
-      console.log(sheetData); 
-      this.app = new VagabondsActorSheetBase({
-        target: this.element.find("form").get(0),
-        props: {
-          dataStore: this.dataStore,
-          //name: 'world',
-        },
-      });
-    })
+    let states = Application.RENDER_STATES;
+    if (this._state == states.RENDERING || this._state == states.RENDERED) {
+      // Update the Datastore.
+      this.dataStore?.set(sheetData);
+      console.log('updating datastore')
+      console.log(this.app)
+      return;
+    }
   }
-
   // Run the normal Foundry render once.
+  this._render(force, options).catch(err => {
+    err.message = `An error occurred while rendering ${this.constructor.name} ${this.appId}: ${err.message}`;
+    console.error(err);
+    this._state = Application.RENDER_STATES.ERROR;
+  })
+  // Run Svelte's render, assign it to our prop for tracking.
+  .then(rendered => {
+    // Prepare the actor data.
+    this.dataStore = writable(sheetData);
+    console.log(this.dataStore);
+    console.log(sheetData);
+    this.app = new VagabondsActorSheetBase({
+      target: this.element.find("form").get(0),
+      props: {
+        dataStore: this.dataStore,
+        //name: 'world',
+      },
+    });
+    console.log(this.app)
+  })
   // Update editable permission
   options.editable = options.editable ?? this.object.isOwner;
 
@@ -227,6 +233,8 @@ render(force=false, options={}) {
   // Return per the overridden method.
   return this;
 }
+
+
 
 close (options={}){
   if (this.app != null) {

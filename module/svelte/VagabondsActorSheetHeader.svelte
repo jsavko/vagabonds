@@ -4,10 +4,10 @@
 	import { writable } from "svelte/store";
 
 
-	export let dataStore;
 	//getContext("sheetStore", dataStore);	
-	let sheetData = getContext("sheetStore",dataStore);
-	let { actor, data, actorData, sheet } = $sheetData;
+	let sheetData = getContext("sheetStore");
+	let { actor, actorData, sheet } = $sheetData;
+	let  data = $sheetData.data;
 </script>
 
 <actorhead>
@@ -104,7 +104,6 @@
 		width: 100%;
 		min-width: 93px;
 		margin-top: auto;
-
 	}
 
 	

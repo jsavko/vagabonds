@@ -5,10 +5,12 @@
 	import { writable } from "svelte/store";
 
 
-	export let dataStore;
 	//getContext("sheetStore", dataStore);	
-	let sheetData = getContext("sheetStore",dataStore);
+	let sheetData = getContext("sheetStore");
 	let { actor, data, actorData, sheet } = $sheetData;
+	let techniques;
+	$: techniques = $sheetData.data.techniques
+
 	let showItems = [];
 	let hasBeenClicked = false;
 
@@ -31,7 +33,7 @@
 <lineage>
 	<label class="resource-label">Techniques</label>
 	<ol class="items-list">
-		{#each data.techniques as item}
+		{#each techniques as item}
 		<li  class="item flexrow" data-item-id="{item._id}">
 			<div on:click="{() => ToggleItem(item._id)}" class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
 			<h4  on:click="{() => ToggleItem(item._id)}" class="item-name">{item.name}</h4>
