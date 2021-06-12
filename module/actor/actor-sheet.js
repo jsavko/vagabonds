@@ -84,6 +84,7 @@
   actorData.lineage = lineage;
   actorData.injury = injury;
   actorData.approach = approach;
+  sheetData.sheet = this;
 
 }
 
@@ -125,6 +126,13 @@
     html.find('.rollable').click(this._onRoll.bind(this));
   }
 
+  async _onItemDelete(itemId) {
+    const item = this.actor.items.get(itemId);
+    item.delete();
+    this.render();
+
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -151,6 +159,11 @@
     delete itemData.data["type"];
     // Finally, create the item!
     return await Item.create(itemData, {parent: this.actor});
+  }
+
+  async _onItemEdit(itemId) {
+    const item = this.actor.items.get(itemId);
+    item.sheet.render(true);
   }
 
   /**

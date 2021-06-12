@@ -1,25 +1,168 @@
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Col.esbuild-svelte-fake-css */
+.layout.svelte-fo9oa1 {
+  display: flex;
+}
+.col.svelte-fo9oa1 {
+  flex-direction: column;
+}
+.reverse.svelte-fo9oa1 {
+  flex-direction: column-reverse !important;
+}
+.inline.svelte-fo9oa1 {
+  display: inline-flex !important;
+}
+.fluid.width.svelte-fo9oa1 {
+  width: 100%;
+}
+.fluid.height.svelte-fo9oa1 {
+  height: 100%;
+}
+.fluid.both.svelte-fo9oa1 {
+  width: 100%;
+  height: 100%;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Row.esbuild-svelte-fake-css */
+.layout.svelte-1o0rrq7 {
+  display: flex;
+}
+.row.svelte-1o0rrq7 {
+  flex-direction: row;
+}
+.reverse.svelte-1o0rrq7 {
+  flex-direction: row-reverse !important;
+}
+.inline.svelte-1o0rrq7 {
+  display: inline-flex !important;
+}
+.fluid.width.svelte-1o0rrq7 {
+  width: 100%;
+}
+.fluid.height.svelte-1o0rrq7 {
+  height: 100%;
+}
+.fluid.both.svelte-1o0rrq7 {
+  width: 100%;
+  height: 100%;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/node_modules/svelte-layouts/src/Grid.esbuild-svelte-fake-css */
+div.grid.svelte-7zpkke {
+  display: grid;
+}
+div.grid.inline.svelte-7zpkke {
+  display: inline-grid;
+}
+.fluid.width.svelte-7zpkke {
+  width: 100%;
+}
+.fluid.height.svelte-7zpkke {
+  height: 100%;
+}
+.fluid.both.svelte-7zpkke {
+  width: 100%;
+  height: 100%;
+}
+
 /* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetHeader.esbuild-svelte-fake-css */
-main.svelte-1tky8bj {
-  text-align: center;
-  padding: 1em;
-  max-width: 240px;
+actorhead.svelte-n9myf3.svelte-n9myf3 {
   margin: 0 auto;
+  padding: 1em;
+  display: grid;
+  grid-template-columns: 125px auto auto auto auto auto;
+  grid-template-rows: 45px 80px auto;
+  text-align: center;
+  vertical-align: bottom;
+  height: 100%;
+}
+actorhead.svelte-n9myf3 input.svelte-n9myf3 {
+  border: none;
+  height: 45px;
+  font-size: 20px;
+}
+.profile-img.svelte-n9myf3.svelte-n9myf3 {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  margin-top: 0px;
+}
+.namebox.svelte-n9myf3.svelte-n9myf3 {
+  grid-column-start: 2;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  text-align: left;
+  vertical-align: bottom;
+  margin-left: 2px;
+}
+.item1.svelte-n9myf3.svelte-n9myf3 {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+  margin-left: 2px;
+}
+.item2.svelte-n9myf3.svelte-n9myf3 {
+  grid-column-start: 3;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+}
+.item2.svelte-n9myf3 input.svelte-n9myf3 {
+  width: 35px;
+}
+.item3.svelte-n9myf3.svelte-n9myf3 {
+  grid-column-start: 4;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+}
+.item4.svelte-n9myf3.svelte-n9myf3 {
+  grid-column-start: 5;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+}
+.item5.svelte-n9myf3.svelte-n9myf3 {
+  grid-column-start: 6;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
 }
 @media (min-width: 640px) {
-  main.svelte-1tky8bj {
-    max-width: none;
-  }
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyLeft.esbuild-svelte-fake-css */
+main.svelte-vo4iol.svelte-vo4iol {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 310px;
+  padding: 1em;
+  flex: 0 0 50%;
+  border-right: 1px solid #999;
+}
+main.svelte-vo4iol input.svelte-vo4iol {
+  border: none;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyRight.esbuild-svelte-fake-css */
+main.svelte-yoob1a {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 310px;
+  padding: 1em;
+  flex: 0 0 50%;
 }
 
 /* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBase.esbuild-svelte-fake-css */
-main.svelte-1tky8bj {
-  text-align: center;
-  padding: 1em;
-  max-width: 240px;
-  margin: 0 auto;
-}
-@media (min-width: 640px) {
-  main.svelte-1tky8bj {
-    max-width: none;
-  }
+container.svelte-1x8y3nd {
+  display: flex;
 }

@@ -8,7 +8,7 @@
   "templateVersion": 2,
   "author": "LostPhoenix",
   "esmodules": ["dist/vagabonds.js"],
-  "styles": ["css/vagabonds.css"],
+  "styles": ["css/vagabonds.css", "dist/vagabonds.css"],
   "scripts": [],
   "packs": [
     {

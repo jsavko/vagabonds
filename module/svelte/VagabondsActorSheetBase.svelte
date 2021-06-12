@@ -2,11 +2,14 @@
 	import { setContext, getContext } from "svelte";
 	import { slide } from "svelte/transition";
 	import { writable } from "svelte/store";
-	
+	import { Row, Col, Item } from 'svelte-layouts'
+
 	  // Component imports
 	  //TODO: IMPORTS
-	  import VagabondsActorSheetHeader from "./VagabondsActorSheetHeader.svelte"; 
-	  
+	import VagabondsActorSheetHeader from "./VagabondsActorSheetHeader.svelte"; 
+	import VagabondsActorSheetBodyLeft from "./VagabondsActorSheetBodyLeft.svelte"; 
+	import VagabondsActorSheetBodyRight from "./VagabondsActorSheetBodyRight.svelte"; 
+
 
 	//Exports
 	export let dataStore;
@@ -19,28 +22,16 @@
 	<VagabondsActorSheetHeader />
 </header>
 
-<main>
-Body Here!
-</main>
+<container>
+	<VagabondsActorSheetBodyLeft />
+	<VagabondsActorSheetBodyRight />
+</container>
+
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
+	container {
+		display: flex; /* or inline-flex */
 		}
-	}
+
+
 </style>

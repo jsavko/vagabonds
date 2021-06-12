@@ -3,7 +3,7 @@ const prefix = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass');
 const esbuild = require('esbuild');
-const esbuildSvelte = require("esbuild-svelte")
+const esbuildSvelte = require("esbuild-svelte");
 
 /* ----------------------------------------- */
 /*  Compile Sass
