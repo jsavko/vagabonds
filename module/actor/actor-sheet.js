@@ -199,8 +199,6 @@ render(force=false, options={}) {
     if (this._state == states.RENDERING || this._state == states.RENDERED) {
       // Update the Datastore.
       this.dataStore?.set(sheetData);
-      console.log('updating datastore')
-      console.log(this.app)
       return;
     }
   }
@@ -214,7 +212,7 @@ render(force=false, options={}) {
   .then(rendered => {
     // Prepare the actor data.
     this.dataStore = writable(sheetData);
-
+    console.log(sheetData);
     this.app = new VagabondsActorSheetBase({
       target: this.element.find("form").get(0),
       props: {

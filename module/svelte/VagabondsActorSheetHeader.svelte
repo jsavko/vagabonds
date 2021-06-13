@@ -31,10 +31,10 @@
 	</div>
 	<div class="item4">
 		<input type="text" name="data.armor.value" value="{data.data.armor.value}" data-dtype="Number"/>
-		<label for="data.data.armor.value" class="resource-label rollable" data-defend="2d6">Armor</label> 
+		<label on:click={sheet?._onRoll.bind(sheet)} for="data.data.armor.value" class="resource-label rollable" data-defend="2d6">Armor</label> 
 	</div>
 	<div class="item5">
-		<input type="text" name="data.data.attributes.exp.value" value="{data.data.attributes.exp.value}" data-dtype="Number"/>
+		<input type="text" name="data.attributes.xp.value" value="{data.data.attributes.xp.value}" data-dtype="Number"/>
 		<label>Exp</label>
 	</div>
 </actorhead>
