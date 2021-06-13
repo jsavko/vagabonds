@@ -10,6 +10,24 @@
 	let { actor, data, actorData, sheet } = $sheetData;
 	let injury;
 	$: injury = $sheetData.data.injury
+
+	let showItems = [];
+	let hasBeenClicked = false;
+
+	function ToggleItem(Item) {
+		if (hasBeenClicked) return;
+        hasBeenClicked = true;
+        setTimeout(() => {
+            hasBeenClicked = false;
+        }, 200);
+
+		if (!showItems[Item] ){
+			showItems[Item] = true;
+		} else { 
+			showItems[Item] = false;
+		}
+	}
+
 </script>
 
 <lineage>
@@ -17,14 +35,26 @@
 	<ol class="items-list">
 		{#each injury as item}
 		<li class="item flexrow" data-item-id="{item._id}}">
-			<div class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
-			<h4 class="item-name">{item.name}</h4>
+			<div  on:click="{() => ToggleItem(item._id)}" class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
+			<h4  on:click="{() => ToggleItem(item._id)}" class="item-name">{item.name}</h4>
 			<div class="item-controls">
-				<a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-				<a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+				<a on:click={sheet?._onItemEdit(item._id)}  class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+				<a on:click={sheet?._onItemDelete(item._id)}  class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
 			</div>
 		</li>
+		{#if showItems[item._id]}
+		<div transition:slide>
+			{@html item.data.description}
+		</div>
+		{/if}
 		{/each}
+		<li class="item flexrow item-header">
+            <div class="item-image"></div>
+            <div class="item-name"></div>
+            <div class="item-controls">
+              <a on:click={sheet?._onItemCreate.bind(sheet)} class="item-control item-create" title="Create item" data-type="injury"><i class="fas fa-plus"></i> Add injury</a>
+            </div>
+        </li>
 	</ol>
 </lineage>
 

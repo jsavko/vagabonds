@@ -214,8 +214,7 @@ render(force=false, options={}) {
   .then(rendered => {
     // Prepare the actor data.
     this.dataStore = writable(sheetData);
-    console.log(this.dataStore);
-    console.log(sheetData);
+
     this.app = new VagabondsActorSheetBase({
       target: this.element.find("form").get(0),
       props: {
@@ -223,7 +222,6 @@ render(force=false, options={}) {
         //name: 'world',
       },
     });
-    console.log(this.app)
   })
   // Update editable permission
   options.editable = options.editable ?? this.object.isOwner;
