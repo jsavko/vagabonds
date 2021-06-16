@@ -7,11 +7,33 @@
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
 	let { actor, actorData, sheet } = $sheetData;
-	let  data = $sheetData.data;
+	let data;
+	$: data = $sheetData.data;
+
+
+/**
+   * Opens a File Picker and updates the actor accordingly.
+   */
+	const filePicker = (event) => {
+    const attr = event.currentTarget.dataset.edit;
+    const current = getProperty(data, attr);
+    const fp = new FilePicker({
+		type: "image",
+		current: current,
+		selected: data.img,
+		callback: (path) => {
+        	actor.update({ [attr]: path });
+		},
+		top: sheet.position.top + 40,
+		left: sheet.position.left + 10,
+		});
+    return fp.browse();
+	};
+
 </script>
 
 <actorhead>
-	<img class="profile-img" src="{data.img}" data-edit="img" title="{data.name}" height="125" width="125"/>
+	<img on:click={filePicker} class="profile-img" src="{data.img}" data-edit="img" title="{data.name}" height="125" width="125"/>
 	<div class="namebox">
 		<input name="name" type="text" value="{data.name}" placeholder="Name"/>
 	</div>

@@ -34,19 +34,21 @@
 	<label class="resource-label">Injury</label>
 	<ol class="items-list">
 		{#each injury as item}
-		<li class="item flexrow" data-item-id="{item._id}}">
-			<div  on:click="{() => ToggleItem(item._id)}" class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
-			<h4  on:click="{() => ToggleItem(item._id)}" class="item-name">{item.name}</h4>
-			<div class="item-controls">
-				<a on:click={sheet?._onItemEdit(item._id)}  class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-				<a on:click={sheet?._onItemDelete(item._id)}  class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+		<div transition:slide|local> 
+			<li class="item flexrow" data-item-id="{item._id}}">
+				<div  on:click="{() => ToggleItem(item._id)}" class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
+				<h4  on:click="{() => ToggleItem(item._id)}" class="item-name">{item.name}</h4>
+				<div class="item-controls">
+					<a on:click={sheet?._onItemEdit(item._id)}  class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+					<a on:click={sheet?._onItemDelete(item._id)}  class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+				</div>
+			</li>
+			{#if showItems[item._id]}
+			<div class="item_desc"  transition:slide>
+				{@html item.data.description}
 			</div>
-		</li>
-		{#if showItems[item._id]}
-		<div transition:slide>
-			{@html item.data.description}
+			{/if}
 		</div>
-		{/if}
 		{/each}
 		<li class="item flexrow item-header">
             <div class="item-image"></div>
@@ -60,4 +62,7 @@
 
 <style>
 
+.item_desc {
+	text-align:left;
+	}
 </style>

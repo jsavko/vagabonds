@@ -190,7 +190,7 @@
     }
   }
 
-render(force=false, options={}) {
+render(force=false, options={}) { 
   // Grab the sheetdata for both updates and new apps.
   let sheetData = this.getData();
   // Exit if Vue has already rendered.
@@ -212,7 +212,7 @@ render(force=false, options={}) {
   .then(rendered => {
     // Prepare the actor data.
     this.dataStore = writable(sheetData);
-    console.log(sheetData);
+    //console.log(sheetData);
     this.app = new VagabondsActorSheetBase({
       target: this.element.find("form").get(0),
       props: {

@@ -16,15 +16,43 @@ var require_2 = __commonJS({
   }
 });
 
-// fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyRight.esbuild-svelte-fake-css
+// fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsLinage.esbuild-svelte-fake-css
 var require_3 = __commonJS({
+  "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsLinage.esbuild-svelte-fake-css"(exports, module) {
+    module.exports = {};
+  }
+});
+
+// fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsGear.esbuild-svelte-fake-css
+var require_4 = __commonJS({
+  "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsGear.esbuild-svelte-fake-css"(exports, module) {
+    module.exports = {};
+  }
+});
+
+// fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsTechnique.esbuild-svelte-fake-css
+var require_5 = __commonJS({
+  "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsTechnique.esbuild-svelte-fake-css"(exports, module) {
+    module.exports = {};
+  }
+});
+
+// fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsInjury.esbuild-svelte-fake-css
+var require_6 = __commonJS({
+  "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsInjury.esbuild-svelte-fake-css"(exports, module) {
+    module.exports = {};
+  }
+});
+
+// fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyRight.esbuild-svelte-fake-css
+var require_7 = __commonJS({
   "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyRight.esbuild-svelte-fake-css"(exports, module) {
     module.exports = {};
   }
 });
 
 // fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBase.esbuild-svelte-fake-css
-var require_4 = __commonJS({
+var require_8 = __commonJS({
   "fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBase.esbuild-svelte-fake-css"(exports, module) {
     module.exports = {};
   }
@@ -128,9 +156,6 @@ function text(data) {
 function space() {
   return text(" ");
 }
-function empty() {
-  return text("");
-}
 function listen(node, event, handler, options) {
   node.addEventListener(event, handler, options);
   return () => node.removeEventListener(event, handler, options);
@@ -154,37 +179,6 @@ function custom_event(type, detail) {
   e.initCustomEvent(type, false, false, detail);
   return e;
 }
-var HtmlTag = class {
-  constructor(anchor = null) {
-    this.a = anchor;
-    this.e = this.n = null;
-  }
-  m(html, target, anchor = null) {
-    if (!this.e) {
-      this.e = element(target.nodeName);
-      this.t = target;
-      this.h(html);
-    }
-    this.i(anchor);
-  }
-  h(html) {
-    this.e.innerHTML = html;
-    this.n = Array.from(this.e.childNodes);
-  }
-  i(anchor) {
-    for (let i = 0; i < this.n.length; i += 1) {
-      insert(this.t, this.n[i], anchor);
-    }
-  }
-  p(html) {
-    this.d();
-    this.h(html);
-    this.i(this.a);
-  }
-  d() {
-    this.n.forEach(detach);
-  }
-};
 var active_docs = new Set();
 var active = 0;
 function hash(str) {
@@ -801,44 +795,44 @@ function create_fragment(ctx) {
       label4 = element("label");
       label4.textContent = "Exp";
       attr(img, "class", "profile-img svelte-1e1arv");
-      if (img.src !== (img_src_value = ctx[2].img))
+      if (img.src !== (img_src_value = ctx[0].img))
         attr(img, "src", img_src_value);
       attr(img, "data-edit", "img");
-      attr(img, "title", img_title_value = ctx[2].name);
+      attr(img, "title", img_title_value = ctx[0].name);
       attr(img, "height", "125");
       attr(img, "width", "125");
       attr(input0, "name", "name");
       attr(input0, "type", "text");
-      input0.value = input0_value_value = ctx[2].name;
+      input0.value = input0_value_value = ctx[0].name;
       attr(input0, "placeholder", "Name");
       attr(input0, "class", "svelte-1e1arv");
       attr(div0, "class", "namebox svelte-1e1arv");
       attr(input1, "type", "text");
       attr(input1, "name", "data.attributes.level.value");
-      input1.value = input1_value_value = ctx[2].data.attributes.level.value;
+      input1.value = input1_value_value = ctx[0].data.attributes.level.value;
       attr(input1, "data-dtype", "Number");
       attr(input1, "class", "svelte-1e1arv");
       attr(div1, "class", "item1 svelte-1e1arv");
       attr(input2, "type", "text");
       attr(input2, "name", "data.health.value");
-      input2.value = input2_value_value = ctx[2].data.health.value;
+      input2.value = input2_value_value = ctx[0].data.health.value;
       attr(input2, "data-dtype", "Number");
       attr(input2, "class", "svelte-1e1arv");
       attr(input3, "type", "text");
       attr(input3, "name", "data.health.max");
-      input3.value = input3_value_value = ctx[2].data.health.max;
+      input3.value = input3_value_value = ctx[0].data.health.max;
       attr(input3, "data-dtype", "Number");
       attr(input3, "class", "svelte-1e1arv");
       attr(div2, "class", "item2 svelte-1e1arv");
       attr(input4, "type", "text");
       attr(input4, "name", "data.speed.value");
-      input4.value = input4_value_value = ctx[2].data.speed.value;
+      input4.value = input4_value_value = ctx[0].data.speed.value;
       attr(input4, "data-dtype", "Number");
       attr(input4, "class", "svelte-1e1arv");
       attr(div3, "class", "item3 svelte-1e1arv");
       attr(input5, "type", "text");
       attr(input5, "name", "data.armor.value");
-      input5.value = input5_value_value = ctx[2].data.armor.value;
+      input5.value = input5_value_value = ctx[0].data.armor.value;
       attr(input5, "data-dtype", "Number");
       attr(input5, "class", "svelte-1e1arv");
       attr(label3, "for", "data.data.armor.value");
@@ -847,7 +841,7 @@ function create_fragment(ctx) {
       attr(div4, "class", "item4 svelte-1e1arv");
       attr(input6, "type", "text");
       attr(input6, "name", "data.attributes.xp.value");
-      input6.value = input6_value_value = ctx[2].data.attributes.xp.value;
+      input6.value = input6_value_value = ctx[0].data.attributes.xp.value;
       attr(input6, "data-dtype", "Number");
       attr(input6, "class", "svelte-1e1arv");
       attr(div5, "class", "item5 svelte-1e1arv");
@@ -889,28 +883,80 @@ function create_fragment(ctx) {
       append(div5, t17);
       append(div5, label4);
       if (!mounted) {
-        dispose = listen(label3, "click", ctx[1]?._onRoll.bind(ctx[1]));
+        dispose = [
+          listen(img, "click", ctx[3]),
+          listen(label3, "click", ctx[2]?._onRoll.bind(ctx[2]))
+        ];
         mounted = true;
       }
     },
-    p: noop,
+    p(ctx2, [dirty]) {
+      if (dirty & 1 && img.src !== (img_src_value = ctx2[0].img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (dirty & 1 && img_title_value !== (img_title_value = ctx2[0].name)) {
+        attr(img, "title", img_title_value);
+      }
+      if (dirty & 1 && input0_value_value !== (input0_value_value = ctx2[0].name) && input0.value !== input0_value_value) {
+        input0.value = input0_value_value;
+      }
+      if (dirty & 1 && input1_value_value !== (input1_value_value = ctx2[0].data.attributes.level.value) && input1.value !== input1_value_value) {
+        input1.value = input1_value_value;
+      }
+      if (dirty & 1 && input2_value_value !== (input2_value_value = ctx2[0].data.health.value) && input2.value !== input2_value_value) {
+        input2.value = input2_value_value;
+      }
+      if (dirty & 1 && input3_value_value !== (input3_value_value = ctx2[0].data.health.max) && input3.value !== input3_value_value) {
+        input3.value = input3_value_value;
+      }
+      if (dirty & 1 && input4_value_value !== (input4_value_value = ctx2[0].data.speed.value) && input4.value !== input4_value_value) {
+        input4.value = input4_value_value;
+      }
+      if (dirty & 1 && input5_value_value !== (input5_value_value = ctx2[0].data.armor.value) && input5.value !== input5_value_value) {
+        input5.value = input5_value_value;
+      }
+      if (dirty & 1 && input6_value_value !== (input6_value_value = ctx2[0].data.attributes.xp.value) && input6.value !== input6_value_value) {
+        input6.value = input6_value_value;
+      }
+    },
     i: noop,
     o: noop,
     d(detaching) {
       if (detaching)
         detach(actorhead);
       mounted = false;
-      dispose();
+      run_all(dispose);
     }
   };
 }
 function instance($$self, $$props, $$invalidate) {
   let $sheetData;
   let sheetData = getContext("sheetStore");
-  component_subscribe($$self, sheetData, (value) => $$invalidate(3, $sheetData = value));
+  component_subscribe($$self, sheetData, (value) => $$invalidate(4, $sheetData = value));
   let { actor, actorData, sheet } = $sheetData;
-  let data = $sheetData.data;
-  return [sheetData, sheet, data];
+  let data;
+  const filePicker = (event) => {
+    const attr2 = event.currentTarget.dataset.edit;
+    const current = getProperty(data, attr2);
+    const fp = new FilePicker({
+      type: "image",
+      current,
+      selected: data.img,
+      callback: (path) => {
+        actor.update({ [attr2]: path });
+      },
+      top: sheet.position.top + 40,
+      left: sheet.position.left + 10
+    });
+    return fp.browse();
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & 16) {
+      $:
+        $$invalidate(0, data = $sheetData.data);
+    }
+  };
+  return [data, sheetData, sheet, filePicker, $sheetData];
 }
 var VagabondsActorSheetHeader = class extends SvelteComponent {
   constructor(options) {
@@ -1162,26 +1208,23 @@ function get_each_context(ctx, list, i) {
 }
 function create_if_block(ctx) {
   let div;
-  let html_tag;
   let raw_value = ctx[12].data.description + "";
-  let t;
   let div_transition;
   let current;
   return {
     c() {
       div = element("div");
-      t = space();
-      html_tag = new HtmlTag(t);
+      attr(div, "class", "item_desc svelte-hd66n3");
     },
     m(target, anchor) {
       insert(target, div, anchor);
-      html_tag.m(raw_value, div);
-      append(div, t);
+      div.innerHTML = raw_value;
       current = true;
     },
     p(ctx2, dirty) {
       if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[12].data.description + ""))
-        html_tag.p(raw_value);
+        div.innerHTML = raw_value;
+      ;
     },
     i(local) {
       if (current)
@@ -1208,6 +1251,7 @@ function create_if_block(ctx) {
   };
 }
 function create_each_block(ctx) {
+  let div2;
   let li;
   let div0;
   let img;
@@ -1222,7 +1266,8 @@ function create_each_block(ctx) {
   let a;
   let li_data_item_id_value;
   let t3;
-  let if_block_anchor;
+  let t4;
+  let div2_transition;
   let current;
   let mounted;
   let dispose;
@@ -1235,6 +1280,7 @@ function create_each_block(ctx) {
   let if_block = ctx[1][ctx[12]._id] && create_if_block(ctx);
   return {
     c() {
+      div2 = element("div");
       li = element("li");
       div0 = element("div");
       img = element("img");
@@ -1248,7 +1294,7 @@ function create_each_block(ctx) {
       t3 = space();
       if (if_block)
         if_block.c();
-      if_block_anchor = empty();
+      t4 = space();
       if (img.src !== (img_src_value = ctx[12].img))
         attr(img, "src", img_src_value);
       attr(img, "title", img_title_value = ctx[12].name);
@@ -1263,7 +1309,8 @@ function create_each_block(ctx) {
       attr(li, "data-item-id", li_data_item_id_value = ctx[12]._id);
     },
     m(target, anchor) {
-      insert(target, li, anchor);
+      insert(target, div2, anchor);
+      append(div2, li);
       append(li, div0);
       append(div0, img);
       append(li, t0);
@@ -1272,10 +1319,10 @@ function create_each_block(ctx) {
       append(li, t2);
       append(li, div1);
       append(div1, a);
-      insert(target, t3, anchor);
+      append(div2, t3);
       if (if_block)
-        if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
+        if_block.m(div2, null);
+      append(div2, t4);
       current = true;
       if (!mounted) {
         dispose = [
@@ -1312,7 +1359,7 @@ function create_each_block(ctx) {
           if_block = create_if_block(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          if_block.m(div2, t4);
         }
       } else if (if_block) {
         group_outros();
@@ -1326,21 +1373,31 @@ function create_each_block(ctx) {
       if (current)
         return;
       transition_in(if_block);
+      if (local) {
+        add_render_callback(() => {
+          if (!div2_transition)
+            div2_transition = create_bidirectional_transition(div2, slide, {}, true);
+          div2_transition.run(1);
+        });
+      }
       current = true;
     },
     o(local) {
       transition_out(if_block);
+      if (local) {
+        if (!div2_transition)
+          div2_transition = create_bidirectional_transition(div2, slide, {}, false);
+        div2_transition.run(0);
+      }
       current = false;
     },
     d(detaching) {
       if (detaching)
-        detach(li);
-      if (detaching)
-        detach(t3);
+        detach(div2);
       if (if_block)
-        if_block.d(detaching);
-      if (detaching)
-        detach(if_block_anchor);
+        if_block.d();
+      if (detaching && div2_transition)
+        div2_transition.end();
       mounted = false;
       run_all(dispose);
     }
@@ -1475,21 +1532,23 @@ var VagabondsLinage = class extends SvelteComponent {
   }
 };
 var VagabondsLinage_default = VagabondsLinage;
+require_3();
 
 // module/svelte/VagabondsGear.svelte
 function get_each_context2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[13] = list[i];
+  child_ctx[12] = list[i];
   return child_ctx;
 }
 function create_if_block2(ctx) {
   let div;
-  let raw_value = ctx[13].data.description + "";
+  let raw_value = ctx[12].data.description + "";
   let div_transition;
   let current;
   return {
     c() {
       div = element("div");
+      attr(div, "class", "item_desc svelte-mzg8sr");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -1497,7 +1556,7 @@ function create_if_block2(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 2) && raw_value !== (raw_value = ctx2[13].data.description + ""))
+      if ((!current || dirty & 2) && raw_value !== (raw_value = ctx2[12].data.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -1526,6 +1585,7 @@ function create_if_block2(ctx) {
   };
 }
 function create_each_block2(ctx) {
+  let div2;
   let li;
   let div0;
   let img;
@@ -1533,7 +1593,7 @@ function create_each_block2(ctx) {
   let img_title_value;
   let t0;
   let h4;
-  let t1_value = ctx[13].name + "";
+  let t1_value = ctx[12].name + "";
   let t1;
   let t2;
   let div1;
@@ -1542,19 +1602,20 @@ function create_each_block2(ctx) {
   let a1;
   let li_data_item_id_value;
   let t4;
-  let if_block_anchor;
+  let div2_transition;
   let current;
   let mounted;
   let dispose;
   function click_handler() {
-    return ctx[6](ctx[13]);
+    return ctx[6](ctx[12]);
   }
   function click_handler_1() {
-    return ctx[7](ctx[13]);
+    return ctx[7](ctx[12]);
   }
-  let if_block = ctx[2][ctx[13]._id] && create_if_block2(ctx);
+  let if_block = ctx[2][ctx[12]._id] && create_if_block2(ctx);
   return {
     c() {
+      div2 = element("div");
       li = element("li");
       div0 = element("div");
       img = element("img");
@@ -1571,10 +1632,9 @@ function create_each_block2(ctx) {
       t4 = space();
       if (if_block)
         if_block.c();
-      if_block_anchor = empty();
-      if (img.src !== (img_src_value = ctx[13].img))
+      if (img.src !== (img_src_value = ctx[12].img))
         attr(img, "src", img_src_value);
-      attr(img, "title", img_title_value = ctx[13].name);
+      attr(img, "title", img_title_value = ctx[12].name);
       attr(img, "width", "24");
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
@@ -1585,10 +1645,11 @@ function create_each_block2(ctx) {
       attr(a1, "title", "Delete Item");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
-      attr(li, "data-item-id", li_data_item_id_value = ctx[13]._id);
+      attr(li, "data-item-id", li_data_item_id_value = ctx[12]._id);
     },
     m(target, anchor) {
-      insert(target, li, anchor);
+      insert(target, div2, anchor);
+      append(div2, li);
       append(li, div0);
       append(div0, img);
       append(li, t0);
@@ -1599,22 +1660,21 @@ function create_each_block2(ctx) {
       append(div1, a0);
       append(div1, t3);
       append(div1, a1);
-      insert(target, t4, anchor);
+      append(div2, t4);
       if (if_block)
-        if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
+        if_block.m(div2, null);
       current = true;
       if (!mounted) {
         dispose = [
           listen(div0, "click", click_handler),
           listen(h4, "click", click_handler_1),
           listen(a0, "click", function() {
-            if (is_function(ctx[0]?._onItemEdit(ctx[13]._id)))
-              ctx[0]?._onItemEdit(ctx[13]._id).apply(this, arguments);
+            if (is_function(ctx[0]?._onItemEdit(ctx[12]._id)))
+              ctx[0]?._onItemEdit(ctx[12]._id).apply(this, arguments);
           }),
           listen(a1, "click", function() {
-            if (is_function(ctx[0]?._onItemDelete(ctx[13]._id)))
-              ctx[0]?._onItemDelete(ctx[13]._id).apply(this, arguments);
+            if (is_function(ctx[0]?._onItemDelete(ctx[12]._id)))
+              ctx[0]?._onItemDelete(ctx[12]._id).apply(this, arguments);
           })
         ];
         mounted = true;
@@ -1622,18 +1682,18 @@ function create_each_block2(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (!current || dirty & 2 && img.src !== (img_src_value = ctx[13].img)) {
+      if (!current || dirty & 2 && img.src !== (img_src_value = ctx[12].img)) {
         attr(img, "src", img_src_value);
       }
-      if (!current || dirty & 2 && img_title_value !== (img_title_value = ctx[13].name)) {
+      if (!current || dirty & 2 && img_title_value !== (img_title_value = ctx[12].name)) {
         attr(img, "title", img_title_value);
       }
-      if ((!current || dirty & 2) && t1_value !== (t1_value = ctx[13].name + ""))
+      if ((!current || dirty & 2) && t1_value !== (t1_value = ctx[12].name + ""))
         set_data(t1, t1_value);
-      if (!current || dirty & 2 && li_data_item_id_value !== (li_data_item_id_value = ctx[13]._id)) {
+      if (!current || dirty & 2 && li_data_item_id_value !== (li_data_item_id_value = ctx[12]._id)) {
         attr(li, "data-item-id", li_data_item_id_value);
       }
-      if (ctx[2][ctx[13]._id]) {
+      if (ctx[2][ctx[12]._id]) {
         if (if_block) {
           if_block.p(ctx, dirty);
           if (dirty & 6) {
@@ -1643,7 +1703,7 @@ function create_each_block2(ctx) {
           if_block = create_if_block2(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          if_block.m(div2, null);
         }
       } else if (if_block) {
         group_outros();
@@ -1657,21 +1717,31 @@ function create_each_block2(ctx) {
       if (current)
         return;
       transition_in(if_block);
+      if (local) {
+        add_render_callback(() => {
+          if (!div2_transition)
+            div2_transition = create_bidirectional_transition(div2, slide, {}, true);
+          div2_transition.run(1);
+        });
+      }
       current = true;
     },
     o(local) {
       transition_out(if_block);
+      if (local) {
+        if (!div2_transition)
+          div2_transition = create_bidirectional_transition(div2, slide, {}, false);
+        div2_transition.run(0);
+      }
       current = false;
     },
     d(detaching) {
       if (detaching)
-        detach(li);
-      if (detaching)
-        detach(t4);
+        detach(div2);
       if (if_block)
-        if_block.d(detaching);
-      if (detaching)
-        detach(if_block_anchor);
+        if_block.d();
+      if (detaching && div2_transition)
+        div2_transition.end();
       mounted = false;
       run_all(dispose);
     }
@@ -1815,7 +1885,7 @@ function instance4($$self, $$props, $$invalidate) {
   let $sheetData;
   let sheetData = getContext("sheetStore");
   component_subscribe($$self, sheetData, (value) => $$invalidate(5, $sheetData = value));
-  let { actor, data, actorData, sheet } = $sheetData;
+  let { actor, data, sheet } = $sheetData;
   let gear;
   let showItems = [];
   let hasBeenClicked = false;
@@ -1859,6 +1929,7 @@ var VagabondsGear = class extends SvelteComponent {
   }
 };
 var VagabondsGear_default = VagabondsGear;
+require_4();
 
 // module/svelte/VagabondsTechnique.svelte
 function get_each_context3(ctx, list, i) {
@@ -1868,26 +1939,23 @@ function get_each_context3(ctx, list, i) {
 }
 function create_if_block3(ctx) {
   let div;
-  let html_tag;
   let raw_value = ctx[12].data.description + "";
-  let t;
   let div_transition;
   let current;
   return {
     c() {
       div = element("div");
-      t = space();
-      html_tag = new HtmlTag(t);
+      attr(div, "class", "item_desc svelte-mzg8sr");
     },
     m(target, anchor) {
       insert(target, div, anchor);
-      html_tag.m(raw_value, div);
-      append(div, t);
+      div.innerHTML = raw_value;
       current = true;
     },
     p(ctx2, dirty) {
       if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[12].data.description + ""))
-        html_tag.p(raw_value);
+        div.innerHTML = raw_value;
+      ;
     },
     i(local) {
       if (current)
@@ -1914,6 +1982,7 @@ function create_if_block3(ctx) {
   };
 }
 function create_each_block3(ctx) {
+  let div2;
   let li;
   let div0;
   let img;
@@ -1928,7 +1997,8 @@ function create_each_block3(ctx) {
   let a;
   let li_data_item_id_value;
   let t3;
-  let if_block_anchor;
+  let t4;
+  let div2_transition;
   let current;
   let mounted;
   let dispose;
@@ -1941,6 +2011,7 @@ function create_each_block3(ctx) {
   let if_block = ctx[1][ctx[12]._id] && create_if_block3(ctx);
   return {
     c() {
+      div2 = element("div");
       li = element("li");
       div0 = element("div");
       img = element("img");
@@ -1954,7 +2025,7 @@ function create_each_block3(ctx) {
       t3 = space();
       if (if_block)
         if_block.c();
-      if_block_anchor = empty();
+      t4 = space();
       if (img.src !== (img_src_value = ctx[12].img))
         attr(img, "src", img_src_value);
       attr(img, "title", img_title_value = ctx[12].name);
@@ -1969,7 +2040,8 @@ function create_each_block3(ctx) {
       attr(li, "data-item-id", li_data_item_id_value = ctx[12]._id);
     },
     m(target, anchor) {
-      insert(target, li, anchor);
+      insert(target, div2, anchor);
+      append(div2, li);
       append(li, div0);
       append(div0, img);
       append(li, t0);
@@ -1978,10 +2050,10 @@ function create_each_block3(ctx) {
       append(li, t2);
       append(li, div1);
       append(div1, a);
-      insert(target, t3, anchor);
+      append(div2, t3);
       if (if_block)
-        if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
+        if_block.m(div2, null);
+      append(div2, t4);
       current = true;
       if (!mounted) {
         dispose = [
@@ -2018,7 +2090,7 @@ function create_each_block3(ctx) {
           if_block = create_if_block3(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          if_block.m(div2, t4);
         }
       } else if (if_block) {
         group_outros();
@@ -2032,21 +2104,31 @@ function create_each_block3(ctx) {
       if (current)
         return;
       transition_in(if_block);
+      if (local) {
+        add_render_callback(() => {
+          if (!div2_transition)
+            div2_transition = create_bidirectional_transition(div2, slide, {}, true);
+          div2_transition.run(1);
+        });
+      }
       current = true;
     },
     o(local) {
       transition_out(if_block);
+      if (local) {
+        if (!div2_transition)
+          div2_transition = create_bidirectional_transition(div2, slide, {}, false);
+        div2_transition.run(0);
+      }
       current = false;
     },
     d(detaching) {
       if (detaching)
-        detach(li);
-      if (detaching)
-        detach(t3);
+        detach(div2);
       if (if_block)
-        if_block.d(detaching);
-      if (detaching)
-        detach(if_block_anchor);
+        if_block.d();
+      if (detaching && div2_transition)
+        div2_transition.end();
       mounted = false;
       run_all(dispose);
     }
@@ -2181,6 +2263,7 @@ var VagabondsTechnique = class extends SvelteComponent {
   }
 };
 var VagabondsTechnique_default = VagabondsTechnique;
+require_5();
 
 // module/svelte/VagabondsInjury.svelte
 function get_each_context4(ctx, list, i) {
@@ -2196,6 +2279,7 @@ function create_if_block4(ctx) {
   return {
     c() {
       div = element("div");
+      attr(div, "class", "item_desc svelte-mzg8sr");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -2232,6 +2316,7 @@ function create_if_block4(ctx) {
   };
 }
 function create_each_block4(ctx) {
+  let div2;
   let li;
   let div0;
   let img;
@@ -2248,7 +2333,7 @@ function create_each_block4(ctx) {
   let a1;
   let li_data_item_id_value;
   let t4;
-  let if_block_anchor;
+  let div2_transition;
   let current;
   let mounted;
   let dispose;
@@ -2261,6 +2346,7 @@ function create_each_block4(ctx) {
   let if_block = ctx[1][ctx[12]._id] && create_if_block4(ctx);
   return {
     c() {
+      div2 = element("div");
       li = element("li");
       div0 = element("div");
       img = element("img");
@@ -2277,7 +2363,6 @@ function create_each_block4(ctx) {
       t4 = space();
       if (if_block)
         if_block.c();
-      if_block_anchor = empty();
       if (img.src !== (img_src_value = ctx[12].img))
         attr(img, "src", img_src_value);
       attr(img, "title", img_title_value = ctx[12].name);
@@ -2294,7 +2379,8 @@ function create_each_block4(ctx) {
       attr(li, "data-item-id", li_data_item_id_value = "" + (ctx[12]._id + "}"));
     },
     m(target, anchor) {
-      insert(target, li, anchor);
+      insert(target, div2, anchor);
+      append(div2, li);
       append(li, div0);
       append(div0, img);
       append(li, t0);
@@ -2305,10 +2391,9 @@ function create_each_block4(ctx) {
       append(div1, a0);
       append(div1, t3);
       append(div1, a1);
-      insert(target, t4, anchor);
+      append(div2, t4);
       if (if_block)
-        if_block.m(target, anchor);
-      insert(target, if_block_anchor, anchor);
+        if_block.m(div2, null);
       current = true;
       if (!mounted) {
         dispose = [
@@ -2349,7 +2434,7 @@ function create_each_block4(ctx) {
           if_block = create_if_block4(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+          if_block.m(div2, null);
         }
       } else if (if_block) {
         group_outros();
@@ -2363,21 +2448,31 @@ function create_each_block4(ctx) {
       if (current)
         return;
       transition_in(if_block);
+      if (local) {
+        add_render_callback(() => {
+          if (!div2_transition)
+            div2_transition = create_bidirectional_transition(div2, slide, {}, true);
+          div2_transition.run(1);
+        });
+      }
       current = true;
     },
     o(local) {
       transition_out(if_block);
+      if (local) {
+        if (!div2_transition)
+          div2_transition = create_bidirectional_transition(div2, slide, {}, false);
+        div2_transition.run(0);
+      }
       current = false;
     },
     d(detaching) {
       if (detaching)
-        detach(li);
-      if (detaching)
-        detach(t4);
+        detach(div2);
       if (if_block)
-        if_block.d(detaching);
-      if (detaching)
-        detach(if_block_anchor);
+        if_block.d();
+      if (detaching && div2_transition)
+        div2_transition.end();
       mounted = false;
       run_all(dispose);
     }
@@ -2552,6 +2647,7 @@ var VagabondsInjury = class extends SvelteComponent {
   }
 };
 var VagabondsInjury_default = VagabondsInjury;
+require_6();
 
 // module/svelte/VagabondsActorSheetBodyRight.svelte
 function create_fragment7(ctx) {
@@ -2659,7 +2755,7 @@ var VagabondsActorSheetBodyRight = class extends SvelteComponent {
   }
 };
 var VagabondsActorSheetBodyRight_default = VagabondsActorSheetBodyRight;
-require_3();
+require_7();
 
 // module/svelte/VagabondsActorSheetBase.svelte
 function create_fragment8(ctx) {
@@ -2743,7 +2839,7 @@ var VagabondsActorSheetBase = class extends SvelteComponent {
   }
 };
 var VagabondsActorSheetBase_default = VagabondsActorSheetBase;
-require_4();
+require_8();
 
 // module/actor/actor-sheet.js
 var VagabondsActorSheet = class extends ActorSheet {
@@ -2883,7 +2979,6 @@ var VagabondsActorSheet = class extends ActorSheet {
       this._state = Application.RENDER_STATES.ERROR;
     }).then((rendered) => {
       this.dataStore = writable(sheetData);
-      console.log(sheetData);
       this.app = new VagabondsActorSheetBase_default({
         target: this.element.find("form").get(0),
         props: {
