@@ -157,13 +157,15 @@
     // Remove the type from the dataset since it's in the itemData.type prop.
     delete itemData.data["type"];
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
-    this.render();
+
+    return await Item.create(itemData, {parent: this.actor}).then( item => { item.sheet.render(true); });
+    
   }
 
-  async _onItemEdit(itemId) {
+    async _onItemEdit(itemId) {
     const item = this.actor.items.get(itemId);
     item.sheet.render(true);
+  
   }
 
   /**

@@ -2941,8 +2941,9 @@ var VagabondsActorSheet = class extends ActorSheet {
       data
     };
     delete itemData.data["type"];
-    return await Item.create(itemData, { parent: this.actor });
-    this.render();
+    return await Item.create(itemData, { parent: this.actor }).then((item) => {
+      item.sheet.render(true);
+    });
   }
   async _onItemEdit(itemId) {
     const item = this.actor.items.get(itemId);
