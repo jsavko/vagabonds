@@ -2,7 +2,7 @@
   "name": "vagabonds",
   "title": "Vagabonds of Dyfed",
   "description": "The Vagabonds of Dyfed system for FoundryVTT!",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "minimumCoreVersion": "0.8.0",
   "compatibleCoreVersion": "0.8.7",
   "templateVersion": 2,
