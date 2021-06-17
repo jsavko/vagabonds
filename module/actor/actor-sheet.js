@@ -2,14 +2,21 @@
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
+ import VagabondsActorSheetBase  from "../svelte/VagabondsActorSheetBase.svelte"; // import Svelte App
+ import { writable } from "svelte/store";
+
  export class VagabondsActorSheet extends ActorSheet {
+
+
+  app = null;
+  dataStore = null;
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["vagabonds", "sheet", "actor"],
-      template: "systems/vagabonds/templates/actor/actor-sheet.html",
-      width: 600,
+      template: "systems/vagabonds/templates/actor/actor-sheetv2.html",
+      width: 640,
       height: 700,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
@@ -20,6 +27,7 @@
   /** @override */
   getData() {
     const data = super.getData();
+    let isOwner = this.actor.isOwner;
     data.dtypes = ["String", "Number", "Boolean"];
     for (let attr of Object.values(data.data.data.attributes)) {
       attr.isCheckbox = attr.dtype === "Boolean";
@@ -43,25 +51,30 @@
   const techniques = [];
   const lineage = [];
   const injury = [];
-
+  const approach = [];
   // Iterate through items, allocating to containers
   // let totalWeight = 0;
   for (let i of sheetData.items) {
     let item = i;
     i.img = i.img || DEFAULT_TOKEN;
-    // Append to gear.
-    if (i.type === 'item') {
-      gear.push(i);
-    }
     // Append to features.
-    else if (i.type === 'technique') {
-      techniques.push(i);
-    }
-    else if (i.type === 'lineage') {
-      lineage.push(i);
-    }
-    else if (i.type === 'injury') {
-      injury.push(i);
+ 
+    switch(i.type) {
+      case 'item':
+        gear.push(i);
+        break;
+      case 'lineage':
+        lineage.push(i);
+        break;
+      case 'technique': 
+        techniques.push(i);
+        break;
+      case 'injury':
+        injury.push(i);
+        break;
+      case 'approach':
+        approach.push(i);
+        break;
     }
   }
 
@@ -70,6 +83,8 @@
   actorData.techniques = techniques;
   actorData.lineage = lineage;
   actorData.injury = injury;
+  actorData.approach = approach;
+  sheetData.sheet = this;
 
 }
 
@@ -102,13 +117,19 @@
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
-     // this.actor.deleteOwnedItem(li.data("itemId"));
-      this.actor.deleteEmbeddedDocuments("Item", [li.data("itemId")])
+      const item = this.actor.items.get(li.data("itemId"));
+      item.delete();
       li.slideUp(200, () => this.render(false));
     });
 
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
+  }
+
+  async _onItemDelete(itemId) {
+    const item = this.actor.items.get(itemId);
+    item.delete();
+    this.render();
   }
 
   /* -------------------------------------------- */
@@ -118,7 +139,7 @@
    * @param {Event} event   The originating click event
    * @private
    */
-   async _onItemCreate(event) {
+  async _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
@@ -135,11 +156,16 @@
     };
     // Remove the type from the dataset since it's in the itemData.type prop.
     delete itemData.data["type"];
-
     // Finally, create the item!
-    //return this.actor.createOwnedItem(itemData);
-    await this.actor.createEmbeddedDocuments('Item', [itemData], {});
 
+    return await Item.create(itemData, {parent: this.actor}).then( item => { item.sheet.render(true); });
+    
+  }
+
+    async _onItemEdit(itemId) {
+    const item = this.actor.items.get(itemId);
+    item.sheet.render(true);
+  
   }
 
   /**
@@ -163,10 +189,61 @@
 
     if (dataset.defend) {
       game.vagabonds.RollHelper.displayRollModal(true);
-  
-
-      
     }
   }
+
+render(force=false, options={}) { 
+  // Grab the sheetdata for both updates and new apps.
+  let sheetData = this.getData();
+  // Exit if Vue has already rendered.
+  if (this.app !== null) {
+    let states = Application.RENDER_STATES;
+    if (this._state == states.RENDERING || this._state == states.RENDERED) {
+      // Update the Datastore.
+      this.dataStore?.set(sheetData);
+      return;
+    }
+  }
+  // Run the normal Foundry render once.
+  this._render(force, options).catch(err => {
+    err.message = `An error occurred while rendering ${this.constructor.name} ${this.appId}: ${err.message}`;
+    console.error(err);
+    this._state = Application.RENDER_STATES.ERROR;
+  })
+  // Run Svelte's render, assign it to our prop for tracking.
+  .then(rendered => {
+    // Prepare the actor data.
+    this.dataStore = writable(sheetData);
+    //console.log(sheetData);
+    this.app = new VagabondsActorSheetBase({
+      target: this.element.find("form").get(0),
+      props: {
+        dataStore: this.dataStore,
+        //name: 'world',
+      },
+    });
+  })
+  // Update editable permission
+  options.editable = options.editable ?? this.object.isOwner;
+
+  // Register the active Application with the referenced Documents
+  this.object.apps[this.appId] = this;
+  // Return per the overridden method.
+  return this;
+}
+
+
+
+close (options={}){
+  if (this.app != null) {
+    this.app.$destroy();
+    this.app = null;
+    this.dataStore = null;
+  }
+  return super.close(options);
+}
+
+
+
 
 }

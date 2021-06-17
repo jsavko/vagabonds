@@ -1,0 +1,122 @@
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetHeader.esbuild-svelte-fake-css */
+actorhead.svelte-1e1arv.svelte-1e1arv {
+  margin: 0 auto;
+  padding: 1em;
+  display: grid;
+  grid-template-columns: 125px auto auto auto auto auto;
+  grid-template-rows: 45px 80px auto;
+  text-align: center;
+  vertical-align: bottom;
+  height: 100%;
+}
+actorhead.svelte-1e1arv input.svelte-1e1arv {
+  border: none;
+  height: 45px;
+  font-size: 20px;
+}
+.profile-img.svelte-1e1arv.svelte-1e1arv {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  margin-top: 0px;
+}
+.namebox.svelte-1e1arv.svelte-1e1arv {
+  grid-column-start: 2;
+  grid-column-end: 7;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  text-align: left;
+  vertical-align: bottom;
+  margin-left: 2px;
+}
+.item1.svelte-1e1arv.svelte-1e1arv {
+  grid-column-start: 2;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+  margin-left: 2px;
+}
+.item2.svelte-1e1arv.svelte-1e1arv {
+  grid-column-start: 3;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+}
+.item2.svelte-1e1arv input.svelte-1e1arv {
+  width: 35px;
+}
+.item3.svelte-1e1arv.svelte-1e1arv {
+  grid-column-start: 4;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+}
+.item4.svelte-1e1arv.svelte-1e1arv {
+  grid-column-start: 5;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+}
+.item5.svelte-1e1arv.svelte-1e1arv {
+  grid-column-start: 6;
+  grid-row-start: 2;
+  width: 100%;
+  min-width: 93px;
+  margin-top: auto;
+}
+@media (min-width: 640px) {
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyLeft.esbuild-svelte-fake-css */
+main.svelte-vo4iol.svelte-vo4iol {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 310px;
+  padding: 1em;
+  flex: 0 0 50%;
+  border-right: 1px solid #999;
+}
+main.svelte-vo4iol input.svelte-vo4iol {
+  border: none;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsLinage.esbuild-svelte-fake-css */
+.item_desc.svelte-hd66n3 {
+  text-align: left;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsGear.esbuild-svelte-fake-css */
+.item_desc.svelte-mzg8sr {
+  text-align: left;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsTechnique.esbuild-svelte-fake-css */
+.item_desc.svelte-mzg8sr {
+  text-align: left;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsInjury.esbuild-svelte-fake-css */
+.item_desc.svelte-mzg8sr {
+  text-align: left;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyRight.esbuild-svelte-fake-css */
+main.svelte-yoob1a {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 310px;
+  padding: 1em;
+  flex: 0 0 50%;
+}
+
+/* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBase.esbuild-svelte-fake-css */
+container.svelte-1x8y3nd {
+  display: flex;
+}

@@ -2,6 +2,8 @@ const gulp = require('gulp');
 const prefix = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const sass = require('gulp-sass');
+const esbuild = require('esbuild');
+const esbuildSvelte = require("esbuild-svelte");
 
 /* ----------------------------------------- */
 /*  Compile Sass
@@ -13,7 +15,24 @@ function handleError(err) {
   this.emit('end');
 }
 
+async function buildCode() {
+  return esbuild.build({
+    entryPoints: ["./module/vagabonds.js"],
+    bundle: true,
+    outfile: `./dist/vagabonds.js`,
+    sourcemap: true,
+    minify: false,
+    format: "esm",
+    platform: "browser",
+    plugins: [esbuildSvelte()]
+  });
+}
+const build = gulp.series(buildCode);
+exports.build = build;
+
 const SYSTEM_SCSS = ["scss/**/*.scss"];
+const STSTEM_JS = ["module/**/*.js", "module/*.js", "module/**/*.svelte"];
+
 function compileScss() {
   // Configure options for sass output. For example, 'expanded' or 'nested'
   let options = {
@@ -36,7 +55,7 @@ const css = gulp.series(compileScss);
 /* ----------------------------------------- */
 
 function watchUpdates() {
-  gulp.watch(SYSTEM_SCSS, css);
+  gulp.watch(STSTEM_JS, build);
 }
 
 /* ----------------------------------------- */
@@ -44,7 +63,10 @@ function watchUpdates() {
 /* ----------------------------------------- */
 
 exports.default = gulp.series(
-  compileScss,
+  buildCode,
   watchUpdates
 );
 exports.css = css;
+
+
+
