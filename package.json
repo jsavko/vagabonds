@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "CSS compiler for the Vagabonds of Dyfed system",
   "scripts": {
-    "build": "gulp",
+    "build": "gulp build",
     "compile": "gulp css",
     "watch": "gulp",
     "gulp": "gulp"
@@ -15,9 +15,14 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "esbuild": "^0.12.8",
+    "esbuild-svelte": "^0.5.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
     "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^2.6.5"
+    "gulp-sourcemaps": "^2.6.5",
+    "sirv-cli": "^1.0.0",
+    "svelte": "^3.38.2",
+    "svelte-layouts": "^0.3.0"
   }
 }

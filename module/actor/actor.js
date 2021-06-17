@@ -17,7 +17,7 @@ export class VagabondsActor extends Actor {
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
     if (actorData.type === 'character') this._prepareCharacterData(actorData);
-    if (actorData.type === 'npc') this._prepareCharacterData(actorData);
+    //if (actorData.type === 'npc') this._prepareCharacterData(actorData);
   }
 
   /**
@@ -25,10 +25,7 @@ export class VagabondsActor extends Actor {
    */
   _prepareCharacterData(actorData) {
     const data = actorData.data;
-
     // Make modifications to data here. For example:
-
-
   }
 
 }
