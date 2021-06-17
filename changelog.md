@@ -1,9 +1,13 @@
 # Vagabonds of Dyfed Foundry VTT System
 0.2.5
 * Updated NPC sheet to no longer use deprecate functions.
-* Updated ActorSheet html
 * Fixed issue where rolls reported negative damage.
 * Updated Actorsheet to use Item.create and Item.delete methods
+* Changed package method to esmodule with svelte front end for actor sheets
+* Auto open new items for editing when adding directly from the character sheet.
+* Updated ActorSheet workflow
+
+
 
 0.2.4
 * Fixed an issue preventing npc sheets from loading.

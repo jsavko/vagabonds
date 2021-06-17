@@ -941,7 +941,6 @@ function instance($$self, $$props, $$invalidate) {
     const fp = new FilePicker({
       type: "image",
       current,
-      selected: data.img,
       callback: (path) => {
         actor.update({ [attr2]: path });
       },

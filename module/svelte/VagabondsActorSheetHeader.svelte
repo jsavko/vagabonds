@@ -20,7 +20,6 @@
     const fp = new FilePicker({
 		type: "image",
 		current: current,
-		selected: data.img,
 		callback: (path) => {
         	actor.update({ [attr]: path });
 		},
