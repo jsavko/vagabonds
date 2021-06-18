@@ -6,6 +6,7 @@ Source book avaiable at [DriveThruRPG](https://www.drivethrurpg.com/product/2405
 
 System Package includes Techniques, Monster Abilities, and Lineages.
 
-![image](https://user-images.githubusercontent.com/192591/118870060-0055d980-b89b-11eb-8dea-a03160604f0b.png)
+![image](https://user-images.githubusercontent.com/192591/122568857-0c020080-cfff-11eb-97bb-ae3e53b8613b.png)
+
 
 ![image](https://user-images.githubusercontent.com/192591/118870473-71958c80-b89b-11eb-958b-ecd178f7f498.png)
