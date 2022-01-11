@@ -10,6 +10,8 @@
 	let data;
 	$: data = $sheetData.data;
 
+	console.log(data);
+
 
 /**
    * Opens a File Picker and updates the actor accordingly.
