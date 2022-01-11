@@ -1,4 +1,9 @@
 # Vagabonds of Dyfed Foundry VTT System
+0.3.0
+* Fixed an issue preventing loading NPC sheets in v9
+* Dropped support for Foundry VTT 0.8
+* Removed Dependancy that was no longer being used from dev enviroment
+
 0.2.5
 * Updated NPC sheet to no longer use deprecate functions.
 * Fixed issue where rolls reported negative damage.
