@@ -935,6 +935,7 @@ function instance($$self, $$props, $$invalidate) {
   component_subscribe($$self, sheetData, (value) => $$invalidate(4, $sheetData = value));
   let { actor, actorData, sheet } = $sheetData;
   let data;
+  console.log(data);
   const filePicker = (event) => {
     const attr2 = event.currentTarget.dataset.edit;
     const current = getProperty(data, attr2);
@@ -3231,7 +3232,7 @@ Hooks.once("init", async function() {
   CONFIG.Item.documentClass = VagabondsItem;
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("vagabonds", VagabondsNPCSheet, { types: ["npc"], makeDefault: true });
-  Actors.registerSheet("vagabonds", VagabondsActorSheet, { makeDefault: true });
+  Actors.registerSheet("vagabonds", VagabondsActorSheet, { types: ["character"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("vagabonds", VagabondsItemSheet, { makeDefault: true });
   Handlebars.registerHelper("concat", function() {

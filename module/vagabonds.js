@@ -33,7 +33,7 @@ Hooks.once('init', async function() {
   Actors.unregisterSheet("core", ActorSheet);
 
   Actors.registerSheet("vagabonds", VagabondsNPCSheet, { types: ["npc"], makeDefault: true });
-  Actors.registerSheet("vagabonds", VagabondsActorSheet, { makeDefault: true });
+  Actors.registerSheet("vagabonds", VagabondsActorSheet, { types: ["character"],makeDefault: true });
   
   Items.unregisterSheet("core", ItemSheet);
   Items.registerSheet("vagabonds", VagabondsItemSheet, { makeDefault: true });

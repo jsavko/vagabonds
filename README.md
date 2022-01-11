@@ -8,5 +8,6 @@ System Package includes Techniques, Monster Abilities, and Lineages.
 
 ![image](https://user-images.githubusercontent.com/192591/122568857-0c020080-cfff-11eb-97bb-ae3e53b8613b.png)
 
+Add Techniques and Lineage by drop them onto the actor sheet from the included compendium
 
 ![image](https://user-images.githubusercontent.com/192591/118870473-71958c80-b89b-11eb-958b-ecd178f7f498.png)
