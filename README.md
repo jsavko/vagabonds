@@ -1,4 +1,6 @@
 # Vagabonds of Dyfed Foundry VTT System
+![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json?color=orange&label=Foundry%20Version&query=compatibleCoreVersion&url=https%3A%2F%2Fraw.githubusercontent.com%2Fjsavko%2Fvagabonds%2Fmain%2Fsystem.json)
+[![ko-fi](https://img.shields.io/badge/-Buy%20me%20a%20beer-orange)](https://ko-fi.com/lostphoenix)
 
 The Vagabonds of Dyfed system for FoundryVTT!
 
