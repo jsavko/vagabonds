@@ -2,12 +2,11 @@
 <script>
 	import { getContext } from "svelte";
 	import { slide } from "svelte/transition";
-	import { writable } from "svelte/store";
 
 
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
-	let { actor, data, sheet } = $sheetData;
+	let { sheet } = $sheetData;
 	
 	//let gear = $sheetData.data.gear;
 	let gear;
@@ -30,7 +29,7 @@
 		}
 	}
  
-	const sheetSub = sheetData.subscribe((v) => (sheet = v.sheet));
+	//const sheetSub = sheetData.subscribe((v) => (sheet = v.sheet));
 </script>
 
 <gear>

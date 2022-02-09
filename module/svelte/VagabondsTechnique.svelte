@@ -2,12 +2,11 @@
 <script>
 	import { getContext } from "svelte";
 	import { slide } from "svelte/transition";
-	import { writable } from "svelte/store";
 
 
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
-	let { actor, data, actorData, sheet } = $sheetData;
+	let { sheet } = $sheetData;
 	let techniques;
 	$: techniques = $sheetData.data.techniques
 

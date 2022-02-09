@@ -1,12 +1,12 @@
 <script>
 	import { getContext } from "svelte";
-	import { slide } from "svelte/transition";
-	import { writable } from "svelte/store";
+	//import { slide } from "svelte/transition";
+	//import { writable } from "svelte/store";
 
 	
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
-	let { actor, data, actorData, sheet } = $sheetData;
+	let {  data} = $sheetData;
 </script>
 
 <main>
@@ -54,11 +54,6 @@
 	main input {
 		border: none;
 	}
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
+
 
 </style>

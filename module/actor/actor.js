@@ -11,8 +11,8 @@ export class VagabondsActor extends Actor {
     super.prepareData();
 
     const actorData = this.data;
-    const data = actorData.data;
-    const flags = actorData.flags;
+    //const data = actorData.data;
+    //const flags = actorData.flags;
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
@@ -24,8 +24,9 @@ export class VagabondsActor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
-    const data = actorData.data;
+    //const data = actorData.data;
     // Make modifications to data here. For example:
+    return actorData
   }
 
 }

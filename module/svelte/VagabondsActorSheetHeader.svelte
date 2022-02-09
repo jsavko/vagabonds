@@ -1,12 +1,11 @@
 <script>
 	import { getContext } from "svelte";
-	import { slide } from "svelte/transition";
-	import { writable } from "svelte/store";
+
 
 
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
-	let { actor, actorData, sheet } = $sheetData;
+	let { actor, sheet } = $sheetData;
 	let data;
 	$: data = $sheetData.data;
 
@@ -23,7 +22,7 @@
 		type: "image",
 		current: current,
 		callback: (path) => {
-        	actor.update({ [attr]: path });
+			actor.update({ [attr]: path });
 		},
 		top: sheet.position.top + 40,
 		left: sheet.position.left + 10,
@@ -149,25 +148,4 @@
 
 	}
 
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-		display:flex;		
-	}
-
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>

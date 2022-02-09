@@ -1,5 +1,5 @@
 /* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetHeader.esbuild-svelte-fake-css */
-actorhead.svelte-1e1arv.svelte-1e1arv {
+actorhead.svelte-dstnap.svelte-dstnap {
   margin: 0 auto;
   padding: 1em;
   display: grid;
@@ -9,19 +9,19 @@ actorhead.svelte-1e1arv.svelte-1e1arv {
   vertical-align: bottom;
   height: 100%;
 }
-actorhead.svelte-1e1arv input.svelte-1e1arv {
+actorhead.svelte-dstnap input.svelte-dstnap {
   border: none;
   height: 45px;
   font-size: 20px;
 }
-.profile-img.svelte-1e1arv.svelte-1e1arv {
+.profile-img.svelte-dstnap.svelte-dstnap {
   grid-column-start: 1;
   grid-column-end: 1;
   grid-row-start: 1;
   grid-row-end: 2;
   margin-top: 0px;
 }
-.namebox.svelte-1e1arv.svelte-1e1arv {
+.namebox.svelte-dstnap.svelte-dstnap {
   grid-column-start: 2;
   grid-column-end: 7;
   grid-row-start: 1;
@@ -30,7 +30,7 @@ actorhead.svelte-1e1arv input.svelte-1e1arv {
   vertical-align: bottom;
   margin-left: 2px;
 }
-.item1.svelte-1e1arv.svelte-1e1arv {
+.item1.svelte-dstnap.svelte-dstnap {
   grid-column-start: 2;
   grid-row-start: 2;
   width: 100%;
@@ -38,42 +38,40 @@ actorhead.svelte-1e1arv input.svelte-1e1arv {
   margin-top: auto;
   margin-left: 2px;
 }
-.item2.svelte-1e1arv.svelte-1e1arv {
+.item2.svelte-dstnap.svelte-dstnap {
   grid-column-start: 3;
   grid-row-start: 2;
   width: 100%;
   min-width: 93px;
   margin-top: auto;
 }
-.item2.svelte-1e1arv input.svelte-1e1arv {
+.item2.svelte-dstnap input.svelte-dstnap {
   width: 35px;
 }
-.item3.svelte-1e1arv.svelte-1e1arv {
+.item3.svelte-dstnap.svelte-dstnap {
   grid-column-start: 4;
   grid-row-start: 2;
   width: 100%;
   min-width: 93px;
   margin-top: auto;
 }
-.item4.svelte-1e1arv.svelte-1e1arv {
+.item4.svelte-dstnap.svelte-dstnap {
   grid-column-start: 5;
   grid-row-start: 2;
   width: 100%;
   min-width: 93px;
   margin-top: auto;
 }
-.item5.svelte-1e1arv.svelte-1e1arv {
+.item5.svelte-dstnap.svelte-dstnap {
   grid-column-start: 6;
   grid-row-start: 2;
   width: 100%;
   min-width: 93px;
   margin-top: auto;
 }
-@media (min-width: 640px) {
-}
 
 /* fakecss:D:/FoundryData/Data/systems/vagabonds/module/svelte/VagabondsActorSheetBodyLeft.esbuild-svelte-fake-css */
-main.svelte-vo4iol.svelte-vo4iol {
+main.svelte-wvbhe2.svelte-wvbhe2 {
   text-align: center;
   margin: 0 auto;
   width: 100%;
@@ -82,7 +80,7 @@ main.svelte-vo4iol.svelte-vo4iol {
   flex: 0 0 50%;
   border-right: 1px solid #999;
 }
-main.svelte-vo4iol input.svelte-vo4iol {
+main.svelte-wvbhe2 input.svelte-wvbhe2 {
   border: none;
 }
 

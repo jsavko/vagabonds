@@ -1,7 +1,7 @@
 <script>
 	import { setContext } from "svelte";
-	import { slide } from "svelte/transition";
-	import { writable } from "svelte/store";
+	//import { slide } from "svelte/transition";
+	//import { writable } from "svelte/store";
 
 	  // Component imports
 	  //TODO: IMPORTS
@@ -14,7 +14,7 @@
 	export let dataStore ;
 	setContext("sheetStore", dataStore);
 	//let sheetData = getContext("sheetStore");
-	let { actor, data, actorData, sheet } = $dataStore;
+	//let { actor, data, actorData, sheet } = $dataStore;
 </script>
 
 <header>

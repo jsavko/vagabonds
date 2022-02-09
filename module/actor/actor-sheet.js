@@ -8,6 +8,7 @@
  export class VagabondsActorSheet extends ActorSheet {
 
 
+
   app = null;
   dataStore = null;
 
@@ -27,7 +28,6 @@
   /** @override */
   getData() {
     const data = super.getData();
-    let isOwner = this.actor.isOwner;
     data.dtypes = ["String", "Number", "Boolean"];
     for (let attr of Object.values(data.data.data.attributes)) {
       attr.isCheckbox = attr.dtype === "Boolean";
@@ -55,7 +55,6 @@
   // Iterate through items, allocating to containers
   // let totalWeight = 0;
   for (let i of sheetData.items) {
-    let item = i;
     i.img = i.img || DEFAULT_TOKEN;
     // Append to features.
  
@@ -222,6 +221,7 @@ render(force=false, options={}) {
         //name: 'world',
       },
     });
+    
   })
   // Update editable permission
   options.editable = options.editable ?? this.object.isOwner;
