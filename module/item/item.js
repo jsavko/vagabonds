@@ -12,8 +12,8 @@ export class VagabondsItem extends Item {
 
     // Get the Item's data
     const itemData = this.data;
-    const actorData = this.actor ? this.actor.data : {};
-    const data = itemData.data;
+    //const actorData = this.actor ? this.actor.data : {};
+    //const data = itemData.data;
 
     if (itemData.type == "injury" && itemData.img == 'icons/svg/item-bag.svg') { 
       itemData.img = 'systems/vagabonds/assets/cut-palm.svg'

@@ -23,5 +23,9 @@
     "sirv-cli": "^1.0.0",
     "svelte": "^3.38.2",
     "svelte-layouts": "^0.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-plugin-svelte3": "^3.4.0"
   }
 }

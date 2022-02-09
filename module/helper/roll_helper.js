@@ -46,28 +46,28 @@ export class RollHelper {
                 if (confirmed) {
                     let rollModifier = parseInt(html.find('[name=modifier-value]')[0].value);
                     let rollisDefense= html.find(`[name=rolltype-defense]`).is(":checked");
-                    let token = canvas.tokens.controlled;
+                    //let token = canvas.tokens.controlled;
                     let actor = game.user.character ?? canvas.tokens.controlled[0]?.actor ?? game.actors.find(a => a.owner);
                     //console.log(token);
                     if (actor.length == 0) {
                             ui.notifications.error("You must have an actor to roll a defense roll");
                             return
-                    } else {
-                        
                     }
-
+                    let roll;
+                    let RollTemplate;
                     if (rollModifier >= 0) { 
-                        var roll = new Roll("2d6 +" + rollModifier, actor.data);
+                        roll = new Roll("2d6 +" + rollModifier, actor.data);
                     } else {
-                        var roll = new Roll("2d6 " + rollModifier, actor.data);
+                        roll = new Roll("2d6 " + rollModifier, actor.data);
                     }
                     roll.evaluate({async: true}).then(
                         function(result) {
                             //console.log(result); // "Stuff worked!"
                             //Set Roll Type
+                            let RollResult;
                             if (rollisDefense == true) {
                                 //Making a defense roll
-                                var RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
+                                RollResult = {type: "defend", high: "0", low:"0", damage:"No", outcome:" Outright success", roll: roll };
                                 if (result.terms[0].results[0].result > result.terms[0].results[1].result) {
                                     RollResult.high = result.terms[0].results[0].result;
                                     RollResult.low = result.terms[0].results[1].result;
@@ -87,7 +87,7 @@ export class RollHelper {
                                 if (RollResult.damage < 0) { RollResult.damage = 0; }
                                 
                                 let template = 'systems/vagabonds/templates/chat/rolls.html';
-                                var RollTemplate = renderTemplate(template, RollResult).then(content => {
+                                RollTemplate = renderTemplate(template, RollResult).then(content => {
                                     result.toMessage({
                                         user: game.user.id,
                                         speaker: ChatMessage.getSpeaker({actor: result.data}),
@@ -97,7 +97,7 @@ export class RollHelper {
 
                             } else {
                                 //Normal Roll
-                                var RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: result };
+                                RollResult = {type: "action", outcome:"Complete Success", apptitude: rollModifier, roll: result };
                                 if (result._total < 7) {
                                     RollResult.outcome = "Failure";
                                 } else if (result._total < 10) {
@@ -106,7 +106,7 @@ export class RollHelper {
                                     RollResult.outcome = "Critical Success";
                                 }
                                 let template = 'systems/vagabonds/templates/chat/rolls.html';
-                                var RollTemplate = renderTemplate(template, RollResult).then(content => {
+                                RollTemplate = renderTemplate(template, RollResult).then(content => {
                                     result.toMessage({
                                     speaker: ChatMessage.getSpeaker({ }),//actor: this.actor }),
                                     flavor: content,

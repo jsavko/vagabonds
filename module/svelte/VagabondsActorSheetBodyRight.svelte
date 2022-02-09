@@ -1,7 +1,6 @@
 <script>
 	import { getContext } from "svelte";
-	import { slide } from "svelte/transition";
-	import { writable } from "svelte/store";
+
 	
 	import VagabondsLinage from "./VagabondsLinage.svelte"; 
 	import VagabondsGear from "./VagabondsGear.svelte"; 
@@ -12,7 +11,7 @@
 	//export let dataStore;
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
-	let { actor, data, actorData, sheet } = $sheetData;
+	let {  data } = $sheetData;
 </script>
 <main>
 	<label class="resource-label">Core Flaw</label>
