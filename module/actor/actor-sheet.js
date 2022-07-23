@@ -58,23 +58,23 @@
     i.img = i.img || DEFAULT_TOKEN;
     // Append to features.
  
-    switch(i.type) {
-      case 'item':
-        gear.push(i);
-        break;
-      case 'lineage':
-        lineage.push(i);
-        break;
-      case 'technique': 
-        techniques.push(i);
-        break;
-      case 'injury':
-        injury.push(i);
-        break;
-      case 'approach':
-        approach.push(i);
-        break;
-    }
+  switch(i.type) {
+  case 'item':
+  gear.push(i);
+  break;
+  case 'lineage':
+  lineage.push(i);
+  break;
+  case 'technique': 
+  techniques.push(i);
+  break;
+  case 'injury':
+  injury.push(i);
+  break;
+  case 'approach':
+  approach.push(i);
+  break;
+  }
   }
 
   // Assign and return
