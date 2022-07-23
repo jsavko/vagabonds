@@ -1213,10 +1213,12 @@ function create_each_block(ctx) {
   let t1;
   let t2;
   let div1;
-  let a;
-  let li_data_item_id_value;
+  let a0;
   let t3;
+  let a1;
+  let li_data_item_id_value;
   let t4;
+  let t5;
   let div2_transition;
   let current;
   let mounted;
@@ -1239,12 +1241,15 @@ function create_each_block(ctx) {
       t1 = text(t1_value);
       t2 = space();
       div1 = element("div");
-      a = element("a");
-      a.innerHTML = `<i class="fas fa-trash"></i>`;
+      a0 = element("a");
+      a0.innerHTML = `<i class="fas fa-edit"></i>`;
       t3 = space();
+      a1 = element("a");
+      a1.innerHTML = `<i class="fas fa-trash"></i>`;
+      t4 = space();
       if (if_block)
         if_block.c();
-      t4 = space();
+      t5 = space();
       if (img.src !== (img_src_value = ctx[9].img))
         attr(img, "src", img_src_value);
       attr(img, "title", img_title_value = ctx[9].name);
@@ -1252,8 +1257,10 @@ function create_each_block(ctx) {
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
       attr(h4, "class", "item-name");
-      attr(a, "class", "item-control item-delete");
-      attr(a, "title", "Delete Item");
+      attr(a0, "class", "item-control item-edit");
+      attr(a0, "title", "Edit Item");
+      attr(a1, "class", "item-control item-delete");
+      attr(a1, "title", "Delete Item");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
       attr(li, "data-item-id", li_data_item_id_value = ctx[9]._id);
@@ -1268,17 +1275,23 @@ function create_each_block(ctx) {
       append(h4, t1);
       append(li, t2);
       append(li, div1);
-      append(div1, a);
-      append(div2, t3);
+      append(div1, a0);
+      append(div1, t3);
+      append(div1, a1);
+      append(div2, t4);
       if (if_block)
         if_block.m(div2, null);
-      append(div2, t4);
+      append(div2, t5);
       current = true;
       if (!mounted) {
         dispose = [
           listen(div0, "click", click_handler),
           listen(h4, "click", click_handler_1),
-          listen(a, "click", function() {
+          listen(a0, "click", function() {
+            if (is_function(ctx[3]?._onItemEdit(ctx[9]._id)))
+              ctx[3]?._onItemEdit(ctx[9]._id).apply(this, arguments);
+          }),
+          listen(a1, "click", function() {
             if (is_function(ctx[3]?._onItemDelete(ctx[9]._id)))
               ctx[3]?._onItemDelete(ctx[9]._id).apply(this, arguments);
           })
@@ -1309,7 +1322,7 @@ function create_each_block(ctx) {
           if_block = create_if_block(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(div2, t4);
+          if_block.m(div2, t5);
         }
       } else if (if_block) {
         group_outros();
@@ -1939,10 +1952,12 @@ function create_each_block3(ctx) {
   let t1;
   let t2;
   let div1;
-  let a;
-  let li_data_item_id_value;
+  let a0;
   let t3;
+  let a1;
+  let li_data_item_id_value;
   let t4;
+  let t5;
   let div2_transition;
   let current;
   let mounted;
@@ -1965,12 +1980,15 @@ function create_each_block3(ctx) {
       t1 = text(t1_value);
       t2 = space();
       div1 = element("div");
-      a = element("a");
-      a.innerHTML = `<i class="fas fa-trash"></i>`;
+      a0 = element("a");
+      a0.innerHTML = `<i class="fas fa-edit"></i>`;
       t3 = space();
+      a1 = element("a");
+      a1.innerHTML = `<i class="fas fa-trash"></i>`;
+      t4 = space();
       if (if_block)
         if_block.c();
-      t4 = space();
+      t5 = space();
       if (img.src !== (img_src_value = ctx[9].img))
         attr(img, "src", img_src_value);
       attr(img, "title", img_title_value = ctx[9].name);
@@ -1978,8 +1996,10 @@ function create_each_block3(ctx) {
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
       attr(h4, "class", "item-name");
-      attr(a, "class", "item-control item-delete");
-      attr(a, "title", "Delete Item");
+      attr(a0, "class", "item-control item-edit");
+      attr(a0, "title", "Edit Item");
+      attr(a1, "class", "item-control item-delete");
+      attr(a1, "title", "Delete Item");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
       attr(li, "data-item-id", li_data_item_id_value = ctx[9]._id);
@@ -1994,17 +2014,23 @@ function create_each_block3(ctx) {
       append(h4, t1);
       append(li, t2);
       append(li, div1);
-      append(div1, a);
-      append(div2, t3);
+      append(div1, a0);
+      append(div1, t3);
+      append(div1, a1);
+      append(div2, t4);
       if (if_block)
         if_block.m(div2, null);
-      append(div2, t4);
+      append(div2, t5);
       current = true;
       if (!mounted) {
         dispose = [
           listen(div0, "click", click_handler),
           listen(h4, "click", click_handler_1),
-          listen(a, "click", function() {
+          listen(a0, "click", function() {
+            if (is_function(ctx[3]?._onItemEdit(ctx[9]._id)))
+              ctx[3]?._onItemEdit(ctx[9]._id).apply(this, arguments);
+          }),
+          listen(a1, "click", function() {
             if (is_function(ctx[3]?._onItemDelete(ctx[9]._id)))
               ctx[3]?._onItemDelete(ctx[9]._id).apply(this, arguments);
           })
@@ -2035,7 +2061,7 @@ function create_each_block3(ctx) {
           if_block = create_if_block3(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(div2, t4);
+          if_block.m(div2, t5);
         }
       } else if (if_block) {
         group_outros();

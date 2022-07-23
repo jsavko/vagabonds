@@ -1,4 +1,7 @@
 # Vagabonds of Dyfed Foundry VTT System
+0.3.1
+* Made Techiques and Lineages editable by request of a user
+
 0.3.0
 * Fixed an issue preventing loading NPC sheets in v9
 * Dropped support for Foundry VTT 0.8
