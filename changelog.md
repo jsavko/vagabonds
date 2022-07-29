@@ -1,4 +1,7 @@
 # Vagabonds of Dyfed Foundry VTT System
+0.3.4
+* Advantage / Disadvantage rolls
+
 0.3.1
 * Made Techiques and Lineages editable by request of a user
 
