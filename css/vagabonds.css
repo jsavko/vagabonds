@@ -303,3 +303,11 @@
 .left {
   text-align: left;
 }
+
+span.flavor-text h2 { 
+  text-align: center;
+}
+
+span.flavor-text h1 { 
+  text-align: center;
+}

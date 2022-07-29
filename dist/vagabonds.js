@@ -3141,9 +3141,17 @@ var RollHelper = class {
                     <option value="-3">-3</option>
                 </select>
             </div>
-                <div class="form-group">
+            <div class="form-group">
                 <label>Defence Roll?</label>
                 <input type="checkbox" ` + defend + ` id="rolltype-defense" name="rolltype-defense" value="1"> Yes
+            </div>
+            <div class="form-group">
+            <label>Roll Type:</label>
+                <select id="roll-adv" name="roll-adv">
+                    <option value="adv">Advantage</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="dis">Disadvantage</option>
+                </select>
             </div>
             </form>
             `,
@@ -3164,6 +3172,7 @@ var RollHelper = class {
         if (confirmed) {
           let rollModifier = parseInt(html.find("[name=modifier-value]")[0].value);
           let rollisDefense = html.find(`[name=rolltype-defense]`).is(":checked");
+          let rollType = html.find("[name=roll-adv]")[0].value;
           let actor = game.user.character ?? canvas.tokens.controlled[0]?.actor ?? game.actors.find((a) => a.owner);
           if (actor.length == 0) {
             ui.notifications.error("You must have an actor to roll a defense roll");
@@ -3171,10 +3180,16 @@ var RollHelper = class {
           }
           let roll;
           let RollTemplate;
+          let baseRoll = "2d6";
+          console.log(rollType);
+          if (rollType == "adv")
+            baseRoll = "3d6kh2";
+          if (rollType == "dis")
+            baseRoll = "3d6kl2";
           if (rollModifier >= 0) {
-            roll = new Roll("2d6 +" + rollModifier, actor.data);
+            roll = new Roll(baseRoll + " +" + rollModifier, actor.data);
           } else {
-            roll = new Roll("2d6 " + rollModifier, actor.data);
+            roll = new Roll(baseRoll + rollModifier, actor.data);
           }
           roll.evaluate({ async: true }).then(function(result) {
             let RollResult;
