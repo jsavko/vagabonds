@@ -1,62 +1,57 @@
 <script>
 	import { getContext } from "svelte";
 
+	import { writable } from "svelte/store";
 
 
 	//getContext("sheetStore", dataStore);	
-	let sheetData = getContext("sheetStore");
-	let { actor, sheet } = $sheetData;
-	let data;
-	$: data = $sheetData.data;
-
-	console.log(data);
-
-
+	let sheetData = getContext("sheetStore"); 
 /**
    * Opens a File Picker and updates the actor accordingly.
    */
-	const filePicker = (event) => {
-    const attr = event.currentTarget.dataset.edit;
-    const current = getProperty(data, attr);
-    const fp = new FilePicker({
-		type: "image",
-		current: current,
-		callback: (path) => {
-			actor.update({ [attr]: path });
-		},
-		top: sheet.position.top + 40,
-		left: sheet.position.left + 10,
-		});
-    return fp.browse();
-	};
+   const filePicker = (event) => {
+        const attr = event.currentTarget.dataset.edit;
+        const current = getProperty($sheetData.actor, attr);
+        const fp = new FilePicker({
+            type: "image",
+            current: current,
+            callback: (path) => {
+                $sheetData.actor.update({ [attr]: path });
+            },
+            top: $sheetData.sheet.position.top + 40,
+            left: $sheetData.sheet.position.left + 10
+        });
+        return fp.browse();
+    };
+
 
 </script>
 
 <actorhead>
-	<img on:click={filePicker} class="profile-img" src="{data.img}" data-edit="img" title="{data.name}" height="125" width="125"/>
+	<img on:click={filePicker} class="profile-img" src="{$sheetData.actor.img}" data-edit="img" title="{$sheetData.actor.name}" height="125" width="125"/>
 	<div class="namebox">
-		<input name="name" type="text" value="{data.name}" placeholder="Name"/>
+		<input name="name" type="text" value="{$sheetData.actor.name}" placeholder="Name"/>
 	</div>
 	<div class="item1">
-		<input type="text" name="data.attributes.level.value" value="{data.data.attributes.level.value}" data-dtype="Number"/>
+		<input type="text" name="system.attributes.level.value" value="{$sheetData.actor.system.attributes.level.value}" data-dtype="Number"/>
 		<label>Level</label>
 	</div>
 	<div class="item2">
-		<input type="text" name="data.health.value" value="{data.data.health.value}" data-dtype="Number"/>
+		<input type="text" name="system.health.value" value="{$sheetData.actor.system.health.value}" data-dtype="Number"/>
 		<span> / </span>
-		<input type="text" name="data.health.max" value="{data.data.health.max}" data-dtype="Number"/>
+		<input type="text" name="system.health.max" value="{$sheetData.actor.system.health.max}" data-dtype="Number"/>
 		<label>HP</label>
 	</div>
 	<div class="item3">
-		<input type="text" name="data.speed.value" value="{data.data.speed.value}" data-dtype="Number"/>
+		<input type="text" name="system.speed.value" value="{$sheetData.actor.system.speed.value}" data-dtype="Number"/>
 		<label>Speed</label>
 	</div>
 	<div class="item4">
-		<input type="text" name="data.armor.value" value="{data.data.armor.value}" data-dtype="Number"/>
-		<label on:click={sheet?._onRoll.bind(sheet)} for="data.data.armor.value" class="resource-label rollable" data-defend="2d6">Armor</label> 
+		<input type="text" name="system.armor.value" value="{$sheetData.actor.system.armor.value}" data-dtype="Number"/>
+		<label on:click={$sheetData.sheet?._onRoll.bind($sheetData.sheet)} for="system.armor.value" class="resource-label rollable" data-defend="2d6">Armor</label> 
 	</div>
 	<div class="item5">
-		<input type="text" name="data.attributes.xp.value" value="{data.data.attributes.xp.value}" data-dtype="Number"/>
+		<input type="text" name="system.attributes.xp.value" value="{$sheetData.actor.system.attributes.xp.value}" data-dtype="Number"/>
 		<label>Exp</label>
 	</div>
 </actorhead>

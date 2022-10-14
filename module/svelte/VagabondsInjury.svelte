@@ -9,7 +9,7 @@
 	let sheetData = getContext("sheetStore");
 	let {  sheet } = $sheetData;
 	let injury;
-	$: injury = $sheetData.data.injury
+	$: injury = $sheetData.injury
 
 	let showItems = [];
 	let hasBeenClicked = false;
@@ -45,7 +45,7 @@
 			</li>
 			{#if showItems[item._id]}
 			<div class="item_desc"  transition:slide>
-				{@html item.data.description}
+				{@html item.system.description}
 			</div>
 			{/if}
 		</div>

@@ -10,7 +10,7 @@
 	
 	//let gear = $sheetData.data.gear;
 	let gear;
-	$: gear = $sheetData.data.gear
+	$: gear = $sheetData.gear
 
 	let showItems = [];
 	let hasBeenClicked = false;
@@ -49,7 +49,7 @@
 			</li>
 			{#if showItems[item._id]} 
 			<div class="item_desc"  transition:slide>
-				{@html item.data.description}
+				{@html item.system.description}
 			</div>
 			{/if}
 		</div>

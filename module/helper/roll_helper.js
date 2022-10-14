@@ -57,9 +57,10 @@ export class RollHelper {
                     let rollType =html.find('[name=roll-adv]')[0].value;
                     //let token = canvas.tokens.controlled;
                     let actor = game.user.character ?? canvas.tokens.controlled[0]?.actor ?? game.actors.find(a => a.owner);
+
                     //console.log(token);
-                    if (actor.length == 0) {
-                            ui.notifications.error("You must have an actor to roll a defense roll");
+                    if (actor == undefined) {
+                            ui.notifications.error("You must select a token to roll");
                             return
                     }
                     let roll;
@@ -70,9 +71,11 @@ export class RollHelper {
                     if (rollType == "dis") baseRoll = "3d6kl2"
 
                     if (rollModifier >= 0) { 
-                        roll = new Roll(baseRoll + " +" + rollModifier, actor.data);
+
+                        roll = new Roll(baseRoll + " +" + rollModifier, actor);
                     } else {
-                        roll = new Roll(baseRoll + rollModifier, actor.data);
+                        roll = new Roll(baseRoll + rollModifier, actor);
+
                     }
                     roll.evaluate({async: true}).then(
                         function(result) {
@@ -92,10 +95,10 @@ export class RollHelper {
 
                                 if (result._total < 7) {
                                     RollResult.outcome = "Failure";
-                                    RollResult.damage =  (RollResult.high - result.data.data.armor.value);
+                                    RollResult.damage =  (RollResult.high - result.data.system.armor.value);
                                 } else if (result._total < 10) {
                                     RollResult.outcome = "Partial Success";
-                                    RollResult.damage = (RollResult.low - result.data.data.armor.value)
+                                    RollResult.damage = (RollResult.low - result.data.system.armor.value)
                                 } 
 
                                 if (RollResult.damage < 0) { RollResult.damage = 0; }

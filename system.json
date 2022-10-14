@@ -1,11 +1,15 @@
 {
-  "name": "vagabonds",
+  "id": "vagabonds",
   "title": "Vagabonds of Dyfed",
   "description": "The Vagabonds of Dyfed system for FoundryVTT!",
-  "version": "0.3.1",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
-  "templateVersion": 2,
+
+  "version": "0.4.0",
+  "compatibility": {
+    "minimum": 10, 
+    "verified": 10.288, 
+    "maximum": 10 
+  },
+  "templateVersion": 4,
   "author": "LostPhoenix",
   "esmodules": ["dist/vagabonds.js"],
   "styles": ["css/vagabonds.css", "dist/vagabonds.css"],

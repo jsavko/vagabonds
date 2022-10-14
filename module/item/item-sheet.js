@@ -28,8 +28,9 @@ export class VagabondsItemSheet extends ItemSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
+  async getData() {
     const data = super.getData();
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, {async: true});
     return data;
   }
 
