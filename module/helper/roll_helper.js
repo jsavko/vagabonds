@@ -71,9 +71,11 @@ export class RollHelper {
                     if (rollType == "dis") baseRoll = "3d6kl2"
 
                     if (rollModifier >= 0) { 
+
                         roll = new Roll(baseRoll + " +" + rollModifier, actor);
                     } else {
                         roll = new Roll(baseRoll + rollModifier, actor);
+
                     }
                     roll.evaluate({async: true}).then(
                         function(result) {

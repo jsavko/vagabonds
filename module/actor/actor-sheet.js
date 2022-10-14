@@ -2,6 +2,7 @@
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
+
 import VagabondsActorSheetBase from "../svelte/VagabondsActorSheetBase.svelte"; // import Svelte App
 import { writable } from "svelte/store";
 
@@ -27,6 +28,7 @@ export class VagabondsActorSheet extends ActorSheet {
     }
 
     /* -------------------------------------------- */
+
 
     /** @override */
     getData() {
@@ -93,6 +95,7 @@ export class VagabondsActorSheet extends ActorSheet {
       //Let's migrate system data? 
       console.log('Attempting to migrate system data');
     }
+
 
     /** @override */
     activateListeners(html) {

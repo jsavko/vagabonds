@@ -6,7 +6,9 @@
 	
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
+
 	let {  data } = $sheetData;
+
 </script>
 
 <main>

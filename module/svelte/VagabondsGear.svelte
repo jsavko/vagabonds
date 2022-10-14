@@ -8,7 +8,6 @@
 	let sheetData = getContext("sheetStore");
 	let { sheet } = $sheetData;
 	
-	
 	//let gear = $sheetData.data.gear;
 	let gear;
 	$: gear = $sheetData.gear

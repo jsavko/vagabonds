@@ -11,7 +11,9 @@
 	//export let dataStore;
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
+
 	//let {  data } = $sheetData;
+
 </script>
 <main>
 	<label class="resource-label">Core Flaw</label>

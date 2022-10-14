@@ -1,12 +1,10 @@
 # Vagabonds of Dyfed Foundry VTT System
-
 0.4.0
 * Updated for Foundry v10
 * Added Temp Health for Health Estimator Module
 
 0.3.5
 * Updated Error messages when rolling without an actor
-
 0.3.4
 * Advantage / Disadvantage rolls
 

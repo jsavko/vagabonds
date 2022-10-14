@@ -62,8 +62,10 @@ var require_8 = __commonJS({
 var VagabondsActor = class extends Actor {
   prepareData() {
     super.prepareData();
+
     const actorData = this;
     if (this.type === "character")
+
       this._prepareCharacterData(actorData);
   }
   _prepareCharacterData(actorData) {
@@ -805,7 +807,9 @@ function create_fragment(ctx) {
       label4 = element("label");
       label4.textContent = "Exp";
       attr(img, "class", "profile-img svelte-dstnap");
+
       if (img.src !== (img_src_value = ctx[0].actor.img))
+
         attr(img, "src", img_src_value);
       attr(img, "data-edit", "img");
       attr(img, "title", img_title_value = ctx[0].actor.name);
@@ -845,7 +849,9 @@ function create_fragment(ctx) {
       input5.value = input5_value_value = ctx[0].actor.system.armor.value;
       attr(input5, "data-dtype", "Number");
       attr(input5, "class", "svelte-dstnap");
+
       attr(label3, "for", "system.armor.value");
+
       attr(label3, "class", "resource-label rollable");
       attr(label3, "data-defend", "2d6");
       attr(div4, "class", "item4 svelte-dstnap");
@@ -946,7 +952,9 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
   let $sheetData;
   let sheetData = getContext("sheetStore");
+
   component_subscribe($$self, sheetData, (value) => $$invalidate(0, $sheetData = value));
+
   const filePicker = (event) => {
     const attr2 = event.currentTarget.dataset.edit;
     const current = getProperty($sheetData.actor, attr2);
@@ -1600,6 +1608,7 @@ function create_if_block2(ctx) {
     },
     p(ctx2, dirty) {
       if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
+
         div.innerHTML = raw_value;
       ;
     },
@@ -1978,6 +1987,7 @@ function get_each_context3(ctx, list, i) {
 function create_if_block3(ctx) {
   let div;
   let raw_value = ctx[9].system.description + "";
+
   let div_transition;
   let current;
   return {
@@ -2324,7 +2334,9 @@ function get_each_context4(ctx, list, i) {
 }
 function create_if_block4(ctx) {
   let div;
+
   let raw_value = ctx[9].system.description + "";
+
   let div_transition;
   let current;
   return {
@@ -2338,7 +2350,9 @@ function create_if_block4(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
+
       if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
+
         div.innerHTML = raw_value;
       ;
     },
@@ -2799,8 +2813,10 @@ function create_fragment7(ctx) {
 function instance7($$self, $$props, $$invalidate) {
   let $sheetData;
   let sheetData = getContext("sheetStore");
+
   component_subscribe($$self, sheetData, (value) => $$invalidate(0, $sheetData = value));
   return [$sheetData, sheetData];
+
 }
 var VagabondsActorSheetBodyRight = class extends SvelteComponent {
   constructor(options) {
@@ -2891,6 +2907,54 @@ var VagabondsActorSheetBase = class extends SvelteComponent {
 var VagabondsActorSheetBase_default = VagabondsActorSheetBase;
 require_8();
 
+// node_modules/svelte/store/index.mjs
+var subscriber_queue = [];
+function writable(value, start = noop) {
+  let stop;
+  const subscribers = [];
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (let i = 0; i < subscribers.length; i += 1) {
+          const s = subscribers[i];
+          s[1]();
+          subscriber_queue.push(s, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update2(fn) {
+    set(fn(value));
+  }
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.push(subscriber);
+    if (subscribers.length === 1) {
+      stop = start(set) || noop;
+    }
+    run2(value);
+    return () => {
+      const index = subscribers.indexOf(subscriber);
+      if (index !== -1) {
+        subscribers.splice(index, 1);
+      }
+      if (subscribers.length === 0) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  return { set, update: update2, subscribe: subscribe2 };
+}
+
 // module/actor/actor-sheet.js
 var VagabondsActorSheet = class extends ActorSheet {
   app = null;
@@ -2912,7 +2976,9 @@ var VagabondsActorSheet = class extends ActorSheet {
   }
   getData() {
     const data = super.getData();
+
     if (this.actor.type == "character") {
+
       this._prepareCharacterItems(data);
     }
     return data;
@@ -3113,7 +3179,9 @@ var VagabondsNPCSheet = class extends ActorSheet {
 var VagabondsItem = class extends Item {
   prepareData() {
     super.prepareData();
+
     const itemData = this;
+
     if (itemData.type == "injury" && itemData.img == "icons/svg/item-bag.svg") {
       itemData.img = "systems/vagabonds/assets/cut-palm.svg";
     } else if (itemData.type == "item" && itemData.img == "icons/svg/item-bag.svg") {
@@ -3231,9 +3299,11 @@ var RollHelper = class {
           if (rollType == "dis")
             baseRoll = "3d6kl2";
           if (rollModifier >= 0) {
+
             roll = new Roll(baseRoll + " +" + rollModifier, actor);
           } else {
             roll = new Roll(baseRoll + rollModifier, actor);
+
           }
           roll.evaluate({ async: true }).then(function(result) {
             let RollResult;
