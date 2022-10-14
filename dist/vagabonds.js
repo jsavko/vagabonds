@@ -62,8 +62,8 @@ var require_8 = __commonJS({
 var VagabondsActor = class extends Actor {
   prepareData() {
     super.prepareData();
-    const actorData = this.data;
-    if (actorData.type === "character")
+    const actorData = this;
+    if (this.type === "character")
       this._prepareCharacterData(actorData);
   }
   _prepareCharacterData(actorData) {
@@ -130,8 +130,33 @@ function loop(callback) {
     }
   };
 }
+var is_hydrating = false;
+function start_hydrating() {
+  is_hydrating = true;
+}
+function end_hydrating() {
+  is_hydrating = false;
+}
 function append(target, node) {
   target.appendChild(node);
+}
+function get_root_for_style(node) {
+  if (!node)
+    return document;
+  const root = node.getRootNode ? node.getRootNode() : node.ownerDocument;
+  if (root && root.host) {
+    return root;
+  }
+  return node.ownerDocument;
+}
+function append_empty_stylesheet(node) {
+  const style_element = element("style");
+  append_stylesheet(get_root_for_style(node), style_element);
+  return style_element.sheet;
+}
+function append_stylesheet(node, style) {
+  append(node.head || node, style);
+  return style.sheet;
 }
 function insert(target, node, anchor) {
   target.insertBefore(node, anchor || null);
@@ -172,12 +197,12 @@ function set_data(text2, data) {
   if (text2.wholeText !== data)
     text2.data = data;
 }
-function custom_event(type, detail) {
+function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
   const e = document.createEvent("CustomEvent");
-  e.initCustomEvent(type, false, false, detail);
+  e.initCustomEvent(type, bubbles, cancelable, detail);
   return e;
 }
-var active_docs = new Set();
+var managed_styles = new Map();
 var active = 0;
 function hash(str) {
   let hash2 = 5381;
@@ -185,6 +210,11 @@ function hash(str) {
   while (i--)
     hash2 = (hash2 << 5) - hash2 ^ str.charCodeAt(i);
   return hash2 >>> 0;
+}
+function create_style_information(doc, node) {
+  const info = { stylesheet: append_empty_stylesheet(node), rules: {} };
+  managed_styles.set(doc, info);
+  return info;
 }
 function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
   const step = 16.666 / duration;
@@ -197,12 +227,10 @@ function create_rule(node, a, b, duration, delay, ease, fn, uid = 0) {
   const rule = keyframes + `100% {${fn(b, 1 - b)}}
 }`;
   const name = `__svelte_${hash(rule)}_${uid}`;
-  const doc = node.ownerDocument;
-  active_docs.add(doc);
-  const stylesheet = doc.__svelte_stylesheet || (doc.__svelte_stylesheet = doc.head.appendChild(element("style")).sheet);
-  const current_rules = doc.__svelte_rules || (doc.__svelte_rules = {});
-  if (!current_rules[name]) {
-    current_rules[name] = true;
+  const doc = get_root_for_style(node);
+  const { stylesheet, rules } = managed_styles.get(doc) || create_style_information(doc, node);
+  if (!rules[name]) {
+    rules[name] = true;
     stylesheet.insertRule(`@keyframes ${name} ${rule}`, stylesheet.cssRules.length);
   }
   const animation = node.style.animation || "";
@@ -225,14 +253,12 @@ function clear_rules() {
   raf(() => {
     if (active)
       return;
-    active_docs.forEach((doc) => {
-      const stylesheet = doc.__svelte_stylesheet;
-      let i = stylesheet.cssRules.length;
-      while (i--)
-        stylesheet.deleteRule(i);
-      doc.__svelte_rules = {};
+    managed_styles.forEach((info) => {
+      const { ownerNode } = info.stylesheet;
+      if (ownerNode)
+        detach(ownerNode);
     });
-    active_docs.clear();
+    managed_styles.clear();
   });
 }
 var current_component;
@@ -246,6 +272,7 @@ function get_current_component() {
 }
 function setContext(key, context) {
   get_current_component().$$.context.set(key, context);
+  return context;
 }
 function getContext(key) {
   return get_current_component().$$.context.get(key);
@@ -265,20 +292,20 @@ function schedule_update() {
 function add_render_callback(fn) {
   render_callbacks.push(fn);
 }
-var flushing = false;
 var seen_callbacks = new Set();
+var flushidx = 0;
 function flush() {
-  if (flushing)
-    return;
-  flushing = true;
+  const saved_component = current_component;
   do {
-    for (let i = 0; i < dirty_components.length; i += 1) {
-      const component = dirty_components[i];
+    while (flushidx < dirty_components.length) {
+      const component = dirty_components[flushidx];
+      flushidx++;
       set_current_component(component);
       update(component.$$);
     }
     set_current_component(null);
     dirty_components.length = 0;
+    flushidx = 0;
     while (binding_callbacks.length)
       binding_callbacks.pop()();
     for (let i = 0; i < render_callbacks.length; i += 1) {
@@ -294,8 +321,8 @@ function flush() {
     flush_callbacks.pop()();
   }
   update_scheduled = false;
-  flushing = false;
   seen_callbacks.clear();
+  set_current_component(saved_component);
 }
 function update($$) {
   if ($$.fragment !== null) {
@@ -355,6 +382,8 @@ function transition_out(block, local, detach2, callback) {
       }
     });
     block.o(local);
+  } else if (callback) {
+    callback();
   }
 }
 var null_transition = { duration: 0 };
@@ -466,7 +495,9 @@ var boolean_attributes = new Set([
   "disabled",
   "formnovalidate",
   "hidden",
+  "inert",
   "ismap",
+  "itemscope",
   "loop",
   "multiple",
   "muted",
@@ -483,13 +514,13 @@ function create_component(block) {
   block && block.c();
 }
 function mount_component(component, target, anchor, customElement) {
-  const { fragment, on_mount, on_destroy, after_update } = component.$$;
+  const { fragment, after_update } = component.$$;
   fragment && fragment.m(target, anchor);
   if (!customElement) {
     add_render_callback(() => {
-      const new_on_destroy = on_mount.map(run).filter(is_function);
-      if (on_destroy) {
-        on_destroy.push(...new_on_destroy);
+      const new_on_destroy = component.$$.on_mount.map(run).filter(is_function);
+      if (component.$$.on_destroy) {
+        component.$$.on_destroy.push(...new_on_destroy);
       } else {
         run_all(new_on_destroy);
       }
@@ -515,12 +546,12 @@ function make_dirty(component, i) {
   }
   component.$$.dirty[i / 31 | 0] |= 1 << i % 31;
 }
-function init(component, options, instance9, create_fragment9, not_equal, props, dirty = [-1]) {
+function init(component, options, instance9, create_fragment9, not_equal, props, append_styles, dirty = [-1]) {
   const parent_component = current_component;
   set_current_component(component);
   const $$ = component.$$ = {
     fragment: null,
-    ctx: null,
+    ctx: [],
     props,
     update: noop,
     not_equal,
@@ -530,11 +561,13 @@ function init(component, options, instance9, create_fragment9, not_equal, props,
     on_disconnect: [],
     before_update: [],
     after_update: [],
-    context: new Map(parent_component ? parent_component.$$.context : options.context || []),
+    context: new Map(options.context || (parent_component ? parent_component.$$.context : [])),
     callbacks: blank_object(),
     dirty,
-    skip_bound: false
+    skip_bound: false,
+    root: options.target || parent_component.$$.root
   };
+  append_styles && append_styles($$.root);
   let ready = false;
   $$.ctx = instance9 ? instance9(component, options.props || {}, (i, ret, ...rest) => {
     const value = rest.length ? rest[0] : ret;
@@ -552,6 +585,7 @@ function init(component, options, instance9, create_fragment9, not_equal, props,
   $$.fragment = create_fragment9 ? create_fragment9($$.ctx) : false;
   if (options.target) {
     if (options.hydrate) {
+      start_hydrating();
       const nodes = children(options.target);
       $$.fragment && $$.fragment.l(nodes);
       nodes.forEach(detach);
@@ -561,6 +595,7 @@ function init(component, options, instance9, create_fragment9, not_equal, props,
     if (options.intro)
       transition_in(component.$$.fragment);
     mount_component(component, options.target, options.anchor, options.customElement);
+    end_hydrating();
     flush();
   }
   set_current_component(parent_component);
@@ -590,6 +625,9 @@ if (typeof HTMLElement === "function") {
       this.$destroy = noop;
     }
     $on(type, callback) {
+      if (!is_function(callback)) {
+        return noop;
+      }
       const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
       callbacks.push(callback);
       return () => {
@@ -613,6 +651,9 @@ var SvelteComponent = class {
     this.$destroy = noop;
   }
   $on(type, callback) {
+    if (!is_function(callback)) {
+      return noop;
+    }
     const callbacks = this.$$.callbacks[type] || (this.$$.callbacks[type] = []);
     callbacks.push(callback);
     return () => {
@@ -629,6 +670,50 @@ var SvelteComponent = class {
     }
   }
 };
+
+// node_modules/svelte/store/index.mjs
+var subscriber_queue = [];
+function writable(value, start = noop) {
+  let stop;
+  const subscribers = new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  function update2(fn) {
+    set(fn(value));
+  }
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  return { set, update: update2, subscribe: subscribe2 };
+}
 
 // module/svelte/VagabondsActorSheetHeader.svelte
 function create_fragment(ctx) {
@@ -720,53 +805,53 @@ function create_fragment(ctx) {
       label4 = element("label");
       label4.textContent = "Exp";
       attr(img, "class", "profile-img svelte-dstnap");
-      if (img.src !== (img_src_value = ctx[0].img))
+      if (img.src !== (img_src_value = ctx[0].actor.img))
         attr(img, "src", img_src_value);
       attr(img, "data-edit", "img");
-      attr(img, "title", img_title_value = ctx[0].name);
+      attr(img, "title", img_title_value = ctx[0].actor.name);
       attr(img, "height", "125");
       attr(img, "width", "125");
       attr(input0, "name", "name");
       attr(input0, "type", "text");
-      input0.value = input0_value_value = ctx[0].name;
+      input0.value = input0_value_value = ctx[0].actor.name;
       attr(input0, "placeholder", "Name");
       attr(input0, "class", "svelte-dstnap");
       attr(div0, "class", "namebox svelte-dstnap");
       attr(input1, "type", "text");
-      attr(input1, "name", "data.attributes.level.value");
-      input1.value = input1_value_value = ctx[0].data.attributes.level.value;
+      attr(input1, "name", "system.attributes.level.value");
+      input1.value = input1_value_value = ctx[0].actor.system.attributes.level.value;
       attr(input1, "data-dtype", "Number");
       attr(input1, "class", "svelte-dstnap");
       attr(div1, "class", "item1 svelte-dstnap");
       attr(input2, "type", "text");
-      attr(input2, "name", "data.health.value");
-      input2.value = input2_value_value = ctx[0].data.health.value;
+      attr(input2, "name", "system.health.value");
+      input2.value = input2_value_value = ctx[0].actor.system.health.value;
       attr(input2, "data-dtype", "Number");
       attr(input2, "class", "svelte-dstnap");
       attr(input3, "type", "text");
-      attr(input3, "name", "data.health.max");
-      input3.value = input3_value_value = ctx[0].data.health.max;
+      attr(input3, "name", "system.health.max");
+      input3.value = input3_value_value = ctx[0].actor.system.health.max;
       attr(input3, "data-dtype", "Number");
       attr(input3, "class", "svelte-dstnap");
       attr(div2, "class", "item2 svelte-dstnap");
       attr(input4, "type", "text");
-      attr(input4, "name", "data.speed.value");
-      input4.value = input4_value_value = ctx[0].data.speed.value;
+      attr(input4, "name", "system.speed.value");
+      input4.value = input4_value_value = ctx[0].actor.system.speed.value;
       attr(input4, "data-dtype", "Number");
       attr(input4, "class", "svelte-dstnap");
       attr(div3, "class", "item3 svelte-dstnap");
       attr(input5, "type", "text");
-      attr(input5, "name", "data.armor.value");
-      input5.value = input5_value_value = ctx[0].data.armor.value;
+      attr(input5, "name", "system.armor.value");
+      input5.value = input5_value_value = ctx[0].actor.system.armor.value;
       attr(input5, "data-dtype", "Number");
       attr(input5, "class", "svelte-dstnap");
-      attr(label3, "for", "data.data.armor.value");
+      attr(label3, "for", "system.armor.value");
       attr(label3, "class", "resource-label rollable");
       attr(label3, "data-defend", "2d6");
       attr(div4, "class", "item4 svelte-dstnap");
       attr(input6, "type", "text");
-      attr(input6, "name", "data.attributes.xp.value");
-      input6.value = input6_value_value = ctx[0].data.attributes.xp.value;
+      attr(input6, "name", "system.attributes.xp.value");
+      input6.value = input6_value_value = ctx[0].actor.system.attributes.xp.value;
       attr(input6, "data-dtype", "Number");
       attr(input6, "class", "svelte-dstnap");
       attr(div5, "class", "item5 svelte-dstnap");
@@ -809,38 +894,42 @@ function create_fragment(ctx) {
       append(div5, label4);
       if (!mounted) {
         dispose = [
-          listen(img, "click", ctx[3]),
-          listen(label3, "click", ctx[2]?._onRoll.bind(ctx[2]))
+          listen(img, "click", ctx[2]),
+          listen(label3, "click", function() {
+            if (is_function(ctx[0].sheet?._onRoll.bind(ctx[0].sheet)))
+              ctx[0].sheet?._onRoll.bind(ctx[0].sheet).apply(this, arguments);
+          })
         ];
         mounted = true;
       }
     },
-    p(ctx2, [dirty]) {
-      if (dirty & 1 && img.src !== (img_src_value = ctx2[0].img)) {
+    p(new_ctx, [dirty]) {
+      ctx = new_ctx;
+      if (dirty & 1 && img.src !== (img_src_value = ctx[0].actor.img)) {
         attr(img, "src", img_src_value);
       }
-      if (dirty & 1 && img_title_value !== (img_title_value = ctx2[0].name)) {
+      if (dirty & 1 && img_title_value !== (img_title_value = ctx[0].actor.name)) {
         attr(img, "title", img_title_value);
       }
-      if (dirty & 1 && input0_value_value !== (input0_value_value = ctx2[0].name) && input0.value !== input0_value_value) {
+      if (dirty & 1 && input0_value_value !== (input0_value_value = ctx[0].actor.name) && input0.value !== input0_value_value) {
         input0.value = input0_value_value;
       }
-      if (dirty & 1 && input1_value_value !== (input1_value_value = ctx2[0].data.attributes.level.value) && input1.value !== input1_value_value) {
+      if (dirty & 1 && input1_value_value !== (input1_value_value = ctx[0].actor.system.attributes.level.value) && input1.value !== input1_value_value) {
         input1.value = input1_value_value;
       }
-      if (dirty & 1 && input2_value_value !== (input2_value_value = ctx2[0].data.health.value) && input2.value !== input2_value_value) {
+      if (dirty & 1 && input2_value_value !== (input2_value_value = ctx[0].actor.system.health.value) && input2.value !== input2_value_value) {
         input2.value = input2_value_value;
       }
-      if (dirty & 1 && input3_value_value !== (input3_value_value = ctx2[0].data.health.max) && input3.value !== input3_value_value) {
+      if (dirty & 1 && input3_value_value !== (input3_value_value = ctx[0].actor.system.health.max) && input3.value !== input3_value_value) {
         input3.value = input3_value_value;
       }
-      if (dirty & 1 && input4_value_value !== (input4_value_value = ctx2[0].data.speed.value) && input4.value !== input4_value_value) {
+      if (dirty & 1 && input4_value_value !== (input4_value_value = ctx[0].actor.system.speed.value) && input4.value !== input4_value_value) {
         input4.value = input4_value_value;
       }
-      if (dirty & 1 && input5_value_value !== (input5_value_value = ctx2[0].data.armor.value) && input5.value !== input5_value_value) {
+      if (dirty & 1 && input5_value_value !== (input5_value_value = ctx[0].actor.system.armor.value) && input5.value !== input5_value_value) {
         input5.value = input5_value_value;
       }
-      if (dirty & 1 && input6_value_value !== (input6_value_value = ctx2[0].data.attributes.xp.value) && input6.value !== input6_value_value) {
+      if (dirty & 1 && input6_value_value !== (input6_value_value = ctx[0].actor.system.attributes.xp.value) && input6.value !== input6_value_value) {
         input6.value = input6_value_value;
       }
     },
@@ -857,31 +946,22 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
   let $sheetData;
   let sheetData = getContext("sheetStore");
-  component_subscribe($$self, sheetData, (value) => $$invalidate(4, $sheetData = value));
-  let { actor, sheet } = $sheetData;
-  let data;
-  console.log(data);
+  component_subscribe($$self, sheetData, (value) => $$invalidate(0, $sheetData = value));
   const filePicker = (event) => {
     const attr2 = event.currentTarget.dataset.edit;
-    const current = getProperty(data, attr2);
+    const current = getProperty($sheetData.actor, attr2);
     const fp = new FilePicker({
       type: "image",
       current,
       callback: (path) => {
-        actor.update({ [attr2]: path });
+        $sheetData.actor.update({ [attr2]: path });
       },
-      top: sheet.position.top + 40,
-      left: sheet.position.left + 10
+      top: $sheetData.sheet.position.top + 40,
+      left: $sheetData.sheet.position.left + 10
     });
     return fp.browse();
   };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & 16) {
-      $:
-        $$invalidate(0, data = $sheetData.data);
-    }
-  };
-  return [data, sheetData, sheet, filePicker, $sheetData];
+  return [$sheetData, sheetData, filePicker];
 }
 var VagabondsActorSheetHeader = class extends SvelteComponent {
   constructor(options) {
@@ -1006,52 +1086,52 @@ function create_fragment2(ctx) {
       attr(label0, "class", "resource-label");
       attr(label1, "class", "rules-label");
       attr(input0, "type", "text");
-      attr(input0, "name", "data.aproaches.conflict");
-      input0.value = input0_value_value = ctx[1].data.aproaches.conflict;
+      attr(input0, "name", "system.aproaches.conflict");
+      input0.value = input0_value_value = ctx[1].system.aproaches.conflict;
       attr(input0, "class", "svelte-wvbhe2");
       attr(input1, "type", "text");
-      attr(input1, "name", "data.aproaches.goal");
-      input1.value = input1_value_value = ctx[1].data.aproaches.goal;
+      attr(input1, "name", "system.aproaches.goal");
+      input1.value = input1_value_value = ctx[1].system.aproaches.goal;
       attr(input1, "class", "svelte-wvbhe2");
       attr(input2, "type", "text");
-      attr(input2, "name", "data.aproaches.gimmick");
-      input2.value = input2_value_value = ctx[1].data.aproaches.gimmick;
+      attr(input2, "name", "system.aproaches.gimmick");
+      input2.value = input2_value_value = ctx[1].system.aproaches.gimmick;
       attr(input2, "class", "svelte-wvbhe2");
       attr(input3, "type", "text");
-      attr(input3, "name", "data.aproaches.background");
-      input3.value = input3_value_value = ctx[1].data.aproaches.background;
+      attr(input3, "name", "system.aproaches.background");
+      input3.value = input3_value_value = ctx[1].system.aproaches.background;
       attr(input3, "class", "svelte-wvbhe2");
       attr(input4, "type", "text");
-      attr(input4, "name", "data.aproaches.foreground");
-      input4.value = input4_value_value = ctx[1].data.aproaches.foreground;
+      attr(input4, "name", "system.aproaches.foreground");
+      input4.value = input4_value_value = ctx[1].system.aproaches.foreground;
       attr(input4, "class", "svelte-wvbhe2");
       attr(input5, "type", "text");
-      attr(input5, "name", "data.aproaches.weakness");
-      input5.value = input5_value_value = ctx[1].data.aproaches.weakness;
+      attr(input5, "name", "system.aproaches.weakness");
+      input5.value = input5_value_value = ctx[1].system.aproaches.weakness;
       attr(input5, "class", "svelte-wvbhe2");
       attr(input6, "type", "text");
-      attr(input6, "name", "data.aproaches.a1");
-      input6.value = input6_value_value = ctx[1].data.aproaches.a1;
+      attr(input6, "name", "system.aproaches.a1");
+      input6.value = input6_value_value = ctx[1].system.aproaches.a1;
       attr(input6, "class", "svelte-wvbhe2");
       attr(input7, "type", "text");
-      attr(input7, "name", "data.aproaches.a2");
-      input7.value = input7_value_value = ctx[1].data.aproaches.a2;
+      attr(input7, "name", "system.aproaches.a2");
+      input7.value = input7_value_value = ctx[1].system.aproaches.a2;
       attr(input7, "class", "svelte-wvbhe2");
       attr(input8, "type", "text");
-      attr(input8, "name", "data.aproaches.a3");
-      input8.value = input8_value_value = ctx[1].data.aproaches.a3;
+      attr(input8, "name", "system.aproaches.a3");
+      input8.value = input8_value_value = ctx[1].system.aproaches.a3;
       attr(input8, "class", "svelte-wvbhe2");
       attr(input9, "type", "text");
-      attr(input9, "name", "data.aproaches.a4");
-      input9.value = input9_value_value = ctx[1].data.aproaches.a4;
+      attr(input9, "name", "system.aproaches.a4");
+      input9.value = input9_value_value = ctx[1].system.aproaches.a4;
       attr(input9, "class", "svelte-wvbhe2");
       attr(input10, "type", "text");
-      attr(input10, "name", "data.aproaches.a5");
-      input10.value = input10_value_value = ctx[1].data.aproaches.a5;
+      attr(input10, "name", "system.aproaches.a5");
+      input10.value = input10_value_value = ctx[1].system.aproaches.a5;
       attr(input10, "class", "svelte-wvbhe2");
       attr(input11, "type", "text");
-      attr(input11, "name", "data.aproaches.a6");
-      input11.value = input11_value_value = ctx[1].data.aproaches.a6;
+      attr(input11, "name", "system.aproaches.a6");
+      input11.value = input11_value_value = ctx[1].system.aproaches.a6;
       attr(input11, "class", "svelte-wvbhe2");
       attr(main, "class", "svelte-wvbhe2");
     },
@@ -1158,7 +1238,7 @@ function get_each_context(ctx, list, i) {
 }
 function create_if_block(ctx) {
   let div;
-  let raw_value = ctx[9].data.description + "";
+  let raw_value = ctx[9].system.description + "";
   let div_transition;
   let current;
   return {
@@ -1172,7 +1252,7 @@ function create_if_block(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].data.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -1474,7 +1554,7 @@ function instance3($$self, $$props, $$invalidate) {
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
-        $$invalidate(0, lineage = $sheetData.data.lineage);
+        $$invalidate(0, lineage = $sheetData.lineage);
     }
   };
   return [
@@ -1505,7 +1585,7 @@ function get_each_context2(ctx, list, i) {
 }
 function create_if_block2(ctx) {
   let div;
-  let raw_value = ctx[9].data.description + "";
+  let raw_value = ctx[9].system.description + "";
   let div_transition;
   let current;
   return {
@@ -1519,7 +1599,7 @@ function create_if_block2(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].data.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -1866,7 +1946,7 @@ function instance4($$self, $$props, $$invalidate) {
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
-        $$invalidate(0, gear = $sheetData.data.gear);
+        $$invalidate(0, gear = $sheetData.gear);
     }
   };
   return [
@@ -1897,7 +1977,7 @@ function get_each_context3(ctx, list, i) {
 }
 function create_if_block3(ctx) {
   let div;
-  let raw_value = ctx[9].data.description + "";
+  let raw_value = ctx[9].system.description + "";
   let div_transition;
   let current;
   return {
@@ -1911,7 +1991,7 @@ function create_if_block3(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].data.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -2213,7 +2293,7 @@ function instance5($$self, $$props, $$invalidate) {
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
-        $$invalidate(0, techniques = $sheetData.data.techniques);
+        $$invalidate(0, techniques = $sheetData.techniques);
     }
   };
   return [
@@ -2244,7 +2324,7 @@ function get_each_context4(ctx, list, i) {
 }
 function create_if_block4(ctx) {
   let div;
-  let raw_value = ctx[9].data.description + "";
+  let raw_value = ctx[9].system.description + "";
   let div_transition;
   let current;
   return {
@@ -2258,7 +2338,7 @@ function create_if_block4(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].data.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -2597,7 +2677,7 @@ function instance6($$self, $$props, $$invalidate) {
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
-        $$invalidate(0, injury = $sheetData.data.injury);
+        $$invalidate(0, injury = $sheetData.injury);
     }
   };
   return [
@@ -2663,9 +2743,9 @@ function create_fragment7(ctx) {
       attr(label0, "class", "resource-label");
       attr(label1, "class", "rules-label");
       attr(textarea, "class", "border_none");
-      attr(textarea, "name", "data.aproaches.coreflaw");
+      attr(textarea, "name", "system.aproaches.coreflaw");
       attr(textarea, "rows", "6");
-      textarea.value = textarea_value_value = ctx[1].data.aproaches.coreflaw;
+      textarea.value = textarea_value_value = ctx[0].actor.system.aproaches.coreflaw;
       attr(main, "class", "svelte-yoob1a");
     },
     m(target, anchor) {
@@ -2685,7 +2765,11 @@ function create_fragment7(ctx) {
       mount_component(vagabondsinjury, main, null);
       current = true;
     },
-    p: noop,
+    p(ctx2, [dirty]) {
+      if (!current || dirty & 1 && textarea_value_value !== (textarea_value_value = ctx2[0].actor.system.aproaches.coreflaw)) {
+        textarea.value = textarea_value_value;
+      }
+    },
     i(local) {
       if (current)
         return;
@@ -2715,9 +2799,8 @@ function create_fragment7(ctx) {
 function instance7($$self, $$props, $$invalidate) {
   let $sheetData;
   let sheetData = getContext("sheetStore");
-  component_subscribe($$self, sheetData, (value) => $$invalidate(2, $sheetData = value));
-  let { data } = $sheetData;
-  return [sheetData, data];
+  component_subscribe($$self, sheetData, (value) => $$invalidate(0, $sheetData = value));
+  return [$sheetData, sheetData];
 }
 var VagabondsActorSheetBodyRight = class extends SvelteComponent {
   constructor(options) {
@@ -2808,54 +2891,6 @@ var VagabondsActorSheetBase = class extends SvelteComponent {
 var VagabondsActorSheetBase_default = VagabondsActorSheetBase;
 require_8();
 
-// node_modules/svelte/store/index.mjs
-var subscriber_queue = [];
-function writable(value, start = noop) {
-  let stop;
-  const subscribers = [];
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop) {
-        const run_queue = !subscriber_queue.length;
-        for (let i = 0; i < subscribers.length; i += 1) {
-          const s = subscribers[i];
-          s[1]();
-          subscriber_queue.push(s, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue.length; i += 2) {
-            subscriber_queue[i][0](subscriber_queue[i + 1]);
-          }
-          subscriber_queue.length = 0;
-        }
-      }
-    }
-  }
-  function update2(fn) {
-    set(fn(value));
-  }
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.push(subscriber);
-    if (subscribers.length === 1) {
-      stop = start(set) || noop;
-    }
-    run2(value);
-    return () => {
-      const index = subscribers.indexOf(subscriber);
-      if (index !== -1) {
-        subscribers.splice(index, 1);
-      }
-      if (subscribers.length === 0) {
-        stop();
-        stop = null;
-      }
-    };
-  }
-  return { set, update: update2, subscribe: subscribe2 };
-}
-
 // module/actor/actor-sheet.js
 var VagabondsActorSheet = class extends ActorSheet {
   app = null;
@@ -2866,16 +2901,18 @@ var VagabondsActorSheet = class extends ActorSheet {
       template: "systems/vagabonds/templates/actor/actor-sheetv2.html",
       width: 640,
       height: 700,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+      tabs: [
+        {
+          navSelector: ".sheet-tabs",
+          contentSelector: ".sheet-body",
+          initial: "description"
+        }
+      ]
     });
   }
   getData() {
     const data = super.getData();
-    data.dtypes = ["String", "Number", "Boolean"];
-    for (let attr2 of Object.values(data.data.data.attributes)) {
-      attr2.isCheckbox = attr2.dtype === "Boolean";
-    }
-    if (this.actor.data.type == "character") {
+    if (this.actor.type == "character") {
       this._prepareCharacterItems(data);
     }
     return data;
@@ -2887,6 +2924,7 @@ var VagabondsActorSheet = class extends ActorSheet {
     const lineage = [];
     const injury = [];
     const approach = [];
+    const trait = [];
     for (let i of sheetData.items) {
       i.img = i.img || DEFAULT_TOKEN;
       switch (i.type) {
@@ -2905,14 +2943,21 @@ var VagabondsActorSheet = class extends ActorSheet {
         case "approach":
           approach.push(i);
           break;
+        case "trait":
+          trait.push(i);
       }
     }
-    actorData.gear = gear;
-    actorData.techniques = techniques;
-    actorData.lineage = lineage;
-    actorData.injury = injury;
-    actorData.approach = approach;
+    sheetData.gear = gear;
+    sheetData.techniques = techniques;
+    sheetData.lineage = lineage;
+    sheetData.injury = injury;
+    sheetData.approach = approach;
+    sheetData.trait = trait;
     sheetData.sheet = this;
+  }
+  async migrateData(...args) {
+    super.migrateData(...args);
+    console.log("Attempting to migrate system data");
   }
   activateListeners(html) {
     super.activateListeners(html);
@@ -2950,10 +2995,8 @@ var VagabondsActorSheet = class extends ActorSheet {
     const name = `New ${type.capitalize()}`;
     const itemData = {
       name,
-      type,
-      data
+      type
     };
-    delete itemData.data["type"];
     return await Item.create(itemData, { parent: this.actor }).then((item) => {
       item.sheet.render(true);
     });
@@ -2967,7 +3010,7 @@ var VagabondsActorSheet = class extends ActorSheet {
     const element2 = event.currentTarget;
     const dataset = element2.dataset;
     if (dataset.roll) {
-      let roll = new Roll(dataset.roll, this.actor.data.data);
+      let roll = new Roll(dataset.roll, this.actor);
       let label = dataset.label ? `Rolling ${dataset.label}` : "";
       roll.roll().toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -3070,7 +3113,7 @@ var VagabondsNPCSheet = class extends ActorSheet {
 var VagabondsItem = class extends Item {
   prepareData() {
     super.prepareData();
-    const itemData = this.data;
+    const itemData = this;
     if (itemData.type == "injury" && itemData.img == "icons/svg/item-bag.svg") {
       itemData.img = "systems/vagabonds/assets/cut-palm.svg";
     } else if (itemData.type == "item" && itemData.img == "icons/svg/item-bag.svg") {
@@ -3081,7 +3124,7 @@ var VagabondsItem = class extends Item {
   }
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
-    this.data.update({ sort: Date.now() });
+    this.updateSource({ sort: Date.now() });
   }
 };
 
@@ -3099,8 +3142,9 @@ var VagabondsItemSheet = class extends ItemSheet {
     const path = "systems/vagabonds/templates/item";
     return `${path}/item-sheet.html`;
   }
-  getData() {
+  async getData() {
     const data = super.getData();
+    data.enrichedDescription = await TextEditor.enrichHTML(this.object.system.description, { async: true });
     return data;
   }
   setPosition(options = {}) {
@@ -3174,8 +3218,8 @@ var RollHelper = class {
           let rollisDefense = html.find(`[name=rolltype-defense]`).is(":checked");
           let rollType = html.find("[name=roll-adv]")[0].value;
           let actor = game.user.character ?? canvas.tokens.controlled[0]?.actor ?? game.actors.find((a) => a.owner);
-          if (actor.length == 0) {
-            ui.notifications.error("You must have an actor to roll a defense roll");
+          if (actor == void 0) {
+            ui.notifications.error("You must select a token to roll");
             return;
           }
           let roll;
@@ -3187,9 +3231,9 @@ var RollHelper = class {
           if (rollType == "dis")
             baseRoll = "3d6kl2";
           if (rollModifier >= 0) {
-            roll = new Roll(baseRoll + " +" + rollModifier, actor.data);
+            roll = new Roll(baseRoll + " +" + rollModifier, actor);
           } else {
-            roll = new Roll(baseRoll + rollModifier, actor.data);
+            roll = new Roll(baseRoll + rollModifier, actor);
           }
           roll.evaluate({ async: true }).then(function(result) {
             let RollResult;
@@ -3204,10 +3248,10 @@ var RollHelper = class {
               }
               if (result._total < 7) {
                 RollResult.outcome = "Failure";
-                RollResult.damage = RollResult.high - result.data.data.armor.value;
+                RollResult.damage = RollResult.high - result.data.system.armor.value;
               } else if (result._total < 10) {
                 RollResult.outcome = "Partial Success";
-                RollResult.damage = RollResult.low - result.data.data.armor.value;
+                RollResult.damage = RollResult.low - result.data.system.armor.value;
               }
               if (RollResult.damage < 0) {
                 RollResult.damage = 0;

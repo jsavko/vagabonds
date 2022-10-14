@@ -11,7 +11,7 @@ export class VagabondsItem extends Item {
     super.prepareData();
 
     // Get the Item's data
-    const itemData = this.data;
+    const itemData = this;
     //const actorData = this.actor ? this.actor.data : {};
     //const data = itemData.data;
 
@@ -23,11 +23,12 @@ export class VagabondsItem extends Item {
       itemData.img = 'systems/vagabonds/assets/swords-emblem.svg'
     } 
 
+    //console.log(itemData);
   }
 
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
-    this.data.update({ sort: Date.now() });
+    this.updateSource({ sort: Date.now() });
   }
 
 }

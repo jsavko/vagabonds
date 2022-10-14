@@ -12,7 +12,8 @@
 
 	//Exports
 	export let dataStore ;
-	setContext("sheetStore", dataStore);
+    setContext("sheetStore", dataStore);
+
 	//let sheetData = getContext("sheetStore");
 	//let { actor, data, actorData, sheet } = $dataStore;
 </script>

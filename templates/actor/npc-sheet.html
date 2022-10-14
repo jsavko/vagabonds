@@ -7,27 +7,27 @@
           <div class="resources grid grid-4col">
 
             <div class="resource flex-group-center border_none">
-                <label for="data.health.value" class="resource-label">HP</label>
+                <label for="system.health.value" class="resource-label">HP</label>
                 <div class="resource-content flexrow flex-center flex-between">
-                  <input type="text" name="data.health.value" value="{{data.data.health.value}}" data-dtype="Number"/>
+                  <input type="text" name="system.health.value" value="{{actor.system.health.value}}" data-dtype="Number"/>
                 </div>
             </div>
             <div class="resource flex-group-center border_none">
-                <label for="data.power.value" class="resource-label">Speed</label>
+                <label for="system.power.value" class="resource-label">Speed</label>
                 <div class="resource-content flexrow flex-center flex-between">
-                  <input type="text" name="data.speed.value" value="{{data.data.speed.value}}" data-dtype="Number"/>
+                  <input type="text" name="system.speed.value" value="{{actor.system.speed.value}}" data-dtype="Number"/>
                   </div>
             </div>
             <div class="resource flex-group-center border_none">
-              <label for="data.power.value" class="resource-label">Damage</label>
+              <label for="system.power.value" class="resource-label">Damage</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.damage.value" value="{{data.data.damage.value}}" data-dtype="Number"/>
+                <input type="text" name="system.damage.value" value="{{actor.system.damage.value}}" data-dtype="Number"/>
                 </div>
           </div>
             <div class="resource flex-group-center border_none">
-              <label for="data.power.value" class="resource-label">Armor</label>
+              <label for="system.power.value" class="resource-label">Armor</label>
               <div class="resource-content flexrow flex-center flex-between">
-                <input type="text" name="data.armor.value" value="{{data.data.armor.value}}" data-dtype="Number"/>
+                <input type="text" name="system.armor.value" value="{{actor.system.armor.value}}" data-dtype="Number"/>
                 </div>
           </div>
         </div>
@@ -36,14 +36,14 @@
   </header>
 
   <section class="sheet-body">
-    <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.description" value="{{data.data.description}}"/></div>
+    <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="system.description" value="{{actor.system.description}}"/></div>
     <div class="resources grid grid-4col">
       <div class="resources-content flexrow flex-left flex-between grid-1col"><label>Trait Tags </label></div>
-      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.traits" value="{{data.data.traits}}"/></div>
+      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="system.traits" value="{{actor.system.traits}}"/></div>
     </div>
     <div class="resources grid grid-4col">
       <div class="resources-content flexrow flex-left flex-between grid-1col"><label>Combat Notes</label> </div>
-      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="data.combat_notes" value="{{data.data.combat_notes}}"/></div>
+      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="system.combat_notes" value="{{actor.system.combat_notes}}"/></div>
     </div>
 
     <ol class="items-list">
@@ -55,7 +55,7 @@
         </div>
       </li>
   {{#each actor.items as |item id|}}
-      <li class="item flexrow" data-item-id="{{item.data._id}}">
+      <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
           <h4 class="item-name">{{item.name}}</h4>
           <div class="item-controls">

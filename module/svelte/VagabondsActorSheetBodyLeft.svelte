@@ -6,37 +6,37 @@
 	
 	//getContext("sheetStore", dataStore);	
 	let sheetData = getContext("sheetStore");
-	let {  data} = $sheetData;
+	let {  data } = $sheetData;
 </script>
 
 <main>
 	<label class="resource-label">Traits</label><br>
 	<label class="rules-label">Sum relevant positive and negative traits to determine <strong>aptitude</strong> (max +3, min -3)</label>
 	<label>My Approch to Conflict:</label>
-	<input type="text" name="data.aproaches.conflict" value="{data.data.aproaches.conflict}" />
+	<input type="text" name="system.aproaches.conflict" value="{data.system.aproaches.conflict}" />
 
 	<label>My Goal:</label>
-	<input type="text" name="data.aproaches.goal" value="{data.data.aproaches.goal}"/>
+	<input type="text" name="system.aproaches.goal" value="{data.system.aproaches.goal}"/>
 
 	<label>My Gimmick:</label>
-	<input type="text" name="data.aproaches.gimmick" value="{data.data.aproaches.gimmick}"/>
+	<input type="text" name="system.aproaches.gimmick" value="{data.system.aproaches.gimmick}"/>
 
 	<label>My Background:</label>
-	<input type="text" name="data.aproaches.background" value="{data.data.aproaches.background}"/>
+	<input type="text" name="system.aproaches.background" value="{data.system.aproaches.background}"/>
 
 	<label >My Foreground:</label>
-	<input type="text" name="data.aproaches.foreground" value="{data.data.aproaches.foreground}"/>
+	<input type="text" name="system.aproaches.foreground" value="{data.system.aproaches.foreground}"/>
 
 	<label>My Weakness:</label>
-	<input type="text" name="data.aproaches.weakness" value="{data.data.aproaches.weakness}" />
+	<input type="text" name="system.aproaches.weakness" value="{data.system.aproaches.weakness}" />
 
 	<label>Additional Traits Per Level:</label>
-	<input type="text" name="data.aproaches.a1" value="{data.data.aproaches.a1}"/>
-	<input type="text" name="data.aproaches.a2" value="{data.data.aproaches.a2}" />
-	<input type="text" name="data.aproaches.a3" value="{data.data.aproaches.a3}" />
-	<input type="text" name="data.aproaches.a4" value="{data.data.aproaches.a4}" />
-	<input type="text" name="data.aproaches.a5" value="{data.data.aproaches.a5}"/>
-	<input type="text" name="data.aproaches.a6" value="{data.data.aproaches.a6}" />
+	<input type="text" name="system.aproaches.a1" value="{data.system.aproaches.a1}"/>
+	<input type="text" name="system.aproaches.a2" value="{data.system.aproaches.a2}" />
+	<input type="text" name="system.aproaches.a3" value="{data.system.aproaches.a3}" />
+	<input type="text" name="system.aproaches.a4" value="{data.system.aproaches.a4}" />
+	<input type="text" name="system.aproaches.a5" value="{data.system.aproaches.a5}"/>
+	<input type="text" name="system.aproaches.a6" value="{data.system.aproaches.a6}" />
 	</main>
 
 
