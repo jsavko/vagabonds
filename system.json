@@ -11,6 +11,12 @@
   },
   "templateVersion": 4,
   "author": "LostPhoenix",
+  "authors": [
+    {
+        "name": "LostPhoenix",
+        "discord": "Phoenix#0009"
+    }
+],
   "esmodules": ["dist/vagabonds.js"],
   "styles": ["css/vagabonds.css", "dist/vagabonds.css"],
   "scripts": [],
