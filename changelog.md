@@ -8,6 +8,7 @@
 
 0.3.5
 * Updated Error messages when rolling without an actor
+
 0.3.4
 * Advantage / Disadvantage rolls
 
