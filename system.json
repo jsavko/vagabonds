@@ -3,7 +3,7 @@
   "title": "Vagabonds of Dyfed",
   "description": "The Vagabonds of Dyfed system for FoundryVTT!",
 
-  "version": "0.4.0",
+  "version": "0.4.1",
   "compatibility": {
     "minimum": 10, 
     "verified": 10.288, 

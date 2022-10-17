@@ -1,4 +1,7 @@
 # Vagabonds of Dyfed Foundry VTT System
+0.4.1
+* Fixed an with actor sheets in v10
+
 0.4.0
 * Updated for Foundry v10
 * Added Temp Health for Health Estimator Module
