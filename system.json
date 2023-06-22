@@ -2,12 +2,11 @@
   "id": "vagabonds",
   "title": "Vagabonds of Dyfed",
   "description": "The Vagabonds of Dyfed system for FoundryVTT!",
-
-  "version": "0.4.1",
+  "version": "0.4.2",
   "compatibility": {
     "minimum": 10, 
-    "verified": 10.288, 
-    "maximum": 10 
+    "verified": 11, 
+    "maximum": 11 
   },
   "templateVersion": 4,
   "author": "LostPhoenix",
