@@ -12,7 +12,7 @@ export class VagabondsActorSheet extends ActorSheet {
 
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["vagabonds", "sheet", "actor"],
             template: "systems/vagabonds/templates/actor/actor-sheetv2.html",
             width: 640,
@@ -153,7 +153,7 @@ export class VagabondsActorSheet extends ActorSheet {
         // Get the type of item to create.
         const type = header.dataset.type;
         // Grab any data associated with this control.
-        const data = duplicate(header.dataset);
+        const data = foundry.utils.duplicate(header.dataset);
         // Initialize a default name.
         const name = `New ${type.capitalize()}`;
         // Prepare the item object.

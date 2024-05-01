@@ -2904,7 +2904,7 @@ var VagabondsActorSheet = class extends ActorSheet {
   app = null;
   dataStore = null;
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["vagabonds", "sheet", "actor"],
       template: "systems/vagabonds/templates/actor/actor-sheetv2.html",
       width: 640,
@@ -2999,7 +2999,7 @@ var VagabondsActorSheet = class extends ActorSheet {
     event.preventDefault();
     const header = event.currentTarget;
     const type = header.dataset.type;
-    const data = duplicate(header.dataset);
+    const data = foundry.utils.duplicate(header.dataset);
     const name = `New ${type.capitalize()}`;
     const itemData = {
       name,
@@ -3068,7 +3068,7 @@ var VagabondsActorSheet = class extends ActorSheet {
 // module/actor/npc-sheet.js
 var VagabondsNPCSheet = class extends ActorSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["vagabonds", "sheet", "actor"],
       template: "systems/vagabonds/templates/actor/npc-sheet.html",
       width: 600,
@@ -3105,7 +3105,7 @@ var VagabondsNPCSheet = class extends ActorSheet {
     event.preventDefault();
     const header = event.currentTarget;
     const type = header.dataset.type;
-    const data = duplicate(header.dataset);
+    const data = foundry.utils.duplicate(header.dataset);
     const name = `New ${type.capitalize()}`;
     const itemData = {
       name,
@@ -3139,7 +3139,7 @@ var VagabondsItem = class extends Item {
 // module/item/item-sheet.js
 var VagabondsItemSheet = class extends ItemSheet {
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["vagabonds", "sheet", "item"],
       width: 520,
       height: 480,
@@ -3243,7 +3243,7 @@ var RollHelper = class {
           } else {
             roll = new Roll(baseRoll + rollModifier, actor);
           }
-          roll.evaluate({ async: true }).then(function(result) {
+          roll.evaluate().then(function(result) {
             let RollResult;
             if (rollisDefense == true) {
               RollResult = { type: "defend", high: "0", low: "0", damage: "No", outcome: " Outright success", roll };

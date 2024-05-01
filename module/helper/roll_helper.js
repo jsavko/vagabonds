@@ -77,7 +77,7 @@ export class RollHelper {
                         roll = new Roll(baseRoll + rollModifier, actor);
 
                     }
-                    roll.evaluate({async: true}).then(
+                    roll.evaluate().then(
                         function(result) {
                             //console.log(result); // "Stuff worked!"
                             //Set Roll Type

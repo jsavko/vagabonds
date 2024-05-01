@@ -4,16 +4,16 @@
   "description": "The Vagabonds of Dyfed system for FoundryVTT!",
   "version": "0.4.2",
   "compatibility": {
-    "minimum": 10, 
-    "verified": 11, 
-    "maximum": 11 
+    "minimum": 11, 
+    "verified": 12, 
+    "maximum": 12 
   },
   "templateVersion": 4,
-  "author": "LostPhoenix",
+  "author": "Phoenix",
   "authors": [
     {
-        "name": "LostPhoenix",
-        "discord": "Phoenix#0009"
+        "name": "Phoenix",
+        "discord": "lostphoenix._."
     }
 ],
   "esmodules": ["dist/vagabonds.js"],
