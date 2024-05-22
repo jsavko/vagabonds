@@ -2,7 +2,7 @@
   "id": "vagabonds",
   "title": "Vagabonds of Dyfed",
   "description": "The Vagabonds of Dyfed system for FoundryVTT!",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "compatibility": {
     "minimum": 11, 
     "verified": 12, 
@@ -60,6 +60,6 @@
   "secondaryTokenAttribute": "speed",
   "url": "https://github.com/jsavko/vagabonds",
   "manifest": "https://raw.githubusercontent.com/jsavko/vagabonds/main/system.json",
-  "download": "https://github.com/jsavko/vagabonds/archive/refs/tags/0.3.0.zip",
+  "download": "https://github.com/jsavko/vagabonds/archive/refs/tags/0.5.0.zip",
   "license": "LICENSE.txt"
 }
