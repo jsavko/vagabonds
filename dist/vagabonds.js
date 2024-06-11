@@ -69,6 +69,57 @@ var VagabondsActor = class extends Actor {
   _prepareCharacterData(actorData) {
     return actorData;
   }
+  async _preUpdate(changed, options, user) {
+    if (await super._preUpdate(changed, options, user) === false)
+      return false;
+    if ("health" in (this.system || {})) {
+      foundry.utils.setProperty(options, "vagabonds.health", { ...this.system.health });
+    }
+  }
+  async _onUpdate(data, options, userId) {
+    super._onUpdate(data, options, userId);
+    const curr = this.system.health.value;
+    const hp = options.vagabonds?.health;
+    if (hp) {
+      const changes = {
+        hp: curr - hp.value
+      };
+      console.log(changes);
+      changes.total = changes.hp;
+      this._displayTokenEffect(changes);
+    }
+  }
+  _displayTokenEffect(changes) {
+    let key;
+    let value;
+    if (changes.hp < 0) {
+      key = "damage";
+      value = changes.total;
+    } else if (changes.hp > 0) {
+      key = "healing";
+      value = changes.total;
+    }
+    if (!key || !value)
+      return;
+    const tokens = this.isToken ? [this.token] : this.getActiveTokens(true, true);
+    if (!tokens.length)
+      return;
+    const pct = Math.clamp(Math.abs(value) / this.system.health.max, 0, 1);
+    const fill = CONFIG.Vagabonds.tokenHPColors[key];
+    for (const token of tokens) {
+      if (!token.object?.visible || !token.object?.renderable)
+        continue;
+      const t = token.object;
+      canvas.interface.createScrollingText(t.center, value.signedString(), {
+        anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
+        fontSize: 16 + 32 * pct,
+        fill,
+        stroke: 0,
+        strokeThickness: 4,
+        jitter: 0.25
+      });
+    }
+  }
 };
 
 // node_modules/svelte/internal/index.mjs
@@ -989,52 +1040,52 @@ function create_fragment2(ctx) {
   let label1;
   let t5;
   let label2;
-  let t7;
+  let t9;
   let input0;
   let input0_value_value;
-  let t8;
-  let label3;
   let t10;
+  let label3;
+  let t14;
   let input1;
   let input1_value_value;
-  let t11;
+  let t15;
   let label4;
-  let t13;
+  let t19;
   let input2;
   let input2_value_value;
-  let t14;
+  let t20;
   let label5;
-  let t16;
+  let t24;
   let input3;
   let input3_value_value;
-  let t17;
+  let t25;
   let label6;
-  let t19;
+  let t29;
   let input4;
   let input4_value_value;
-  let t20;
+  let t30;
   let label7;
-  let t22;
+  let t34;
   let input5;
   let input5_value_value;
-  let t23;
+  let t35;
   let label8;
-  let t25;
+  let t37;
   let input6;
   let input6_value_value;
-  let t26;
+  let t38;
   let input7;
   let input7_value_value;
-  let t27;
+  let t39;
   let input8;
   let input8_value_value;
-  let t28;
+  let t40;
   let input9;
   let input9_value_value;
-  let t29;
+  let t41;
   let input10;
   let input10_value_value;
-  let t30;
+  let t42;
   let input11;
   let input11_value_value;
   return {
@@ -1048,48 +1099,48 @@ function create_fragment2(ctx) {
       label1.innerHTML = `Sum relevant positive and negative traits to determine <strong>aptitude</strong> (max +3, min -3)`;
       t5 = space();
       label2 = element("label");
-      label2.textContent = "My Approch to Conflict:";
-      t7 = space();
+      label2.innerHTML = `My <strong>Approch</strong> to Conflict:`;
+      t9 = space();
       input0 = element("input");
-      t8 = space();
-      label3 = element("label");
-      label3.textContent = "My Goal:";
       t10 = space();
-      input1 = element("input");
-      t11 = space();
-      label4 = element("label");
-      label4.textContent = "My Gimmick:";
-      t13 = space();
-      input2 = element("input");
+      label3 = element("label");
+      label3.innerHTML = `My <strong>Goal</strong>:`;
       t14 = space();
-      label5 = element("label");
-      label5.textContent = "My Background:";
-      t16 = space();
-      input3 = element("input");
-      t17 = space();
-      label6 = element("label");
-      label6.textContent = "My Foreground:";
+      input1 = element("input");
+      t15 = space();
+      label4 = element("label");
+      label4.innerHTML = `My <strong>Gimmick</strong>:`;
       t19 = space();
-      input4 = element("input");
+      input2 = element("input");
       t20 = space();
+      label5 = element("label");
+      label5.innerHTML = `My <strong>Background</strong>:`;
+      t24 = space();
+      input3 = element("input");
+      t25 = space();
+      label6 = element("label");
+      label6.innerHTML = `My <strong>Foreground</strong>:`;
+      t29 = space();
+      input4 = element("input");
+      t30 = space();
       label7 = element("label");
-      label7.textContent = "My Weakness:";
-      t22 = space();
+      label7.innerHTML = `My <strong>Weakness</strong>:`;
+      t34 = space();
       input5 = element("input");
-      t23 = space();
+      t35 = space();
       label8 = element("label");
       label8.textContent = "Additional Traits Per Level:";
-      t25 = space();
+      t37 = space();
       input6 = element("input");
-      t26 = space();
+      t38 = space();
       input7 = element("input");
-      t27 = space();
+      t39 = space();
       input8 = element("input");
-      t28 = space();
+      t40 = space();
       input9 = element("input");
-      t29 = space();
+      t41 = space();
       input10 = element("input");
-      t30 = space();
+      t42 = space();
       input11 = element("input");
       attr(label0, "class", "resource-label");
       attr(label1, "class", "rules-label");
@@ -1151,41 +1202,41 @@ function create_fragment2(ctx) {
       append(main, label1);
       append(main, t5);
       append(main, label2);
-      append(main, t7);
+      append(main, t9);
       append(main, input0);
-      append(main, t8);
-      append(main, label3);
       append(main, t10);
-      append(main, input1);
-      append(main, t11);
-      append(main, label4);
-      append(main, t13);
-      append(main, input2);
+      append(main, label3);
       append(main, t14);
-      append(main, label5);
-      append(main, t16);
-      append(main, input3);
-      append(main, t17);
-      append(main, label6);
+      append(main, input1);
+      append(main, t15);
+      append(main, label4);
       append(main, t19);
-      append(main, input4);
+      append(main, input2);
       append(main, t20);
-      append(main, label7);
-      append(main, t22);
-      append(main, input5);
-      append(main, t23);
-      append(main, label8);
+      append(main, label5);
+      append(main, t24);
+      append(main, input3);
       append(main, t25);
-      append(main, input6);
-      append(main, t26);
-      append(main, input7);
-      append(main, t27);
-      append(main, input8);
-      append(main, t28);
-      append(main, input9);
+      append(main, label6);
       append(main, t29);
-      append(main, input10);
+      append(main, input4);
       append(main, t30);
+      append(main, label7);
+      append(main, t34);
+      append(main, input5);
+      append(main, t35);
+      append(main, label8);
+      append(main, t37);
+      append(main, input6);
+      append(main, t38);
+      append(main, input7);
+      append(main, t39);
+      append(main, input8);
+      append(main, t40);
+      append(main, input9);
+      append(main, t41);
+      append(main, input10);
+      append(main, t42);
       append(main, input11);
     },
     p: noop,
@@ -3307,8 +3358,13 @@ Hooks.once("init", async function() {
     formula: "@speed.value",
     decimals: 2
   };
+  CONFIG.Vagabonds = {};
   CONFIG.Actor.documentClass = VagabondsActor;
   CONFIG.Item.documentClass = VagabondsItem;
+  CONFIG.Vagabonds.tokenHPColors = {
+    damage: 15711680,
+    healing: 65280
+  };
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("vagabonds", VagabondsNPCSheet, { types: ["npc"], makeDefault: true });
   Actors.registerSheet("vagabonds", VagabondsActorSheet, { types: ["character"], makeDefault: true });

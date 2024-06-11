@@ -22,10 +22,16 @@ Hooks.once('init', async function() {
     formula: "@speed.value",
     decimals: 2
   };
+  CONFIG.Vagabonds = {};
 
   // Define custom Entity classes
   CONFIG.Actor.documentClass = VagabondsActor;
   CONFIG.Item.documentClass = VagabondsItem;
+
+  CONFIG.Vagabonds.tokenHPColors = {
+    damage: 15711680,
+    healing: 65280
+  }
 
   //foundry.data.ItemData.DEFAULT_ICON = "icons/containers/bags/pack-leather-brown.webp";
 

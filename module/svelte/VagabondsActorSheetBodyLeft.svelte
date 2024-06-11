@@ -14,22 +14,22 @@
 <main>
 	<label class="resource-label">Traits</label><br>
 	<label class="rules-label">Sum relevant positive and negative traits to determine <strong>aptitude</strong> (max +3, min -3)</label>
-	<label>My Approch to Conflict:</label>
+	<label>My <strong>Approch</strong> to Conflict:</label>
 	<input type="text" name="system.aproaches.conflict" value="{data.system.aproaches.conflict}" />
 
-	<label>My Goal:</label>
+	<label>My <strong>Goal</strong>:</label>
 	<input type="text" name="system.aproaches.goal" value="{data.system.aproaches.goal}"/>
 
-	<label>My Gimmick:</label>
+	<label>My <strong>Gimmick</strong>:</label>
 	<input type="text" name="system.aproaches.gimmick" value="{data.system.aproaches.gimmick}"/>
 
-	<label>My Background:</label>
+	<label>My <strong>Background</strong>:</label>
 	<input type="text" name="system.aproaches.background" value="{data.system.aproaches.background}"/>
 
-	<label >My Foreground:</label>
+	<label >My <strong>Foreground</strong>:</label>
 	<input type="text" name="system.aproaches.foreground" value="{data.system.aproaches.foreground}"/>
 
-	<label>My Weakness:</label>
+	<label>My <strong>Weakness</strong>:</label>
 	<input type="text" name="system.aproaches.weakness" value="{data.system.aproaches.weakness}" />
 
 	<label>Additional Traits Per Level:</label>
