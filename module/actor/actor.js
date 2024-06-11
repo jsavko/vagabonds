@@ -51,10 +51,37 @@ export class VagabondsActor extends Actor {
       };  
       console.log(changes)
       changes.total = changes.hp;
+      const isDead = this.system.health.value <= 0;
   
       this._displayTokenEffect(changes);
+      if (isDead) {
+        
+        this._displayTokenMessage('Dead', CONFIG.Vagabonds.tokenHPColors['damage'] )
+
+      }
     }
   }
+
+ _displayTokenMessage(message, fill) { 
+  const tokens = this.isToken ? [this.token] : this.getActiveTokens(true, true);
+  if ( !tokens.length ) return;
+
+    for ( const token of tokens ) {
+      if ( !token.object?.visible || !token.object?.renderable ) continue;
+      const t = token.object;
+      canvas.interface.createScrollingText(t.center, message, {
+        anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
+        // Adapt the font size relative to the Actor's HP total to emphasize more significant blows
+        fontSize: 48, // Range between [16, 48]
+        fill: fill,
+        stroke: 0x000000,
+        strokeThickness: 4,
+        jitter: 0.25
+      });
+    }
+
+  
+}
 
   _displayTokenEffect(changes) {
     let key;

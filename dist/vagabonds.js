@@ -86,7 +86,29 @@ var VagabondsActor = class extends Actor {
       };
       console.log(changes);
       changes.total = changes.hp;
+      const isDead = this.system.health.value <= 0;
       this._displayTokenEffect(changes);
+      if (isDead) {
+        this._displayTokenMessage("Dead", CONFIG.Vagabonds.tokenHPColors["damage"]);
+      }
+    }
+  }
+  _displayTokenMessage(message, fill) {
+    const tokens = this.isToken ? [this.token] : this.getActiveTokens(true, true);
+    if (!tokens.length)
+      return;
+    for (const token of tokens) {
+      if (!token.object?.visible || !token.object?.renderable)
+        continue;
+      const t = token.object;
+      canvas.interface.createScrollingText(t.center, message, {
+        anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
+        fontSize: 48,
+        fill,
+        stroke: 0,
+        strokeThickness: 4,
+        jitter: 0.25
+      });
     }
   }
   _displayTokenEffect(changes) {
@@ -1292,12 +1314,12 @@ function slide(node, { delay = 0, duration = 400, easing = cubicOut } = {}) {
 // module/svelte/VagabondsLinage.svelte
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[9] = list[i];
+  child_ctx[10] = list[i];
   return child_ctx;
 }
 function create_if_block(ctx) {
   let div;
-  let raw_value = ctx[9].system.description + "";
+  let raw_value = ctx[10].system.description + "";
   let div_transition;
   let current;
   return {
@@ -1311,7 +1333,7 @@ function create_if_block(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[10].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -1348,27 +1370,32 @@ function create_each_block(ctx) {
   let img_title_value;
   let t0;
   let h4;
-  let t1_value = ctx[9].name + "";
+  let t1_value = ctx[10].name + "";
   let t1;
   let t2;
   let div1;
   let a0;
   let t3;
   let a1;
-  let li_data_item_id_value;
   let t4;
+  let a2;
+  let li_data_item_id_value;
   let t5;
+  let t6;
   let div2_transition;
   let current;
   let mounted;
   let dispose;
   function click_handler() {
-    return ctx[6](ctx[9]);
+    return ctx[6](ctx[10]);
   }
   function click_handler_1() {
-    return ctx[7](ctx[9]);
+    return ctx[7](ctx[10]);
   }
-  let if_block = ctx[1][ctx[9]._id] && create_if_block(ctx);
+  function click_handler_2(...args) {
+    return ctx[8](ctx[10], ...args);
+  }
+  let if_block = ctx[1][ctx[10]._id] && create_if_block(ctx);
   return {
     c() {
       div2 = element("div");
@@ -1381,28 +1408,31 @@ function create_each_block(ctx) {
       t2 = space();
       div1 = element("div");
       a0 = element("a");
-      a0.innerHTML = `<i class="fas fa-edit"></i>`;
+      a0.innerHTML = `<i class="fas fa-bullhorn"></i>`;
       t3 = space();
       a1 = element("a");
-      a1.innerHTML = `<i class="fas fa-trash"></i>`;
+      a1.innerHTML = `<i class="fas fa-edit"></i>`;
       t4 = space();
+      a2 = element("a");
+      a2.innerHTML = `<i class="fas fa-trash"></i>`;
+      t5 = space();
       if (if_block)
         if_block.c();
-      t5 = space();
-      if (!src_url_equal(img.src, img_src_value = ctx[9].img))
+      t6 = space();
+      if (!src_url_equal(img.src, img_src_value = ctx[10].img))
         attr(img, "src", img_src_value);
-      attr(img, "title", img_title_value = ctx[9].name);
+      attr(img, "title", img_title_value = ctx[10].name);
       attr(img, "width", "24");
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
       attr(h4, "class", "item-name");
-      attr(a0, "class", "item-control item-edit");
-      attr(a0, "title", "Edit Item");
-      attr(a1, "class", "item-control item-delete");
-      attr(a1, "title", "Delete Item");
+      attr(a1, "class", "item-control item-edit");
+      attr(a1, "title", "Edit Item");
+      attr(a2, "class", "item-control item-delete");
+      attr(a2, "title", "Delete Item");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
-      attr(li, "data-item-id", li_data_item_id_value = ctx[9]._id);
+      attr(li, "data-item-id", li_data_item_id_value = ctx[10]._id);
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -1417,22 +1447,25 @@ function create_each_block(ctx) {
       append(div1, a0);
       append(div1, t3);
       append(div1, a1);
-      append(div2, t4);
+      append(div1, t4);
+      append(div1, a2);
+      append(div2, t5);
       if (if_block)
         if_block.m(div2, null);
-      append(div2, t5);
+      append(div2, t6);
       current = true;
       if (!mounted) {
         dispose = [
           listen(div0, "click", click_handler),
           listen(h4, "click", click_handler_1),
-          listen(a0, "click", function() {
-            if (is_function(ctx[3]?._onItemEdit(ctx[9]._id)))
-              ctx[3]?._onItemEdit(ctx[9]._id).apply(this, arguments);
-          }),
+          listen(a0, "click", click_handler_2),
           listen(a1, "click", function() {
-            if (is_function(ctx[3]?._onItemDelete(ctx[9]._id)))
-              ctx[3]?._onItemDelete(ctx[9]._id).apply(this, arguments);
+            if (is_function(ctx[3]?._onItemEdit(ctx[10]._id)))
+              ctx[3]?._onItemEdit(ctx[10]._id).apply(this, arguments);
+          }),
+          listen(a2, "click", function() {
+            if (is_function(ctx[3]?._onItemDelete(ctx[10]._id)))
+              ctx[3]?._onItemDelete(ctx[10]._id).apply(this, arguments);
           })
         ];
         mounted = true;
@@ -1440,18 +1473,18 @@ function create_each_block(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[9].img)) {
+      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[10].img)) {
         attr(img, "src", img_src_value);
       }
-      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[9].name)) {
+      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[10].name)) {
         attr(img, "title", img_title_value);
       }
-      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[9].name + ""))
+      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[10].name + ""))
         set_data(t1, t1_value);
-      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = ctx[9]._id)) {
+      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = ctx[10]._id)) {
         attr(li, "data-item-id", li_data_item_id_value);
       }
-      if (ctx[1][ctx[9]._id]) {
+      if (ctx[1][ctx[10]._id]) {
         if (if_block) {
           if_block.p(ctx, dirty);
           if (dirty & 3) {
@@ -1461,7 +1494,7 @@ function create_each_block(ctx) {
           if_block = create_if_block(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(div2, t5);
+          if_block.m(div2, t6);
         }
       } else if (if_block) {
         group_outros();
@@ -1610,6 +1643,9 @@ function instance3($$self, $$props, $$invalidate) {
   }
   const click_handler = (item) => ToggleItem(item._id);
   const click_handler_1 = (item) => ToggleItem(item._id);
+  const click_handler_2 = (item, e) => {
+    sheet?._chatItem(item._id);
+  };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
@@ -1624,7 +1660,8 @@ function instance3($$self, $$props, $$invalidate) {
     ToggleItem,
     $sheetData,
     click_handler,
-    click_handler_1
+    click_handler_1,
+    click_handler_2
   ];
 }
 var VagabondsLinage = class extends SvelteComponent {
@@ -1639,12 +1676,12 @@ require_3();
 // module/svelte/VagabondsGear.svelte
 function get_each_context2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[9] = list[i];
+  child_ctx[10] = list[i];
   return child_ctx;
 }
 function create_if_block2(ctx) {
   let div;
-  let raw_value = ctx[9].system.description + "";
+  let raw_value = ctx[10].system.description + "";
   let div_transition;
   let current;
   return {
@@ -1658,7 +1695,7 @@ function create_if_block2(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[10].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -1695,26 +1732,31 @@ function create_each_block2(ctx) {
   let img_title_value;
   let t0;
   let h4;
-  let t1_value = ctx[9].name + "";
+  let t1_value = ctx[10].name + "";
   let t1;
   let t2;
   let div1;
   let a0;
   let t3;
   let a1;
-  let li_data_item_id_value;
   let t4;
+  let a2;
+  let li_data_item_id_value;
+  let t5;
   let div2_transition;
   let current;
   let mounted;
   let dispose;
   function click_handler() {
-    return ctx[6](ctx[9]);
+    return ctx[6](ctx[10]);
   }
   function click_handler_1() {
-    return ctx[7](ctx[9]);
+    return ctx[7](ctx[10]);
   }
-  let if_block = ctx[1][ctx[9]._id] && create_if_block2(ctx);
+  function click_handler_2(...args) {
+    return ctx[8](ctx[10], ...args);
+  }
+  let if_block = ctx[1][ctx[10]._id] && create_if_block2(ctx);
   return {
     c() {
       div2 = element("div");
@@ -1727,27 +1769,30 @@ function create_each_block2(ctx) {
       t2 = space();
       div1 = element("div");
       a0 = element("a");
-      a0.innerHTML = `<i class="fas fa-edit"></i>`;
+      a0.innerHTML = `<i class="fas fa-bullhorn"></i>`;
       t3 = space();
       a1 = element("a");
-      a1.innerHTML = `<i class="fas fa-trash"></i>`;
+      a1.innerHTML = `<i class="fas fa-edit"></i>`;
       t4 = space();
+      a2 = element("a");
+      a2.innerHTML = `<i class="fas fa-trash"></i>`;
+      t5 = space();
       if (if_block)
         if_block.c();
-      if (!src_url_equal(img.src, img_src_value = ctx[9].img))
+      if (!src_url_equal(img.src, img_src_value = ctx[10].img))
         attr(img, "src", img_src_value);
-      attr(img, "title", img_title_value = ctx[9].name);
+      attr(img, "title", img_title_value = ctx[10].name);
       attr(img, "width", "24");
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
       attr(h4, "class", "item-name");
-      attr(a0, "class", "item-control item-edit");
-      attr(a0, "title", "Edit Item");
-      attr(a1, "class", "item-control item-delete");
-      attr(a1, "title", "Delete Item");
+      attr(a1, "class", "item-control item-edit");
+      attr(a1, "title", "Edit Item");
+      attr(a2, "class", "item-control item-delete");
+      attr(a2, "title", "Delete Item");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
-      attr(li, "data-item-id", li_data_item_id_value = ctx[9]._id);
+      attr(li, "data-item-id", li_data_item_id_value = ctx[10]._id);
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -1762,7 +1807,9 @@ function create_each_block2(ctx) {
       append(div1, a0);
       append(div1, t3);
       append(div1, a1);
-      append(div2, t4);
+      append(div1, t4);
+      append(div1, a2);
+      append(div2, t5);
       if (if_block)
         if_block.m(div2, null);
       current = true;
@@ -1770,13 +1817,14 @@ function create_each_block2(ctx) {
         dispose = [
           listen(div0, "click", click_handler),
           listen(h4, "click", click_handler_1),
-          listen(a0, "click", function() {
-            if (is_function(ctx[3]?._onItemEdit(ctx[9]._id)))
-              ctx[3]?._onItemEdit(ctx[9]._id).apply(this, arguments);
-          }),
+          listen(a0, "click", click_handler_2),
           listen(a1, "click", function() {
-            if (is_function(ctx[3]?._onItemDelete(ctx[9]._id)))
-              ctx[3]?._onItemDelete(ctx[9]._id).apply(this, arguments);
+            if (is_function(ctx[3]?._onItemEdit(ctx[10]._id)))
+              ctx[3]?._onItemEdit(ctx[10]._id).apply(this, arguments);
+          }),
+          listen(a2, "click", function() {
+            if (is_function(ctx[3]?._onItemDelete(ctx[10]._id)))
+              ctx[3]?._onItemDelete(ctx[10]._id).apply(this, arguments);
           })
         ];
         mounted = true;
@@ -1784,18 +1832,18 @@ function create_each_block2(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[9].img)) {
+      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[10].img)) {
         attr(img, "src", img_src_value);
       }
-      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[9].name)) {
+      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[10].name)) {
         attr(img, "title", img_title_value);
       }
-      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[9].name + ""))
+      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[10].name + ""))
         set_data(t1, t1_value);
-      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = ctx[9]._id)) {
+      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = ctx[10]._id)) {
         attr(li, "data-item-id", li_data_item_id_value);
       }
-      if (ctx[1][ctx[9]._id]) {
+      if (ctx[1][ctx[10]._id]) {
         if (if_block) {
           if_block.p(ctx, dirty);
           if (dirty & 3) {
@@ -2002,6 +2050,9 @@ function instance4($$self, $$props, $$invalidate) {
   }
   const click_handler = (item) => ToggleItem(item._id);
   const click_handler_1 = (item) => ToggleItem(item._id);
+  const click_handler_2 = (item, e) => {
+    sheet?._chatItem(item._id);
+  };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
@@ -2016,7 +2067,8 @@ function instance4($$self, $$props, $$invalidate) {
     ToggleItem,
     $sheetData,
     click_handler,
-    click_handler_1
+    click_handler_1,
+    click_handler_2
   ];
 }
 var VagabondsGear = class extends SvelteComponent {
@@ -2031,12 +2083,12 @@ require_4();
 // module/svelte/VagabondsTechnique.svelte
 function get_each_context3(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[9] = list[i];
+  child_ctx[10] = list[i];
   return child_ctx;
 }
 function create_if_block3(ctx) {
   let div;
-  let raw_value = ctx[9].system.description + "";
+  let raw_value = ctx[10].system.description + "";
   let div_transition;
   let current;
   return {
@@ -2050,7 +2102,7 @@ function create_if_block3(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[10].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -2087,27 +2139,32 @@ function create_each_block3(ctx) {
   let img_title_value;
   let t0;
   let h4;
-  let t1_value = ctx[9].name + "";
+  let t1_value = ctx[10].name + "";
   let t1;
   let t2;
   let div1;
   let a0;
   let t3;
   let a1;
-  let li_data_item_id_value;
   let t4;
+  let a2;
+  let li_data_item_id_value;
   let t5;
+  let t6;
   let div2_transition;
   let current;
   let mounted;
   let dispose;
   function click_handler() {
-    return ctx[6](ctx[9]);
+    return ctx[6](ctx[10]);
   }
   function click_handler_1() {
-    return ctx[7](ctx[9]);
+    return ctx[7](ctx[10]);
   }
-  let if_block = ctx[1][ctx[9]._id] && create_if_block3(ctx);
+  function click_handler_2(...args) {
+    return ctx[8](ctx[10], ...args);
+  }
+  let if_block = ctx[1][ctx[10]._id] && create_if_block3(ctx);
   return {
     c() {
       div2 = element("div");
@@ -2120,28 +2177,31 @@ function create_each_block3(ctx) {
       t2 = space();
       div1 = element("div");
       a0 = element("a");
-      a0.innerHTML = `<i class="fas fa-edit"></i>`;
+      a0.innerHTML = `<i class="fas fa-bullhorn"></i>`;
       t3 = space();
       a1 = element("a");
-      a1.innerHTML = `<i class="fas fa-trash"></i>`;
+      a1.innerHTML = `<i class="fas fa-edit"></i>`;
       t4 = space();
+      a2 = element("a");
+      a2.innerHTML = `<i class="fas fa-trash"></i>`;
+      t5 = space();
       if (if_block)
         if_block.c();
-      t5 = space();
-      if (!src_url_equal(img.src, img_src_value = ctx[9].img))
+      t6 = space();
+      if (!src_url_equal(img.src, img_src_value = ctx[10].img))
         attr(img, "src", img_src_value);
-      attr(img, "title", img_title_value = ctx[9].name);
+      attr(img, "title", img_title_value = ctx[10].name);
       attr(img, "width", "24");
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
       attr(h4, "class", "item-name");
-      attr(a0, "class", "item-control item-edit");
-      attr(a0, "title", "Edit Item");
-      attr(a1, "class", "item-control item-delete");
-      attr(a1, "title", "Delete Item");
+      attr(a1, "class", "item-control item-edit");
+      attr(a1, "title", "Edit Item");
+      attr(a2, "class", "item-control item-delete");
+      attr(a2, "title", "Delete Item");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
-      attr(li, "data-item-id", li_data_item_id_value = ctx[9]._id);
+      attr(li, "data-item-id", li_data_item_id_value = ctx[10]._id);
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -2156,22 +2216,25 @@ function create_each_block3(ctx) {
       append(div1, a0);
       append(div1, t3);
       append(div1, a1);
-      append(div2, t4);
+      append(div1, t4);
+      append(div1, a2);
+      append(div2, t5);
       if (if_block)
         if_block.m(div2, null);
-      append(div2, t5);
+      append(div2, t6);
       current = true;
       if (!mounted) {
         dispose = [
           listen(div0, "click", click_handler),
           listen(h4, "click", click_handler_1),
-          listen(a0, "click", function() {
-            if (is_function(ctx[3]?._onItemEdit(ctx[9]._id)))
-              ctx[3]?._onItemEdit(ctx[9]._id).apply(this, arguments);
-          }),
+          listen(a0, "click", click_handler_2),
           listen(a1, "click", function() {
-            if (is_function(ctx[3]?._onItemDelete(ctx[9]._id)))
-              ctx[3]?._onItemDelete(ctx[9]._id).apply(this, arguments);
+            if (is_function(ctx[3]?._onItemEdit(ctx[10]._id)))
+              ctx[3]?._onItemEdit(ctx[10]._id).apply(this, arguments);
+          }),
+          listen(a2, "click", function() {
+            if (is_function(ctx[3]?._onItemDelete(ctx[10]._id)))
+              ctx[3]?._onItemDelete(ctx[10]._id).apply(this, arguments);
           })
         ];
         mounted = true;
@@ -2179,18 +2242,18 @@ function create_each_block3(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[9].img)) {
+      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[10].img)) {
         attr(img, "src", img_src_value);
       }
-      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[9].name)) {
+      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[10].name)) {
         attr(img, "title", img_title_value);
       }
-      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[9].name + ""))
+      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[10].name + ""))
         set_data(t1, t1_value);
-      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = ctx[9]._id)) {
+      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = ctx[10]._id)) {
         attr(li, "data-item-id", li_data_item_id_value);
       }
-      if (ctx[1][ctx[9]._id]) {
+      if (ctx[1][ctx[10]._id]) {
         if (if_block) {
           if_block.p(ctx, dirty);
           if (dirty & 3) {
@@ -2200,7 +2263,7 @@ function create_each_block3(ctx) {
           if_block = create_if_block3(ctx);
           if_block.c();
           transition_in(if_block, 1);
-          if_block.m(div2, t5);
+          if_block.m(div2, t6);
         }
       } else if (if_block) {
         group_outros();
@@ -2349,6 +2412,9 @@ function instance5($$self, $$props, $$invalidate) {
   }
   const click_handler = (item) => ToggleItem(item._id);
   const click_handler_1 = (item) => ToggleItem(item._id);
+  const click_handler_2 = (item, e) => {
+    sheet?._chatItem(item._id);
+  };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
@@ -2363,7 +2429,8 @@ function instance5($$self, $$props, $$invalidate) {
     ToggleItem,
     $sheetData,
     click_handler,
-    click_handler_1
+    click_handler_1,
+    click_handler_2
   ];
 }
 var VagabondsTechnique = class extends SvelteComponent {
@@ -2378,12 +2445,12 @@ require_5();
 // module/svelte/VagabondsInjury.svelte
 function get_each_context4(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[9] = list[i];
+  child_ctx[10] = list[i];
   return child_ctx;
 }
 function create_if_block4(ctx) {
   let div;
-  let raw_value = ctx[9].system.description + "";
+  let raw_value = ctx[10].system.description + "";
   let div_transition;
   let current;
   return {
@@ -2397,7 +2464,7 @@ function create_if_block4(ctx) {
       current = true;
     },
     p(ctx2, dirty) {
-      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[9].system.description + ""))
+      if ((!current || dirty & 1) && raw_value !== (raw_value = ctx2[10].system.description + ""))
         div.innerHTML = raw_value;
       ;
     },
@@ -2434,26 +2501,31 @@ function create_each_block4(ctx) {
   let img_title_value;
   let t0;
   let h4;
-  let t1_value = ctx[9].name + "";
+  let t1_value = ctx[10].name + "";
   let t1;
   let t2;
   let div1;
   let a0;
   let t3;
   let a1;
-  let li_data_item_id_value;
   let t4;
+  let a2;
+  let li_data_item_id_value;
+  let t5;
   let div2_transition;
   let current;
   let mounted;
   let dispose;
   function click_handler() {
-    return ctx[6](ctx[9]);
+    return ctx[6](ctx[10]);
   }
   function click_handler_1() {
-    return ctx[7](ctx[9]);
+    return ctx[7](ctx[10]);
   }
-  let if_block = ctx[1][ctx[9]._id] && create_if_block4(ctx);
+  function click_handler_2(...args) {
+    return ctx[8](ctx[10], ...args);
+  }
+  let if_block = ctx[1][ctx[10]._id] && create_if_block4(ctx);
   return {
     c() {
       div2 = element("div");
@@ -2466,27 +2538,30 @@ function create_each_block4(ctx) {
       t2 = space();
       div1 = element("div");
       a0 = element("a");
-      a0.innerHTML = `<i class="fas fa-edit"></i>`;
+      a0.innerHTML = `<i class="fas fa-bullhorn"></i>`;
       t3 = space();
       a1 = element("a");
-      a1.innerHTML = `<i class="fas fa-trash"></i>`;
+      a1.innerHTML = `<i class="fas fa-edit"></i>`;
       t4 = space();
+      a2 = element("a");
+      a2.innerHTML = `<i class="fas fa-trash"></i>`;
+      t5 = space();
       if (if_block)
         if_block.c();
-      if (!src_url_equal(img.src, img_src_value = ctx[9].img))
+      if (!src_url_equal(img.src, img_src_value = ctx[10].img))
         attr(img, "src", img_src_value);
-      attr(img, "title", img_title_value = ctx[9].name);
+      attr(img, "title", img_title_value = ctx[10].name);
       attr(img, "width", "24");
       attr(img, "height", "24");
       attr(div0, "class", "item-image");
       attr(h4, "class", "item-name");
-      attr(a0, "class", "item-control item-edit");
-      attr(a0, "title", "Edit Item");
-      attr(a1, "class", "item-control item-delete");
-      attr(a1, "title", "Delete Item");
+      attr(a1, "class", "item-control item-edit");
+      attr(a1, "title", "Edit Item");
+      attr(a2, "class", "item-control item-delete");
+      attr(a2, "title", "Delete Item");
       attr(div1, "class", "item-controls");
       attr(li, "class", "item flexrow");
-      attr(li, "data-item-id", li_data_item_id_value = "" + (ctx[9]._id + "}"));
+      attr(li, "data-item-id", li_data_item_id_value = "" + (ctx[10]._id + "}"));
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -2501,7 +2576,9 @@ function create_each_block4(ctx) {
       append(div1, a0);
       append(div1, t3);
       append(div1, a1);
-      append(div2, t4);
+      append(div1, t4);
+      append(div1, a2);
+      append(div2, t5);
       if (if_block)
         if_block.m(div2, null);
       current = true;
@@ -2509,13 +2586,14 @@ function create_each_block4(ctx) {
         dispose = [
           listen(div0, "click", click_handler),
           listen(h4, "click", click_handler_1),
-          listen(a0, "click", function() {
-            if (is_function(ctx[3]?._onItemEdit(ctx[9]._id)))
-              ctx[3]?._onItemEdit(ctx[9]._id).apply(this, arguments);
-          }),
+          listen(a0, "click", click_handler_2),
           listen(a1, "click", function() {
-            if (is_function(ctx[3]?._onItemDelete(ctx[9]._id)))
-              ctx[3]?._onItemDelete(ctx[9]._id).apply(this, arguments);
+            if (is_function(ctx[3]?._onItemEdit(ctx[10]._id)))
+              ctx[3]?._onItemEdit(ctx[10]._id).apply(this, arguments);
+          }),
+          listen(a2, "click", function() {
+            if (is_function(ctx[3]?._onItemDelete(ctx[10]._id)))
+              ctx[3]?._onItemDelete(ctx[10]._id).apply(this, arguments);
           })
         ];
         mounted = true;
@@ -2523,18 +2601,18 @@ function create_each_block4(ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[9].img)) {
+      if (!current || dirty & 1 && !src_url_equal(img.src, img_src_value = ctx[10].img)) {
         attr(img, "src", img_src_value);
       }
-      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[9].name)) {
+      if (!current || dirty & 1 && img_title_value !== (img_title_value = ctx[10].name)) {
         attr(img, "title", img_title_value);
       }
-      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[9].name + ""))
+      if ((!current || dirty & 1) && t1_value !== (t1_value = ctx[10].name + ""))
         set_data(t1, t1_value);
-      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = "" + (ctx[9]._id + "}"))) {
+      if (!current || dirty & 1 && li_data_item_id_value !== (li_data_item_id_value = "" + (ctx[10]._id + "}"))) {
         attr(li, "data-item-id", li_data_item_id_value);
       }
-      if (ctx[1][ctx[9]._id]) {
+      if (ctx[1][ctx[10]._id]) {
         if (if_block) {
           if_block.p(ctx, dirty);
           if (dirty & 3) {
@@ -2733,6 +2811,9 @@ function instance6($$self, $$props, $$invalidate) {
   }
   const click_handler = (item) => ToggleItem(item._id);
   const click_handler_1 = (item) => ToggleItem(item._id);
+  const click_handler_2 = (item, e) => {
+    sheet?._chatItem(item._id);
+  };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & 32) {
       $:
@@ -2747,7 +2828,8 @@ function instance6($$self, $$props, $$invalidate) {
     ToggleItem,
     $sheetData,
     click_handler,
-    click_handler_1
+    click_handler_1,
+    click_handler_2
   ];
 }
 var VagabondsInjury = class extends SvelteComponent {
@@ -3080,6 +3162,23 @@ var VagabondsActorSheet = class extends ActorSheet {
       game.vagabonds.RollHelper.displayRollModal(true);
     }
   }
+  async _chatItem(id) {
+    const item = this.actor.items.get(id);
+    let template = "systems/vagabonds/templates/chat/ability.html";
+    item.system.description = await TextEditor.enrichHTML(item.system.description, { async: true });
+    let data = { ability: item, actor: this.actor.system };
+    console.log(data);
+    const html = await renderTemplate(template, data);
+    const chatData = {
+      actor: this.actor._id,
+      type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+      content: html,
+      speaker: {
+        actor: this.actor
+      }
+    };
+    return ChatMessage.create(chatData);
+  }
   render(force = false, options = {}) {
     let sheetData = this.getData();
     if (this.app !== null) {
@@ -3123,7 +3222,7 @@ var VagabondsNPCSheet = class extends ActorSheet {
       classes: ["vagabonds", "sheet", "actor"],
       template: "systems/vagabonds/templates/actor/npc-sheet.html",
       width: 600,
-      height: 440,
+      height: 700,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }
@@ -3136,6 +3235,10 @@ var VagabondsNPCSheet = class extends ActorSheet {
     if (!this.options.editable)
       return;
     html.find(".item-create").click(this._onItemCreate.bind(this));
+    html.find(".item-speak").click((ev) => {
+      const li = $(ev.currentTarget).parents(".item");
+      this._chatItem(li.data("itemId"));
+    });
     html.find(".item-edit").click((ev) => {
       const li = $(ev.currentTarget).parents(".item");
       const item = this.actor.items.get(li.data("itemId"));
@@ -3151,6 +3254,23 @@ var VagabondsNPCSheet = class extends ActorSheet {
       this.actor.deleteEmbeddedDocuments("Item", [li.data("itemId")]);
       li.slideUp(200, () => this.render(false));
     });
+  }
+  async _chatItem(id) {
+    const item = this.actor.items.get(id);
+    let template = "systems/vagabonds/templates/chat/ability.html";
+    item.system.description = await TextEditor.enrichHTML(item.system.description, { async: true });
+    let data = { ability: item, actor: this.actor.system };
+    console.log(data);
+    const html = await renderTemplate(template, data);
+    const chatData = {
+      actor: this.actor._id,
+      type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+      content: html,
+      speaker: {
+        actor: this.actor
+      }
+    };
+    return ChatMessage.create(chatData);
   }
   async _onItemCreate(event) {
     event.preventDefault();

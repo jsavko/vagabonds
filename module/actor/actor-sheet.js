@@ -199,6 +199,31 @@ export class VagabondsActorSheet extends ActorSheet {
         }
     }
 
+    async _chatItem(id) {
+        const item = this.actor.items.get(id);
+        let template = "systems/vagabonds/templates/chat/ability.html";
+        item.system.description = await TextEditor.enrichHTML(
+            item.system.description,
+            { async: true }
+        );
+        let data = { ability: item, actor: this.actor.system };
+        console.log(data);
+        
+        const html = await renderTemplate(template, data);
+
+        const chatData = {
+            actor: this.actor._id,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+            content: html,
+            speaker: {
+                actor: this.actor
+            }
+        };
+        return ChatMessage.create(chatData);
+
+
+    }
+
     render(force = false, options = {}) {
         // Grab the sheetdata for both updates and new apps.
         let sheetData = this.getData();

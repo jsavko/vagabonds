@@ -43,6 +43,7 @@
 				<div on:click="{() => ToggleItem(item._id)}" class="item-image"><img src="{item.img}" title="{item.name}" width="24" height="24"/></div>
 				<h4 on:click="{() => ToggleItem(item._id)}" class="item-name">{item.name}</h4>
 				<div class="item-controls">
+					<a on:click={(e) => {sheet?._chatItem(item._id)}}><i class="fas fa-bullhorn" /></a>
 					<a on:click={sheet?._onItemEdit(item._id)} class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
 					<a on:click={sheet?._onItemDelete(item._id)} class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
 				</div>

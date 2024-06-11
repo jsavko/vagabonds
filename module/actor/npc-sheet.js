@@ -10,7 +10,7 @@ export class VagabondsNPCSheet extends ActorSheet {
       classes: ["vagabonds", "sheet", "actor"],
       template: "systems/vagabonds/templates/actor/npc-sheet.html",
       width: 600,
-      height: 440,
+      height: 700,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }
@@ -32,7 +32,14 @@ export class VagabondsNPCSheet extends ActorSheet {
 
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
-    
+
+
+    // Chat Item
+    html.find('.item-speak').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      this._chatItem(li.data("itemId"));
+    });
+
     // Update Inventory Item
     html.find('.item-edit').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
@@ -59,6 +66,36 @@ export class VagabondsNPCSheet extends ActorSheet {
   }
 
   
+
+
+  
+  async _chatItem(id) {
+    const item = this.actor.items.get(id);
+    let template = "systems/vagabonds/templates/chat/ability.html";
+    item.system.description = await TextEditor.enrichHTML(
+        item.system.description,
+        { async: true }
+    );
+    let data = { ability: item, actor: this.actor.system };
+    console.log(data);
+    
+    const html = await renderTemplate(template, data);
+
+    const chatData = {
+        actor: this.actor._id,
+        type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+        content: html,
+        speaker: {
+            actor: this.actor
+        }
+    };
+    return ChatMessage.create(chatData);
+
+
+}
+
+
+
   /* -------------------------------------------- */
 
   /**

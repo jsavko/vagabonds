@@ -36,14 +36,21 @@
   </header>
 
   <section class="sheet-body">
-    <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="system.description" value="{{actor.system.description}}"/></div>
+    <div class="resources-content flexrow flex-right grid-3col">
+      <textarea class="border_none" name="system.description" rows="6">{{actor.system.description}}</textarea>
+    </div>
     <div class="resources grid grid-4col">
       <div class="resources-content flexrow flex-left flex-between grid-1col"><label>Trait Tags </label></div>
-      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="system.traits" value="{{actor.system.traits}}"/></div>
+      <div class="resources-content flexrow flex-right grid-3col">
+        <textarea class="border_none" name="system.traits" rows="6">{{actor.system.traits}}</textarea>
+      </div>
     </div>
     <div class="resources grid grid-4col">
       <div class="resources-content flexrow flex-left flex-between grid-1col"><label>Combat Notes</label> </div>
-      <div class="resources-content flexrow flex-right grid-3col"><input class="border_none" type="text" name="system.combat_notes" value="{{actor.system.combat_notes}}"/></div>
+      <div class="resources-content flexrow flex-right grid-3col">
+        <textarea class="border_none" name="system.combat_notes" rows="6">{{actor.system.combat_notes}}</textarea>
+
+      </div>
     </div>
 
     <ol class="items-list">
@@ -59,6 +66,7 @@
           <div class="item-image"><img src="{{item.img}}" title="{{item.name}}" width="24" height="24"/></div>
           <h4 class="item-name">{{item.name}}</h4>
           <div class="item-controls">
+            <a class="item-control item-speak" title="Send To Chat"><i class="fas fa-bullhorn"></i></a>
               <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
               <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
           </div>
