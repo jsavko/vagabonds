@@ -11,7 +11,7 @@
    */
    const filePicker = (event) => {
         const attr = event.currentTarget.dataset.edit;
-        const current = getProperty($sheetData.actor, attr);
+        const current = foundry.utils.getProperty($sheetData.actor, attr);
         const fp = new FilePicker({
             type: "image",
             current: current,

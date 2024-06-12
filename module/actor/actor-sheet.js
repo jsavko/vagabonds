@@ -81,10 +81,10 @@ export class VagabondsActorSheet extends ActorSheet {
         }
 
         // Assign and return
-        sheetData.gear = gear;
-        sheetData.techniques = techniques;
+        sheetData.gear = gear.sort((a, b) => a.sort - b.sort);
+        sheetData.techniques = techniques.sort((a, b) => a.sort - b.sort);;
         sheetData.lineage = lineage;
-        sheetData.injury = injury;
+        sheetData.injury = injury.sort((a, b) => a.sort - b.sort);;
         sheetData.approach = approach;
         sheetData.trait = trait;
         sheetData.sheet = this;
@@ -197,6 +197,30 @@ export class VagabondsActorSheet extends ActorSheet {
         if (dataset.defend) {
             game.vagabonds.RollHelper.displayRollModal(true);
         }
+    }
+
+    async _chatItem(id) {
+        const item = this.actor.items.get(id);
+        let template = "systems/vagabonds/templates/chat/ability.html";
+        item.system.description = await TextEditor.enrichHTML(
+            item.system.description,
+            { async: true }
+        );
+        let data = { ability: item, actor: this.actor.system };
+        
+        const html = await renderTemplate(template, data);
+
+        const chatData = {
+            actor: this.actor._id,
+            type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+            content: html,
+            speaker: {
+                actor: this.actor
+            }
+        };
+        return ChatMessage.create(chatData);
+
+
     }
 
     render(force = false, options = {}) {
