@@ -327,4 +327,6 @@ span.flavor-text h1 {
 .npc_item_desc {
 	text-align:left;
   display: none;
+  padding-left: 40px;
+  padding-right: 40px;
 	}
