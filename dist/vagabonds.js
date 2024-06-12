@@ -1025,7 +1025,7 @@ function instance($$self, $$props, $$invalidate) {
   component_subscribe($$self, sheetData, (value) => $$invalidate(0, $sheetData = value));
   const filePicker = (event) => {
     const attr2 = event.currentTarget.dataset.edit;
-    const current = getProperty($sheetData.actor, attr2);
+    const current = foundry.utils.getProperty($sheetData.actor, attr2);
     const fp = new FilePicker({
       type: "image",
       current,
