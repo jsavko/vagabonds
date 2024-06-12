@@ -1,4 +1,14 @@
 # Vagabonds of Dyfed Foundry VTT System
+
+0.5.1
+* Added the ability to send Techniques, Injury and Items to the Chat Widnow with the new blowhorn button
+* Added Scrolling Combat Text on tokens when hp changes
+* Updated the NPC sheet to give more room (as requested)
+* Updated Actors and Items to use dataModels
+
+0.5.0
+* Updated for v12
+
 0.4.1
 * Fixed an with actor sheets in v10
 
