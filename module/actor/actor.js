@@ -49,7 +49,6 @@ export class VagabondsActor extends Actor {
       const changes = {
         hp: curr - hp.value,
       };  
-      console.log(changes)
       changes.total = changes.hp;
   
       this._displayTokenEffect(changes);

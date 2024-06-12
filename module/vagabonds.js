@@ -5,7 +5,7 @@ import { VagabondsNPCSheet } from "./actor/npc-sheet.js";
 import { VagabondsItem } from "./item/item.js";
 import { VagabondsItemSheet } from "./item/item-sheet.js";
 import { RollHelper } from "./helper/roll_helper.js";
-import { VagabondsActorDataModel } from "./data-models.js";
+import { VagabondsActorDataModel, VagabondsNPCDataModel, VagabondsBaseItemModel } from "./data-models.js";
 
 Hooks.once('init', async function() {
 
@@ -28,9 +28,16 @@ Hooks.once('init', async function() {
 
   // Define custom Entity classes
   CONFIG.Actor.documentClass = VagabondsActor;
-  //CONFIG.Actor.dataModels.character = VagabondsActorDataModel;
+  CONFIG.Actor.dataModels.character = VagabondsActorDataModel;
+  CONFIG.Actor.dataModels.npc = VagabondsNPCDataModel;
 
   CONFIG.Item.documentClass = VagabondsItem;
+  CONFIG.Item.dataModels.item = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.approach = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.technique = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.lineage = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.injury = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.trait = VagabondsBaseItemModel;
 
   CONFIG.Vagabonds.tokenHPColors = {
     damage: 15711680,

@@ -54,7 +54,7 @@ export class VagabondsBaseActorModel extends foundry.abstract.TypeDataModel {
               integer: true
             })
           }),
-        attributes : new fields.SchemaField({
+        attributes: new fields.SchemaField({
             level: new fields.SchemaField({
               value: new fields.NumberField({
                 required: true,
@@ -87,7 +87,7 @@ export class VagabondsBaseActorModel extends foundry.abstract.TypeDataModel {
 export class VagabondsActorDataModel extends VagabondsBaseActorModel {
     static defineSchema() {
         const fields = foundry.data.fields;
-        return {
+        return foundry.utils.mergeObject(super.defineSchema(), {
             aproaches :  new fields.SchemaField({
                 conflict: new fields.StringField({
                   nullable:false,
@@ -160,7 +160,53 @@ export class VagabondsActorDataModel extends VagabondsBaseActorModel {
                   initial:""
                 }),
             }),
-        };
+        });
       }
 
 }
+
+
+
+export class VagabondsNPCDataModel extends VagabondsBaseActorModel {
+  static defineSchema() {
+      const fields = foundry.data.fields;
+      return foundry.utils.mergeObject(super.defineSchema(), {
+          damage: new fields.SchemaField({
+              value: new fields.NumberField({
+                required: true,
+                initial: 1,
+                integer: true
+            })}),
+          description: new fields.StringField({
+            nullable:false,
+            required: true,
+            initial:""
+          }),
+          traits: new fields.StringField({
+            nullable:false,
+            required: true,
+            initial:""
+          }),
+          combat_notes: new fields.StringField({
+            nullable:false,
+            required: true,
+            initial:""
+          }),
+      });
+    }
+  }
+
+
+  export class VagabondsBaseItemModel  extends foundry.abstract.TypeDataModel {
+
+    static defineSchema() {
+      const fields = foundry.data.fields;
+      return {
+        description: new fields.StringField({
+          nullable:false,
+          required: true,
+          initial:""
+        })
+      };
+    }
+  }

@@ -84,7 +84,6 @@ var VagabondsActor = class extends Actor {
       const changes = {
         hp: curr - hp.value
       };
-      console.log(changes);
       changes.total = changes.hp;
       this._displayTokenEffect(changes);
     }
@@ -1088,24 +1087,29 @@ function create_fragment2(ctx) {
   let input5_value_value;
   let t35;
   let label8;
-  let t37;
+  let t39;
   let input6;
   let input6_value_value;
-  let t38;
+  let t40;
+  let label9;
+  let t42;
   let input7;
   let input7_value_value;
-  let t39;
+  let t43;
   let input8;
   let input8_value_value;
-  let t40;
+  let t44;
   let input9;
   let input9_value_value;
-  let t41;
+  let t45;
   let input10;
   let input10_value_value;
-  let t42;
+  let t46;
   let input11;
   let input11_value_value;
+  let t47;
+  let input12;
+  let input12_value_value;
   return {
     c() {
       main = element("main");
@@ -1147,19 +1151,24 @@ function create_fragment2(ctx) {
       input5 = element("input");
       t35 = space();
       label8 = element("label");
-      label8.textContent = "Additional Traits Per Level:";
-      t37 = space();
-      input6 = element("input");
-      t38 = space();
-      input7 = element("input");
+      label8.innerHTML = `My <strong>Wealth</strong>:`;
       t39 = space();
-      input8 = element("input");
+      input6 = element("input");
       t40 = space();
-      input9 = element("input");
-      t41 = space();
-      input10 = element("input");
+      label9 = element("label");
+      label9.textContent = "Additional Traits Per Level:";
       t42 = space();
+      input7 = element("input");
+      t43 = space();
+      input8 = element("input");
+      t44 = space();
+      input9 = element("input");
+      t45 = space();
+      input10 = element("input");
+      t46 = space();
       input11 = element("input");
+      t47 = space();
+      input12 = element("input");
       attr(label0, "class", "resource-label");
       attr(label1, "class", "rules-label");
       attr(input0, "type", "text");
@@ -1187,29 +1196,33 @@ function create_fragment2(ctx) {
       input5.value = input5_value_value = ctx[1].system.aproaches.weakness;
       attr(input5, "class", "svelte-wvbhe2");
       attr(input6, "type", "text");
-      attr(input6, "name", "system.aproaches.a1");
-      input6.value = input6_value_value = ctx[1].system.aproaches.a1;
+      attr(input6, "name", "system.aproaches.wealth");
+      input6.value = input6_value_value = ctx[1].system.aproaches.wealth;
       attr(input6, "class", "svelte-wvbhe2");
       attr(input7, "type", "text");
-      attr(input7, "name", "system.aproaches.a2");
-      input7.value = input7_value_value = ctx[1].system.aproaches.a2;
+      attr(input7, "name", "system.aproaches.a1");
+      input7.value = input7_value_value = ctx[1].system.aproaches.a1;
       attr(input7, "class", "svelte-wvbhe2");
       attr(input8, "type", "text");
-      attr(input8, "name", "system.aproaches.a3");
-      input8.value = input8_value_value = ctx[1].system.aproaches.a3;
+      attr(input8, "name", "system.aproaches.a2");
+      input8.value = input8_value_value = ctx[1].system.aproaches.a2;
       attr(input8, "class", "svelte-wvbhe2");
       attr(input9, "type", "text");
-      attr(input9, "name", "system.aproaches.a4");
-      input9.value = input9_value_value = ctx[1].system.aproaches.a4;
+      attr(input9, "name", "system.aproaches.a3");
+      input9.value = input9_value_value = ctx[1].system.aproaches.a3;
       attr(input9, "class", "svelte-wvbhe2");
       attr(input10, "type", "text");
-      attr(input10, "name", "system.aproaches.a5");
-      input10.value = input10_value_value = ctx[1].system.aproaches.a5;
+      attr(input10, "name", "system.aproaches.a4");
+      input10.value = input10_value_value = ctx[1].system.aproaches.a4;
       attr(input10, "class", "svelte-wvbhe2");
       attr(input11, "type", "text");
-      attr(input11, "name", "system.aproaches.a6");
-      input11.value = input11_value_value = ctx[1].system.aproaches.a6;
+      attr(input11, "name", "system.aproaches.a5");
+      input11.value = input11_value_value = ctx[1].system.aproaches.a5;
       attr(input11, "class", "svelte-wvbhe2");
+      attr(input12, "type", "text");
+      attr(input12, "name", "system.aproaches.a6");
+      input12.value = input12_value_value = ctx[1].system.aproaches.a6;
+      attr(input12, "class", "svelte-wvbhe2");
       attr(main, "class", "svelte-wvbhe2");
     },
     m(target, anchor) {
@@ -1244,18 +1257,22 @@ function create_fragment2(ctx) {
       append(main, input5);
       append(main, t35);
       append(main, label8);
-      append(main, t37);
-      append(main, input6);
-      append(main, t38);
-      append(main, input7);
       append(main, t39);
-      append(main, input8);
+      append(main, input6);
       append(main, t40);
-      append(main, input9);
-      append(main, t41);
-      append(main, input10);
+      append(main, label9);
       append(main, t42);
+      append(main, input7);
+      append(main, t43);
+      append(main, input8);
+      append(main, t44);
+      append(main, input9);
+      append(main, t45);
+      append(main, input10);
+      append(main, t46);
       append(main, input11);
+      append(main, t47);
+      append(main, input12);
     },
     p: noop,
     i: noop,
@@ -3548,6 +3565,126 @@ var VagabondsBaseActorModel = class extends foundry.abstract.TypeDataModel {
     };
   }
 };
+var VagabondsActorDataModel = class extends VagabondsBaseActorModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return foundry.utils.mergeObject(super.defineSchema(), {
+      aproaches: new fields.SchemaField({
+        conflict: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        goal: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        gimmick: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        background: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        foreground: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        weakness: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        wealth: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        a1: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        a2: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        a3: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        a4: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        a5: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        a6: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        }),
+        coreflaw: new fields.StringField({
+          nullable: false,
+          required: true,
+          initial: ""
+        })
+      })
+    });
+  }
+};
+var VagabondsNPCDataModel = class extends VagabondsBaseActorModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return foundry.utils.mergeObject(super.defineSchema(), {
+      damage: new fields.SchemaField({
+        value: new fields.NumberField({
+          required: true,
+          initial: 1,
+          integer: true
+        })
+      }),
+      description: new fields.StringField({
+        nullable: false,
+        required: true,
+        initial: ""
+      }),
+      traits: new fields.StringField({
+        nullable: false,
+        required: true,
+        initial: ""
+      }),
+      combat_notes: new fields.StringField({
+        nullable: false,
+        required: true,
+        initial: ""
+      })
+    });
+  }
+};
+var VagabondsBaseItemModel = class extends foundry.abstract.TypeDataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      description: new fields.StringField({
+        nullable: false,
+        required: true,
+        initial: ""
+      })
+    };
+  }
+};
 
 // module/vagabonds.js
 Hooks.once("init", async function() {
@@ -3562,7 +3699,15 @@ Hooks.once("init", async function() {
   };
   CONFIG.Vagabonds = {};
   CONFIG.Actor.documentClass = VagabondsActor;
+  CONFIG.Actor.dataModels.character = VagabondsActorDataModel;
+  CONFIG.Actor.dataModels.npc = VagabondsNPCDataModel;
   CONFIG.Item.documentClass = VagabondsItem;
+  CONFIG.Item.dataModels.item = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.approach = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.technique = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.lineage = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.injury = VagabondsBaseItemModel;
+  CONFIG.Item.dataModels.trait = VagabondsBaseItemModel;
   CONFIG.Vagabonds.tokenHPColors = {
     damage: 15711680,
     healing: 65280

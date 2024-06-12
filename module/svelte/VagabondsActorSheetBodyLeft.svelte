@@ -32,6 +32,10 @@
 	<label>My <strong>Weakness</strong>:</label>
 	<input type="text" name="system.aproaches.weakness" value="{data.system.aproaches.weakness}" />
 
+	<label>My <strong>Wealth</strong>:</label>
+	<input type="text" name="system.aproaches.wealth" value="{data.system.aproaches.wealth}" />
+
+
 	<label>Additional Traits Per Level:</label>
 	<input type="text" name="system.aproaches.a1" value="{data.system.aproaches.a1}"/>
 	<input type="text" name="system.aproaches.a2" value="{data.system.aproaches.a2}" />
