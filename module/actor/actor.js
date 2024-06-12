@@ -51,14 +51,13 @@ export class VagabondsActor extends Actor {
       };  
       console.log(changes)
       changes.total = changes.hp;
-      const isDead = this.system.health.value <= 0;
   
       this._displayTokenEffect(changes);
-      if (isDead) {
-        
-        this._displayTokenMessage('Dead', CONFIG.Vagabonds.tokenHPColors['damage'] )
-
-      }
+     
+     // const isDead = this.system.health.value <= 0;
+     // if (isDead) { 
+     //   this._displayTokenMessage('Dead', CONFIG.Vagabonds.tokenHPColors['damage'] )
+     // }
     }
   }
 

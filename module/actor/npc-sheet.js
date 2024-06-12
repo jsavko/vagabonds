@@ -76,9 +76,7 @@ export class VagabondsNPCSheet extends ActorSheet {
         item.system.description,
         { async: true }
     );
-    let data = { ability: item, actor: this.actor.system };
-    console.log(data);
-    
+    let data = { ability: item, actor: this.actor.system };   
     const html = await renderTemplate(template, data);
 
     const chatData = {

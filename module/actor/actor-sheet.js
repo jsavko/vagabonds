@@ -81,10 +81,10 @@ export class VagabondsActorSheet extends ActorSheet {
         }
 
         // Assign and return
-        sheetData.gear = gear;
-        sheetData.techniques = techniques;
+        sheetData.gear = gear.sort((a, b) => a.sort - b.sort);
+        sheetData.techniques = techniques.sort((a, b) => a.sort - b.sort);;
         sheetData.lineage = lineage;
-        sheetData.injury = injury;
+        sheetData.injury = injury.sort((a, b) => a.sort - b.sort);;
         sheetData.approach = approach;
         sheetData.trait = trait;
         sheetData.sheet = this;
@@ -207,7 +207,6 @@ export class VagabondsActorSheet extends ActorSheet {
             { async: true }
         );
         let data = { ability: item, actor: this.actor.system };
-        console.log(data);
         
         const html = await renderTemplate(template, data);
 

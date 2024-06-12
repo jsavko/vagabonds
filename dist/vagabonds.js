@@ -86,11 +86,7 @@ var VagabondsActor = class extends Actor {
       };
       console.log(changes);
       changes.total = changes.hp;
-      const isDead = this.system.health.value <= 0;
       this._displayTokenEffect(changes);
-      if (isDead) {
-        this._displayTokenMessage("Dead", CONFIG.Vagabonds.tokenHPColors["damage"]);
-      }
     }
   }
   _displayTokenMessage(message, fill) {
@@ -3088,10 +3084,12 @@ var VagabondsActorSheet = class extends ActorSheet {
           trait.push(i);
       }
     }
-    sheetData.gear = gear;
-    sheetData.techniques = techniques;
+    sheetData.gear = gear.sort((a, b) => a.sort - b.sort);
+    sheetData.techniques = techniques.sort((a, b) => a.sort - b.sort);
+    ;
     sheetData.lineage = lineage;
-    sheetData.injury = injury;
+    sheetData.injury = injury.sort((a, b) => a.sort - b.sort);
+    ;
     sheetData.approach = approach;
     sheetData.trait = trait;
     sheetData.sheet = this;
@@ -3167,7 +3165,6 @@ var VagabondsActorSheet = class extends ActorSheet {
     let template = "systems/vagabonds/templates/chat/ability.html";
     item.system.description = await TextEditor.enrichHTML(item.system.description, { async: true });
     let data = { ability: item, actor: this.actor.system };
-    console.log(data);
     const html = await renderTemplate(template, data);
     const chatData = {
       actor: this.actor._id,
@@ -3260,7 +3257,6 @@ var VagabondsNPCSheet = class extends ActorSheet {
     let template = "systems/vagabonds/templates/chat/ability.html";
     item.system.description = await TextEditor.enrichHTML(item.system.description, { async: true });
     let data = { ability: item, actor: this.actor.system };
-    console.log(data);
     const html = await renderTemplate(template, data);
     const chatData = {
       actor: this.actor._id,
@@ -3464,6 +3460,92 @@ var RollHelper = class {
         }
       }
     }).render(true);
+  }
+};
+
+// module/data-models.js
+var VagabondsBaseActorModel = class extends foundry.abstract.TypeDataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      health: new fields.SchemaField({
+        value: new fields.NumberField({
+          required: true,
+          initial: 8,
+          integer: true
+        }),
+        min: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        max: new fields.NumberField({
+          required: true,
+          initial: 8,
+          integer: true
+        })
+      }),
+      speed: new fields.SchemaField({
+        value: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        min: new fields.NumberField({
+          required: true,
+          initial: -10,
+          integer: true
+        }),
+        max: new fields.NumberField({
+          required: true,
+          initial: 15,
+          integer: true
+        })
+      }),
+      armor: new fields.SchemaField({
+        value: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        min: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        max: new fields.NumberField({
+          required: true,
+          initial: 20,
+          integer: true
+        })
+      }),
+      attributes: new fields.SchemaField({
+        level: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 1,
+            integer: true
+          })
+        }),
+        xp: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          min: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          max: new fields.NumberField({
+            required: true,
+            initial: 100,
+            integer: true
+          })
+        })
+      })
+    };
   }
 };
 
