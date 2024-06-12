@@ -72,8 +72,6 @@ export class VagabondsNPCSheet extends ActorSheet {
       } else  {
         desc.slideDown("slow");
       }
-      console.log(li);
-
     });
 
   }

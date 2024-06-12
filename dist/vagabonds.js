@@ -3277,7 +3277,6 @@ var VagabondsNPCSheet = class extends ActorSheet {
       } else {
         desc.slideDown("slow");
       }
-      console.log(li);
     });
   }
   async _chatItem(id) {
