@@ -3250,6 +3250,7 @@ var VagabondsNPCSheet = class extends ActorSheet {
       return;
     html.find(".item-create").click(this._onItemCreate.bind(this));
     html.find(".item-speak").click((ev) => {
+      ev.stopPropagation();
       const li = $(ev.currentTarget).parents(".item");
       this._chatItem(li.data("itemId"));
     });
@@ -3267,6 +3268,16 @@ var VagabondsNPCSheet = class extends ActorSheet {
       const li = $(ev.currentTarget).parents(".item");
       this.actor.deleteEmbeddedDocuments("Item", [li.data("itemId")]);
       li.slideUp(200, () => this.render(false));
+    });
+    html.find("li.item").click((ev) => {
+      const li = $(ev.currentTarget);
+      const desc = li.find(".npc_item_desc");
+      if (desc.is(":visible")) {
+        desc.slideUp("slow");
+      } else {
+        desc.slideDown("slow");
+      }
+      console.log(li);
     });
   }
   async _chatItem(id) {
