@@ -8,8 +8,6 @@
     "verified": 12, 
     "maximum": 12 
   },
-  "templateVersion": 5,
-  "author": "Phoenix",
   "authors": [
     {
         "name": "Phoenix",
@@ -54,12 +52,14 @@
       "path": "lang/en.json"
     }
   ],
-  "gridDistance": 5,
-  "gridUnits": "ft",
+  "grid":{
+    "distance": 5,
+    "units":"ft"
+  },
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "speed",
   "url": "https://github.com/jsavko/vagabonds",
-  "manifest": "https://raw.githubusercontent.com/jsavko/vagabonds/main/system.json",
-  "download": "https://github.com/jsavko/vagabonds/archive/refs/tags/0.5.1.zip",
+  "manifest": "https://github.com/jsavko/vagabonds/releases/latest/download/system.json",
+  "download": "https://github.com/jsavko/vagabonds/releases/latest/download/system.zip",
   "license": "LICENSE.txt"
 }
